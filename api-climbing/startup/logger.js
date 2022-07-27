@@ -8,10 +8,10 @@ const myFormat = printf(({level, message, timestamp})=> {
 const winstonOptions = {
     format: combine(
         timestamp(),
-        myFormat
+        myFormat,
     ),
     transports: [
-        new transports.Console()
+        new transports.Console(),
     ]
 }
 
