@@ -9,6 +9,7 @@ const winstonOptions = {
 const logger = createLogger(winstonOptions)
 
 const infoLog = (info)=> {
+    logger.add(new transports.File({filename: "info.log"}))
     logger.info(info)
 }
 
