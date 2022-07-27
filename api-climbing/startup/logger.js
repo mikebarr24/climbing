@@ -13,6 +13,7 @@ const infoLog = (info)=> {
 }
 
 const errorLog = (err, req, res, next) => {
+    logger.add(new transports.File({filename: "error.log"}))
     logger.error(err.message)
     res.status(500).send("Opps! Something went wrong")
     next()
