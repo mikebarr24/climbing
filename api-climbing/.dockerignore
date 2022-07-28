@@ -3,3 +3,6 @@ npm-debug.log
 api-design.txt
 .env
 coverage
+log.log
+rejections.log
+exceptions.log
