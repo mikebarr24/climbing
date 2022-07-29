@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User, validateUser } = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const _ = require("lodash");
 
 router.get("/me", (req, res) => {
   res.send("user");
@@ -27,7 +28,9 @@ router.post("/", async (req, res) => {
 
   const token = newUser.genAuthToken();
 
-  res.header("x-auth-token", token).send(newUser);
+  res
+    .header("x-auth-token", token)
+    .send(_.pick(newUser, ["_id", "name", "email"]));
 });
 
 module.exports = router;

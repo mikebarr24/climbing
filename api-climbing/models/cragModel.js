@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const joi = require("joi");
 const Joi = require("joi");
 
 const cragSchema = new mongoose.Schema({
@@ -19,7 +18,15 @@ const cragSchema = new mongoose.Schema({
       required: true,
     },
   },
-  timestamps: true,
+  dateCreated: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  addedBy: {
+    type: mongoose.ObjectId,
+    required: true,
+  },
 });
 
 const Crag = mongoose.model("Crag", cragSchema);
@@ -31,8 +38,8 @@ const validateCrag = (crag) => {
       lat: Joi.string().required(),
       lng: Joi.string().required(),
     },
-    timestamps: Joi.date(),
   });
+  return schema.validate(crag);
 };
 
 exports.Crag = Crag;

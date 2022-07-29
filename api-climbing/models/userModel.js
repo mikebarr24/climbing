@@ -46,13 +46,5 @@ const validateUser = (user) => {
   return schema.validate(user);
 };
 
-/* userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign(
-    { _id: this._id, isAdmin: this.isAdmin },
-    process.env.VIDLY_JWT_PRIVATE_KEY
-  );
-  return token;
-}; */
-
 exports.validateUser = validateUser;
 exports.User = User;
