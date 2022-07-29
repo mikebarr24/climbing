@@ -6,6 +6,7 @@ describe("api/users", () => {
   let email;
   let password;
   let server;
+
   beforeEach(async () => {
     server = require("../../index");
     name = "12345";
