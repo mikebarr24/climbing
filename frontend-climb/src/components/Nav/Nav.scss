@@ -1,0 +1,52 @@
+@import "../../config";
+
+#nav {
+  height: $nav-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  .nav-menu {
+    display: flex;
+    position: absolute;
+    transform: translateY(-100%);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: $light-color;
+    background-image: url("../../media/images/rock-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 200ms ease-in-out;
+    .nav-item {
+      list-style: none;
+      color: $light-color;
+      font-weight: 600;
+      font-size: 3rem;
+      margin: 1rem 0;
+    }
+    &.open {
+      transform: translateY(0);
+    }
+  }
+  .burger-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    width: 35px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    span {
+      height: 3px;
+      width: 100%;
+      display: block;
+      background-color: $light-color;
+      border-radius: 5px;
+    }
+  }
+}
