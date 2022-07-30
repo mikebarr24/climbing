@@ -1,5 +1,14 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const Joi = require("joi");
+
+const emailValidation = (email) => {
+  const schema = Joi.object({
+    from: Joi.string().min(3).max(255).email().required(),
+    message: Joi.string().min(3).required(),
+  });
+  return schema.validate(email);
+};
 
 const sendMail = (message) => {
   const transporter = nodemailer.createTransport({
@@ -18,8 +27,7 @@ const sendMail = (message) => {
     from: `"Climbing " <${process.env.EMAIL}>`, // sender address (who sends)
     to: `${process.env.EMAIL}`, // list of receivers (who receives)
     subject: "From Climbing ", // Subject line
-    text: "Hello world ", // plaintext body
-    html: `<b>${message.from}</b><b>${message.message}</b>`, // html body
+    html: `<b>From: ${message.from}</b><br /><br />${message.message}`, // html body
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
@@ -30,4 +38,5 @@ const sendMail = (message) => {
   });
 };
 
-module.exports = sendMail;
+exports.sendMail = sendMail;
+exports.emailValidation = emailValidation;
