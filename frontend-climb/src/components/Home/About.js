@@ -1,0 +1,24 @@
+import React from "react";
+import "./About.scss";
+
+function About() {
+  return (
+    <div id="about" className="container">
+      <h2>About my Project</h2>
+      <p>
+        This is a project I’ve just set up for the climbing community in
+        Norhtern Ireland. I’d like to create a community specifically for our
+        wee country to meet and share online.
+        <br />
+        <br />
+        If there are any features you would like to see implimented, please
+        reach out and I’ll do my best to get it up and running.
+        <br />
+        <br />
+        Cheers everyone! Michael
+      </p>
+    </div>
+  );
+}
+
+export default About;

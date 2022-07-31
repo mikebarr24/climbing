@@ -1,17 +1,1 @@
 @import "../../config";
-
-#home {
-  margin-top: $nav-height;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - $nav-height);
-  .home-logo {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 10%;
-  }
-  .subheading {
-    margin: 1rem;
-    text-align: center;
-  }
-}

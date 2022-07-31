@@ -1,0 +1,17 @@
+@import "../../config";
+
+#hero {
+  margin-top: $nav-height;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - $nav-height);
+  .hero-logo {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10%;
+  }
+  .subheading {
+    margin: 1rem;
+    text-align: center;
+  }
+}
