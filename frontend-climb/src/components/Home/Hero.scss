@@ -2,16 +2,31 @@
 
 #hero {
   margin-top: $nav-height;
-  display: flex;
-  flex-direction: column;
   min-height: calc(100vh - $nav-height);
-  .hero-logo {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 10%;
-  }
-  .subheading {
-    margin: 1rem;
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+  background-color: $dark-color;
+  .hero-wrapper {
     text-align: center;
+    padding-top: 1rem;
+    .hero-logo {
+      width: 90%;
+    }
+    .hero-text {
+      text-transform: uppercase;
+      margin-top: 1rem;
+      line-height: 2.5rem;
+      .hero-subheading {
+        display: block;
+        text-align: center;
+        font-size: 1rem;
+        letter-spacing: 18px;
+        text-indent: 18px;
+      }
+      .hero-heading {
+        display: block;
+        text-align: center;
+        font-size: 2.2rem;
+      }
+    }
   }
 }
