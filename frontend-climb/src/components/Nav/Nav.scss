@@ -6,10 +6,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0px 2px 10px rgba($color: $light-color, $alpha: 0.2);
+  background-color: black;
+  z-index: 1000;
+  .main-logo {
+    height: 85%;
+  }
   .nav-menu {
-    display: flex;
+    display: none;
     position: absolute;
-    transform: translateY(-100%);
+    height: 100vh;
     top: 0;
     bottom: 0;
     right: 0;
@@ -20,7 +29,8 @@
     background-image: url("../../media/images/rock-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    transition: all 200ms ease-in-out;
+    animation: nav-open 300ms ease-in-out;
+    animation-direction: reverse;
     .nav-item {
       list-style: none;
       color: $light-color;
@@ -29,12 +39,13 @@
       margin: 1rem 0;
     }
     &.open {
-      transform: translateY(0);
+      display: flex;
+      animation: nav-open 300ms ease-in-out;
     }
   }
   .burger-button {
     position: absolute;
-    top: 0.5rem;
+    top: 0.75rem;
     right: 0.75rem;
     width: 35px;
     height: 25px;
@@ -48,5 +59,14 @@
       background-color: $light-color;
       border-radius: 5px;
     }
+  }
+}
+
+@keyframes nav-open {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

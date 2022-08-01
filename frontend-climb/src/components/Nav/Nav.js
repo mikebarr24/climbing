@@ -1,7 +1,7 @@
 import React from "react";
 import "./Nav.scss";
 import { Link } from "react-router-dom";
-const logo = require("../../media/images/climbing-ni-logo.png");
+const mainLogo = require("../../media/images/climbing-logo-main-white.png");
 
 function Nav(props) {
   const [menu, setMenu] = React.useState(false);
@@ -12,7 +12,7 @@ function Nav(props) {
 
   return (
     <nav id="nav">
-      <h1>ClimbingNI</h1>
+      <img src={mainLogo} alt="Main Logo" className="main-logo" />
       <div className={!menu ? "nav-menu" : "nav-menu open"}>
         <ul>
           <Link to="">
