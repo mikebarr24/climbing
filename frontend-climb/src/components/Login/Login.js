@@ -19,7 +19,6 @@ function Login() {
     event.preventDefault();
     console.log(form);
   };
-
   return (
     <div id="login" className="container">
       <h2>Log in to your Account</h2>
