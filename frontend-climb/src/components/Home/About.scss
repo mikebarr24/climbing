@@ -1,7 +1,20 @@
 @import "../../config";
 
 #about {
+  scroll-margin: $nav-height;
   min-height: calc(100vh - $nav-height);
   background-color: $light-color;
   color: black;
+  padding-top: 1rem;
+  .about-home-txt {
+    margin-bottom: 1.5rem;
+  }
+  .btn-wrapper {
+    text-align: center;
+    margin: auto;
+    .about-btn {
+      display: inline block;
+      margin: 0.5rem;
+    }
+  }
 }

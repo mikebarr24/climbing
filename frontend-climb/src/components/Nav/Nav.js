@@ -1,6 +1,7 @@
 import React from "react";
 import "./Nav.scss";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 const mainLogo = require("../../media/images/climbing-logo-main-white.png");
 
 function Nav(props) {
@@ -12,20 +13,29 @@ function Nav(props) {
 
   return (
     <nav id="nav">
-      <img src={mainLogo} alt="Main Logo" className="main-logo" />
+      <Link to="/">
+        <img src={mainLogo} alt="Main Logo" className="main-logo" />
+      </Link>
       <div className={!menu ? "nav-menu" : "nav-menu open"}>
         <ul>
-          <Link to="">
-            <li className="nav-item">Home</li>
+          <Link to="/">
+            <li className="nav-item" onClick={menuView}>
+              Home
+            </li>
           </Link>
-          <Link to="">
+          <HashLink smooth to="#about" onClick={menuView}>
             <li className="nav-item">About</li>
-          </Link>
-          <Link to="">
+          </HashLink>
+          <Link to="#">
             <li className="nav-item">Crags</li>
           </Link>
-          <Link to="">
+          <Link to="#">
             <li className="nav-item">Contact</li>
+          </Link>
+          <Link to="/login">
+            <li className="nav-item" onClick={menuView}>
+              Login
+            </li>
           </Link>
         </ul>
       </div>

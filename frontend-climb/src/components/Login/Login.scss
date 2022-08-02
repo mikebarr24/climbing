@@ -1,0 +1,35 @@
+@import "../../config";
+
+#login {
+  margin-top: $nav-height;
+  color: $dark-color;
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 10px;
+  }
+  input,
+  button {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 0;
+  }
+  .login-field {
+    background-color: rgb(230, 230, 230);
+    border: 1px solid #ccc;
+  }
+  .login-submit,
+  .login-new {
+    display: block;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 0;
+    color: $light-color;
+    background-color: $dark-color;
+    text-align: center;
+  }
+  .login-forgot-password {
+    margin-top: 1rem;
+  }
+}
