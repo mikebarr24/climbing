@@ -45,10 +45,10 @@ function Login() {
         <button className="login-submit" value="Login">
           Login
         </button>
-        <a href="#" className="login-new">
+        <a href="/" className="login-new">
           Create New Accout
         </a>
-        <a href="#" className="login-forgot-password">
+        <a href="/" className="login-forgot-password">
           Forgot Password?
         </a>
       </form>
