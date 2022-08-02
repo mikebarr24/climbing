@@ -7,6 +7,7 @@ services:
       - 3001:3001
     volumes:
       - ./api-climbing:/app
+      - /app/node_modules
   frontend:
     build: ./frontend-climb
     container_name: frontend-climb
