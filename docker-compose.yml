@@ -2,7 +2,7 @@ version: '3.9'
 services:
   api:
     build: ./api-climbing
-    container_name: api-climbing
+    container_name: api
     ports:
       - 3001:3001
     volumes:
@@ -10,10 +10,11 @@ services:
       - /app/node_modules
   frontend:
     build: ./frontend-climb
-    container_name: frontend-climb
+    container_name: frontend
     ports:
       - 3000:3000
     volumes:
       - ./frontend-climb:/app
+      - /app/node_modules
     depends_on:
       - api

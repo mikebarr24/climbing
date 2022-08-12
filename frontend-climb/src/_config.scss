@@ -4,19 +4,22 @@ $nav-height: 3.5rem;
 $light-color: white;
 $dark-color: black;
 
-html,
+html {
+  font-size: 62.5%;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
-  font-size: 20px;
   color: $light-color;
 }
 body {
   background-color: $light-color;
+  box-sizing: border-box;
 }
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 
 .container {
@@ -25,6 +28,10 @@ body {
 
 .home-title {
   margin-bottom: 0.5rem;
+}
+
+.page-title {
+  font-size: 4rem;
 }
 
 a {

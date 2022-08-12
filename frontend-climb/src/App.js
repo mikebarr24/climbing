@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import Crags from "./components/Crags/Crags";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Nav from "./components/Nav/Nav";
@@ -10,6 +11,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/crags" element={<Crags />} />
         <Route path="/login" element={<Login />} />
         <Route path="/newuser" element={<NewUser />} />
       </Routes>

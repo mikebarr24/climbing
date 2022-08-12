@@ -1,12 +1,4 @@
 const request = require("supertest");
-const logger = require("../../startup/logger");
-
-const sendMailMock = jest.fn().mockReturnValue(200);
-jest.mock("nodemailer");
-const nodemailer = require("nodemailer");
-nodemailer.createTransport.mockReturnValue({
-  sendMail: sendMailMock,
-});
 
 describe("/api/contact", () => {
   let from;
@@ -16,8 +8,6 @@ describe("/api/contact", () => {
     server = require("../../index");
     from = "abcd@abcd.com";
     message = "abcde123";
-    sendMailMock.mockClear();
-    nodemailer.createTransport.mockClear();
   });
   afterEach(() => {
     server.close();
@@ -28,10 +18,10 @@ describe("/api/contact", () => {
       message,
     });
   };
-  describe("post /", () => {
+  describe("POST /", () => {
     it("should return 200", async () => {
       const res = await exec();
-      console.log(res.body);
+      expect(res.status).toBe(200);
     });
   });
 });
