@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { infoLog, errorLog } = require("./logger");
+require("dotenv").config();
 
 const db = () => {
   let connectionString;

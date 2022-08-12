@@ -18,7 +18,7 @@ const sendMail = async (message) => {
       port: 587,
       auth: {
         user: process.env.TEST_EMAIL,
-        pass: process.env.TEST_EMAIL,
+        pass: process.env.TEST_PASS,
       },
     };
   } else {

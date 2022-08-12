@@ -20,17 +20,23 @@ const winstonOptions = {
 const logger = createLogger(winstonOptions);
 
 const infoLog = (info) => {
-  logger.add(new transports.File({ filename: "info.log" }));
+  logger.add(new transports.File({ filename: "info.log" }), {
+    name: "console.info",
+  });
   logger.info(info);
 };
 
 const errorLog = (err) => {
-  logger.add(new transports.File({ filename: "error.log" }));
+  logger.add(new transports.File({ filename: "error.log" }), {
+    name: "console.err",
+  });
   logger.error(err.message);
 };
 
 const errorReqLog = (err, req, res, next) => {
-  logger.add(new transports.File({ filename: "error.log" }));
+  logger.add(new transports.File({ filename: "error.log" }), {
+    name: "console.errReq",
+  });
   logger.error(err.message);
   res.status(500).send("Opps! Something went wrong");
   next();
