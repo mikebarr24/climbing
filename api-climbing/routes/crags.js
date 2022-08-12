@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Crag, validateCrag } = require("../models/cragModel");
 const auth = require("../middleware/auth");
+const validate = require("../middleware/validate");
 const _ = require("lodash");
 
 router.get("/", async (req, res) => {
@@ -8,9 +9,7 @@ router.get("/", async (req, res) => {
   res.send(crags);
 });
 
-router.post("/", [auth], async (req, res) => {
-  const { error } = validateCrag(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+router.post("/", [auth, validate(validateCrag)], async (req, res) => {
   const crag = new Crag({
     cragName: req.body.cragName,
     cragLocation: {

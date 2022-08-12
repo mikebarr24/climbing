@@ -1,9 +1,8 @@
 const router = require("express").Router();
 const { sendMail, emailValidation } = require("../startup/sendMail");
+const validator = require("../middleware/validate");
 
-router.post("/", (req, res) => {
-  const { error } = emailValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+router.post("/", [validator(emailValidation)], (req, res) => {
   const message = {
     from: req.body.from,
     message: req.body.message,
