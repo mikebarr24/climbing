@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { infoLog, errorLog } = require("./logger");
+const logger = require("./logger");
 require("dotenv").config();
 
 const db = () => {
@@ -15,7 +15,7 @@ const db = () => {
   mongoose
     .connect(connectionString)
     .then(() => {
-      infoLog(`Connected to MongoDB (${connectedDB})`);
+      logger.info(`Connected to MongoDB (${connectedDB})`);
     })
     .catch((err) => infoLog(err));
 };

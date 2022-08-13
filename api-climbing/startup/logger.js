@@ -6,7 +6,10 @@ const myFormat = printf(({ level, message, timestamp }) => {
 
 const winstonOptions = {
   format: combine(timestamp(), myFormat),
-  transports: [new transports.Console()],
+  transports: [
+    new transports.File({ filename: "log.log" }),
+    new transports.Console({ colorize: true, prettyPrint: true }),
+  ],
   exceptionHandlers: [
     new transports.File({ filename: "exceptions.log" }),
     new transports.Console({ colorize: true, prettyPrint: true }),
@@ -19,21 +22,4 @@ const winstonOptions = {
 
 const logger = createLogger(winstonOptions);
 
-const infoLog = (info) => {
-  logger.add(new transports.File({ filename: "info.log" }));
-  logger.info(info);
-};
-
-const errorLog = (err) => {
-  logger.add(new transports.File({ filename: "error.log" }));
-  logger.error(err.message);
-};
-
-const errorReqLog = (err, req, res, next) => {
-  logger.add(new transports.File({ filename: "error.log" }));
-  logger.error(err.message);
-  res.status(500).send("Opps! Something went wrong");
-  next();
-};
-
-module.exports = { infoLog, errorReqLog, errorLog, logger };
+module.exports = logger;

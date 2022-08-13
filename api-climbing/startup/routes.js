@@ -1,8 +1,8 @@
 const users = require("../routes/users");
 const crags = require("../routes/crags");
 const contact = require("../routes/contact");
+const error = require("../middleware/error");
 const express = require("express");
-const { errorReqLog } = require("../startup/logger");
 const cors = require("cors");
 
 module.exports = (app) => {
@@ -11,5 +11,5 @@ module.exports = (app) => {
   app.use("/api/users", users);
   app.use("/api/crags", crags);
   app.use("/api/contact", contact);
-  app.use(errorReqLog);
+  app.use(error);
 };
