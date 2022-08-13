@@ -42,7 +42,7 @@ const sendMail = async (message) => {
     subject: "From Climbing ", // Subject line
     html: `<b>From: ${message.from}</b><br /><br />${message.message}`, // html body
   };
-  transporter.sendMail(mailOptions, function (error, info) {
+  await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       return console.log(error);
     }
