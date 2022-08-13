@@ -8,6 +8,7 @@ describe("/api/crags", () => {
   let token;
   let cragName;
   let cragLocation;
+
   beforeEach(() => {
     server = require("../../index");
     token = new User().genAuthToken();
@@ -18,10 +19,9 @@ describe("/api/crags", () => {
     };
   });
   afterEach(async () => {
-    server.close();
     await Crag.deleteMany({});
+    return server.close();
   });
-
   const exec = () => {
     return request(server).post("/api/crags").set("x-auth-token", token).send({
       cragName,

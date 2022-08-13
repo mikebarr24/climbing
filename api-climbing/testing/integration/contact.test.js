@@ -1,26 +1,22 @@
+const { iteratee } = require("lodash");
 const request = require("supertest");
 
 describe("/api/contact", () => {
-  let from;
-  let message;
   let server;
-  beforeEach(async () => {
+  beforeEach(() => {
     server = require("../../index");
-    from = "abcd@abcd.com";
-    message = "abcde123";
   });
-  afterEach(() => {
-    server.close();
+  afterEach(async () => {
+    await server.close();
+  });
+  afterAll(() => {
+    return server.close();
   });
   const exec = () => {
-    return request(server).post("/api/contact").send({
-      from,
-      message,
-    });
+    return request(server).get("/api/crags");
   };
   describe("POST /", () => {
-    it("should return 200", async () => {
-      const res = await exec();
+    it("should return status 200", async () => {
       expect(res.status).toBe(200);
     });
   });

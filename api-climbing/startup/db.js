@@ -17,7 +17,7 @@ const db = () => {
     .then(() => {
       infoLog(`Connected to MongoDB (${connectedDB})`);
     })
-    .catch((err) => errorLog(err));
+    .catch((err) => infoLog(err));
 };
 
 module.exports = db;

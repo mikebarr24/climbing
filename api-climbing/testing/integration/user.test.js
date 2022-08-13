@@ -1,6 +1,5 @@
 const { User } = require("../../models/userModel");
 const request = require("supertest");
-const mongoose = require("mongoose");
 
 describe("api/users", () => {
   let name;
@@ -8,7 +7,7 @@ describe("api/users", () => {
   let password;
   let server;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     server = require("../../index");
     name = "12345";
     email = "abcde@abcde.com";
@@ -16,8 +15,9 @@ describe("api/users", () => {
   });
   afterEach(async () => {
     await User.deleteMany({});
-    await server.close();
+    return server.close();
   });
+
   const exec = () => {
     return request(server).post("/api/users").send({
       name,
