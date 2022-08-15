@@ -4,7 +4,7 @@ services:
     build: ./api-climbing
     container_name: api
     ports:
-      - 3001:3001
+      - 8080:8080
     volumes:
       - ./api-climbing:/app
       - /app/node_modules

@@ -1,14 +1,21 @@
 import React from "react";
 import "./NewUser.scss";
+import newUser from "../../api/newUser";
 
 function NewUser() {
-  const initialState = {
+  const initialForm = {
     name: "",
     email: "",
     password: "",
     passwordVerify: "",
   };
-  const [form, setForm] = React.useState(initialState);
+  const initialWarnings = {
+    passwordMatch: false,
+    success: false,
+  };
+
+  const [form, setForm] = React.useState(initialForm);
+  const [warnings, setWarnings] = React.useState(initialWarnings);
 
   const changeHandle = (event) => {
     setForm((state) => ({
@@ -19,7 +26,17 @@ function NewUser() {
 
   const submitHandle = (event) => {
     event.preventDefault();
-    console.log(form);
+    if (form.password !== form.passwordVerify) {
+      setWarnings((state) => ({
+        ...state,
+        passwordMatch: true,
+      }));
+    }
+    const res = newUser(form);
+    setWarnings((state) => ({
+      ...state,
+      success: true,
+    }));
   };
 
   return (
@@ -54,12 +71,20 @@ function NewUser() {
           type="password"
           className="form-field"
           placeholder="Verify Password"
-          name="passwordVerfiy"
+          name="passwordVerify"
           onChange={changeHandle}
-          value={form.passwordVerfiy}
+          value={form.passwordVerify}
         />
         <input type="submit" value="Create Account" className="form-button" />
       </form>
+      {warnings.passwordMatch && (
+        <p className="standard-text warning-text green">
+          Passwords don't Match
+        </p>
+      )}
+      {warnings.success && (
+        <p className="standard-text warning-text green">Account Created</p>
+      )}
     </div>
   );
 }

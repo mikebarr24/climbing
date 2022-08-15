@@ -50,20 +50,18 @@ a {
   flex-direction: column;
   padding: 1rem 10px;
   .form-field {
+    margin: 0.5rem 0;
     background-color: rgb(230, 230, 230);
     border: 1px solid #ccc;
-    margin: 0.5rem 0;
     padding: 0.5rem;
     font-size: inherit;
   }
   .form-button {
     font-size: inherit;
     margin: 0.5rem 0;
-    display: block;
     width: 100%;
     border: none;
     padding: 0.7rem;
-    border-radius: 0;
     color: $light-color;
     background-color: $dark-color;
     text-align: center;
