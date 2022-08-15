@@ -5,15 +5,15 @@ import "./About.scss";
 function About() {
   return (
     <div id="about" className="container">
-      <h2 className="home-title">About my Project</h2>
-      <p className="about-home-txt">
-        This is a project I’ve just set up for the climbing community in
-        Norhtern Ireland. I’d like to create a community specifically for our
+      <h2 className="title-text">About my Project</h2>
+      <p className="standard-text">
+        This is a project I've just set up for the climbing community in
+        Norhtern Ireland. I'd like to create a community specifically for our
         wee country to meet and share online.
         <br />
         <br />
         If there are any features you would like to see implimented, please
-        reach out and I’ll do my best to get it up and running.
+        reach out and I'll do my best to get it up and running.
         <br />
         <br />
         Cheers everyone!

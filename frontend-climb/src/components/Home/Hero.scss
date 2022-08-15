@@ -10,16 +10,16 @@
     padding-top: 3rem;
     .hero-logo {
       width: 90%;
-      max-width: 20rem;
+      max-width: 30rem;
     }
     .hero-text {
       text-transform: uppercase;
-      margin-top: 1rem;
-      line-height: 2.5rem;
+      margin-top: 2rem;
+      line-height: 4.5rem;
       .hero-subheading {
         display: block;
         text-align: center;
-        font-size: 1rem;
+        font-size: 2.7rem;
         letter-spacing: 18px;
         text-indent: 18px;
         animation: slideLeft 1s ease-out;
@@ -27,7 +27,7 @@
       .hero-heading {
         display: block;
         text-align: center;
-        font-size: 2.2rem;
+        font-size: 5rem;
         animation: slideRight 1s ease-out;
       }
     }
@@ -37,7 +37,7 @@
 @keyframes slideLeft {
   0% {
     opacity: 0;
-    transform: translateX(-1rem);
+    transform: translateX(-2rem);
   }
   100% {
     opacity: 1;
@@ -47,7 +47,7 @@
 @keyframes slideRight {
   0% {
     opacity: 0;
-    transform: translateX(1rem);
+    transform: translateX(2rem);
   }
   100% {
     opacity: 1;

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Login.scss";
 
 function Login() {
@@ -21,12 +22,12 @@ function Login() {
   };
   return (
     <div id="login" className="container">
-      <h2>Log in to your Account</h2>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <h2 className="title-text">Log in to your Account</h2>
+      <form className="form-standard standard-text" onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
-          className="login-field"
+          className="form-field"
           placeholder="Email"
           onChange={handleChange}
           value={form.email}
@@ -35,18 +36,19 @@ function Login() {
         <input
           type="password"
           name="password"
-          className="login-field"
+          className="form-field"
           placeholder="Password"
           onChange={handleChange}
           value={form.password}
           required
         />
-        <button className="login-submit" value="Login">
+        <button className="form-button" value="Login">
           Login
         </button>
-        <a href="/" className="login-new">
-          Create New Accout
-        </a>
+        <Link to="/newuser">
+          <button className="form-button">Create New Accout</button>
+        </Link>
+
         <a href="/" className="login-forgot-password">
           Forgot Password?
         </a>
