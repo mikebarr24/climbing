@@ -2,13 +2,13 @@ const router = require("express").Router();
 const { User, validateUser } = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
+const logger = require("../startup/logger");
 
 router.get("/me", (req, res) => {
   res.send("user");
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
   await newUser.save();
 
   const token = newUser.genAuthToken();
-
+  logger.info(`User ${newUser._id} created`);
   return res
     .header("x-auth-token", token)
     .send(_.pick(newUser, ["_id", "name", "email"]));
