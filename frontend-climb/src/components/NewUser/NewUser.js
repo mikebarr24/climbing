@@ -16,6 +16,7 @@ function NewUser() {
 
   const [form, setForm] = React.useState(initialForm);
   const [warnings, setWarnings] = React.useState(initialWarnings);
+  const [res, setRes] = React.useState(null);
 
   const changeHandle = (event) => {
     setForm((state) => ({
@@ -32,12 +33,24 @@ function NewUser() {
         passwordMatch: true,
       }));
     }
-    const res = newUser(form);
-    setWarnings((state) => ({
-      ...state,
-      success: true,
-    }));
+    newUser(form).then((response) => setRes(response));
   };
+
+  React.useEffect(() => {
+    if (res !== null) {
+      if (res.status === 200) {
+        setWarnings((state) => ({
+          ...state,
+          success: "Account Created",
+        }));
+      } else {
+        setWarnings((state) => ({
+          ...state,
+          success: "Something went wrong... Please try again later",
+        }));
+      }
+    }
+  }, [res]);
 
   return (
     <div id="new-user" className="container">
@@ -83,7 +96,7 @@ function NewUser() {
         </p>
       )}
       {warnings.success && (
-        <p className="standard-text warning-text green">Account Created</p>
+        <p className="standard-text warning-text green">{warnings.success}</p>
       )}
     </div>
   );
