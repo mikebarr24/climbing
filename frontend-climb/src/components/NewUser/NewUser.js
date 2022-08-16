@@ -10,8 +10,8 @@ function NewUser() {
     passwordVerify: "",
   };
   const initialWarnings = {
-    passwordMatch: false,
-    success: false,
+    problem: "",
+    success: "",
   };
 
   const [form, setForm] = React.useState(initialForm);
@@ -30,8 +30,9 @@ function NewUser() {
     if (form.password !== form.passwordVerify) {
       setWarnings((state) => ({
         ...state,
-        passwordMatch: true,
+        problem: "Passwords don't match. Please try again.",
       }));
+      return;
     }
     newUser(form).then((response) => setRes(response));
   };
@@ -46,7 +47,7 @@ function NewUser() {
       } else {
         setWarnings((state) => ({
           ...state,
-          success: "Something went wrong... Please try again later",
+          problem: "Something went wrong... Please try again later",
         }));
       }
     }
@@ -90,10 +91,8 @@ function NewUser() {
         />
         <input type="submit" value="Create Account" className="form-button" />
       </form>
-      {warnings.passwordMatch && (
-        <p className="standard-text warning-text green">
-          Passwords don't Match
-        </p>
+      {warnings.problem && (
+        <p className="standard-text warning-text red">{warnings.problem}</p>
       )}
       {warnings.success && (
         <p className="standard-text warning-text green">{warnings.success}</p>
