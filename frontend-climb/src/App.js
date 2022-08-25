@@ -4,11 +4,19 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Nav from "./components/Nav/Nav";
 import NewUser from "./components/NewUser/NewUser";
+import { useState, useEffect } from "react";
+import Auth from "./api/Auth";
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(Auth.getCurrentUser());
+  }, []);
+
   return (
     <div className="App">
-      <Nav />
+      <Nav user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/crags" element={<Crags />} />

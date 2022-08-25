@@ -6,7 +6,7 @@ const mainLogo = require("../../media/images/climbing-logo-main-white.png");
 
 function Nav(props) {
   const [menu, setMenu] = React.useState(false);
-
+  console.log(props.user);
   const menuView = () => {
     setMenu(!menu);
   };
