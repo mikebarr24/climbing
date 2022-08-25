@@ -1,7 +1,7 @@
 import axios from "axios";
 const newUser = async (user) => {
   try {
-    const res = await axios.post("/api/users", {
+    const res = await axios.post("http://localhost:8080/api/users", {
       name: user.name,
       email: user.email,
       password: user.password,
