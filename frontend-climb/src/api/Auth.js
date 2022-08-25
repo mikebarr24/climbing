@@ -12,6 +12,13 @@ class Auth {
     });
     return res;
   }
+  async login(user) {
+    const { data } = await axios.post("http://localhost:8080/api/auth/login", {
+      email: user.email,
+      password: user.password,
+    });
+    localStorage.setItem(tokenKey, data);
+  }
   logInWithJwt(jwt) {
     localStorage.setItem(tokenKey, jwt);
   }
@@ -22,6 +29,9 @@ class Auth {
     } catch (error) {
       return null;
     }
+  }
+  logout() {
+    localStorage.removeItem(tokenKey);
   }
 }
 

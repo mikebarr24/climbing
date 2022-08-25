@@ -1,4 +1,5 @@
 import React from "react";
+import Auth from "../../api/Auth";
 import { Link } from "react-router-dom";
 import "./Login.scss";
 
@@ -8,6 +9,7 @@ function Login() {
     password: "",
   };
   const [form, setForm] = React.useState(initForm);
+  const [warning, setWarning] = React.useState(null);
 
   const handleChange = (event) => {
     setForm((state) => ({
@@ -16,9 +18,14 @@ function Login() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(form);
+    try {
+      await Auth.login(form);
+      window.location = "/";
+    } catch (error) {
+      setWarning(error.response.data);
+    }
   };
   return (
     <div id="login" className="container">
@@ -48,11 +55,11 @@ function Login() {
         <Link to="/newuser">
           <button className="form-button">Create New Accout</button>
         </Link>
-
         <a href="/" className="login-forgot-password">
           Forgot Password?
         </a>
       </form>
+      {warning && <p className="standard-text form-error">{warning}</p>}
     </div>
   );
 }

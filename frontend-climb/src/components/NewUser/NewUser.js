@@ -73,7 +73,7 @@ function NewUser() {
         />
         <input type="submit" value="Create Account" className="form-button" />
       </form>
-      {warnings && <p className="standard-text warning-text red">{warnings}</p>}
+      {warnings && <p className="standard-text form-error">{warnings}</p>}
     </div>
   );
 }
