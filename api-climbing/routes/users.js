@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { User, validateUser } = require("../models/userModel");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const logger = require("../startup/logger");
 
@@ -31,6 +31,7 @@ router.post("/", async (req, res) => {
   logger.info(`User ${newUser._id} created`);
   return res
     .header("x-auth-token", token)
+    .header("access-control-expose-headers", "x-auth-token")
     .send(_.pick(newUser, ["_id", "name", "email"]));
 });
 
