@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
   res.send(crags);
 });
 
-router.post("/", [auth, validate(validateCrag)], async (req, res) => {
+router.post("/newcrag", [auth, validate(validateCrag)], async (req, res) => {
   const crag = new Crag({
     cragName: req.body.cragName,
     cragLocation: {

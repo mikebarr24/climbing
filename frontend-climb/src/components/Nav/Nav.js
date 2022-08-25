@@ -24,8 +24,10 @@ function Nav(props) {
           <HashLink smooth to="#about" onClick={menuView}>
             <li className="nav-item">About</li>
           </HashLink>
-          <Link to="#">
-            <li className="nav-item">Crags</li>
+          <Link to="/crags">
+            <li className="nav-item" onClick={menuView}>
+              Crags
+            </li>
           </Link>
           <Link to="#">
             <li className="nav-item">Contact</li>
