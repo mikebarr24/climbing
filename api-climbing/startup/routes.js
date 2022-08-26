@@ -5,6 +5,7 @@ const error = require("../middleware/error");
 const express = require("express");
 const cors = require("cors");
 const auth = require("../routes/auth");
+const keys = require("../routes/keys");
 
 module.exports = (app) => {
   app.use(express.json());
@@ -13,5 +14,6 @@ module.exports = (app) => {
   app.use("/api/crags", crags);
   app.use("/api/contact", contact);
   app.use("/api/auth", auth);
+  app.use("/api/keys", keys);
   app.use(error);
 };

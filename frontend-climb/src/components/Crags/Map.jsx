@@ -1,22 +1,23 @@
 import React from "react";
-import GoogleMapReact from "google-map-react";
+import ApiKeys from "../../api/ApiKeys";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 function Map(props) {
-  const defaultProps = {
-    center: {
-      lat: 54.694655,
-      lng: -6.899781,
-    },
-    zoom: 7,
-  };
+  const [api, setApi] = React.useState(null);
 
-  return (
-    <GoogleMapReact
-      bootstrapURLKeys={{ key: "" }}
-      defaultCenter={defaultProps.center}
-      defaultZoom={defaultProps.zoom}
-    />
-  );
+  React.useEffect(() => {
+    const getData = async () => {
+      const { data } = await ApiKeys.mapsApi();
+      setApi(data);
+    };
+    getData();
+  }, []);
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "",
+  });
+
+  if (!isLoaded) return <div>Loading...</div>;
+  return <GoogleMap zoom={7} center={{ lat: 54, lng: -6 }}></GoogleMap>;
 }
 
 export default Map;
