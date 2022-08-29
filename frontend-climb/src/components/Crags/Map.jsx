@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState, FC } from "react";
-import { Status, Wrapper } from "@googlemaps/react-wrapper";
+import React from "react";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
-function Map(props) {
-  const ref = useRef(null);
-  const [map, setMap] = useState();
-
-  useEffect(() => {
-    if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {}));
-    }
-  }, [ref, map]);
-  return <Wrapper></Wrapper>;
+function Map() {
+  return (
+    <GoogleMap
+      zoom={7}
+      center={{ lat: 54.677809, lng: -6.774634 }}
+      mapContainerClassName="map-container"
+    ></GoogleMap>
+  );
 }
 
 export default Map;
