@@ -23,12 +23,7 @@ const cragSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  addedBy: {
-    type: mongoose.ObjectId,
-    required: true,
-  },
 });
-
 const Crag = mongoose.model("Crag", cragSchema);
 
 const validateCrag = (crag) => {
@@ -38,6 +33,7 @@ const validateCrag = (crag) => {
       lat: Joi.string().required(),
       lng: Joi.string().required(),
     },
+    addedBy: Joi.string(),
   });
   return schema.validate(crag);
 };
