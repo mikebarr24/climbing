@@ -1,9 +1,14 @@
 import axios from "axios";
 
-const uri = "http://localhost:8080/api";
+const baseUrl = "http://localhost:8080/api";
 
 const get = async (endpoint) => {
-  return await axios.get(uri + endpoint);
+  return await axios.get(baseUrl + endpoint);
 };
 
-export default { get };
+const post = async (endpoint, data) => {
+  return await axios.post(baseUrl + endpoint, data);
+};
+
+const exportObject = { get, post };
+export default exportObject;

@@ -1,10 +1,10 @@
-import axios from "axios";
 import jwtDecode from "jwt-decode";
+import http from "./http";
 
 const tokenKey = "token";
 class Auth {
   async register(user) {
-    const res = await axios.post("http://localhost:8080/api/users", {
+    const res = await http.post("/users", {
       name: user.name,
       email: user.email,
       password: user.password,
@@ -13,7 +13,7 @@ class Auth {
     return res;
   }
   async login(user) {
-    const { data } = await axios.post("http://localhost:8080/api/auth/login", {
+    const { data } = await http.post("/auth/login", {
       email: user.email,
       password: user.password,
     });

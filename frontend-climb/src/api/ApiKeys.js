@@ -1,8 +1,8 @@
-import axios from "axios";
+import http from "./http";
 
 class ApiKeys {
   async mapsApi() {
-    const api = await axios.get("http://localhost:8080/api/keys/maps");
+    const api = await http.get("/keys/maps");
     return api;
   }
 }
