@@ -4,12 +4,21 @@ const auth = require("../middleware/auth");
 const validate = require("../middleware/validate");
 const _ = require("lodash");
 
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
   const crags = await Crag.find();
   res.send(crags);
 });
 
-router.post("/newcrag", [validate(validateCrag)], async (req, res) => {
+router.get("/:cragName", async (req, res) => {
+  const crag = await Crag.findOne({ cragName: req.params.cragName });
+  if (!crag)
+    return res
+      .status(400)
+      .send(`The crag ${req.params.cragName} cannot be found`);
+  res.send(crag);
+});
+
+router.post("/newcrag", [auth, validate(validateCrag)], async (req, res) => {
   console.log(req.body);
   const crag = new Crag({
     cragName: req.body.cragName,

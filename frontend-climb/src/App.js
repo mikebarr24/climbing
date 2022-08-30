@@ -6,6 +6,7 @@ import Nav from "./components/Nav/Nav";
 import NewUser from "./components/NewUser/NewUser";
 import { useState, useEffect } from "react";
 import Auth from "./api/Auth";
+import Crag from "./components/Crag/Crag";
 import Logout from "./components/Logout";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/crags" element={<Crags />} />
+        <Route path="/crags/:cragName" element={<Crag />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/newuser" element={<NewUser />} />

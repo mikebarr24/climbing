@@ -73,3 +73,10 @@ a {
   font-weight: 600;
   color: red;
 }
+
+.standard-button {
+  color: $light-color;
+  background-color: black;
+  padding: 1rem 2rem;
+  border: none;
+}
