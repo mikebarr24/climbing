@@ -1,11 +1,13 @@
 import "./Crag.scss";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ErrorMessage from "../ErrorMessage";
 import crags from "../../api/crags";
+import Button from "../Button/Button";
 
 function Crag() {
   const params = useParams();
+  const navigate = useNavigate();
   const [crag, setCrag] = useState(null);
   const [error, setError] = useState(null);
   useEffect(() => {
@@ -21,7 +23,7 @@ function Crag() {
   }, [params.cragName]);
   return (
     <div id="crag" className="container">
-      <button className="standard-button">Back to Map</button>
+      <Button name="Back to Map" onClick={() => navigate("/crags")} />
       <h2 className="title-text">{crag && crag.cragName}</h2>
       {error && <ErrorMessage errorMessage={error} />}
     </div>

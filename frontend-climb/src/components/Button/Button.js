@@ -16,7 +16,7 @@ function Button(props) {
   }
   return (
     <>
-      <button className={`btn-home ${props.className}`} style={styles}>
+      <button className={`btn-home ${props.className}`} style={styles} onClick={props.onClick} >
         {props.name}
       </button>
     </>
