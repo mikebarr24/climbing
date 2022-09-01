@@ -8,13 +8,14 @@ function Map() {
   const navigate = useNavigate();
   const [api, setApi] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [newCrag, setNewCrag] = useState(null);
   useEffect(() => {
     const getApi = async () => {
       const { data } = await ApiKeys.mapsApi();
       setApi(data);
     };
     getApi();
-  }, [api]);
+  }, []);
 
   useEffect(() => {
     const getMarkers = async () => {
@@ -44,6 +45,12 @@ function Map() {
   if (!api) {
     return <h2>Loading...</h2>;
   }
+
+  const mapClick = (e) => {
+    setNewCrag({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+  };
+
+  console.log(newCrag);
   return (
     //Replace with api
     <LoadScript googleMapsApiKey={""}>
@@ -51,6 +58,7 @@ function Map() {
         zoom={7}
         center={{ lat: 54.677809, lng: -6.774634 }}
         mapContainerClassName="map-container"
+        onClick={mapClick}
       >
         {displayMarkers && displayMarkers}
       </GoogleMap>

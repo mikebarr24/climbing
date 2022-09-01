@@ -10,6 +10,7 @@ function Crag() {
   const navigate = useNavigate();
   const [crag, setCrag] = useState(null);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     const getCrag = async () => {
       try {
