@@ -25,7 +25,15 @@ function Crag() {
   return (
     <div id="crag" className="container">
       <Button name="Back to Map" onClick={() => navigate("/crags")} />
-      <h2 className="title-text">{crag && crag.cragName}</h2>
+      {crag && (
+        <div className="crag-wrapper">
+          <h2 className="title-text">
+            {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
+          </h2>
+          <p>{crag.information}</p>
+        </div>
+      )}
+      <h2 className="title-text"></h2>
       {error && <ErrorMessage errorMessage={error} />}
     </div>
   );
