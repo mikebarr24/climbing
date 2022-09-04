@@ -30,7 +30,6 @@ function Crag() {
           <h2 className="title-text">
             {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
           </h2>
-          <p>{crag.information}</p>
         </div>
       )}
       <h2 className="title-text"></h2>
