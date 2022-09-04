@@ -25,7 +25,7 @@ function Map() {
     getMarkers();
   }, []);
   const markerClick = (marker) => {
-    navigate(marker);
+    navigate(marker.cragName);
   };
   const displayMarkers = markers.map((marker) => {
     return (
@@ -37,7 +37,7 @@ function Map() {
         }}
         title={marker.cragName}
         onClick={() => {
-          markerClick(marker.cragName);
+          markerClick(marker);
         }}
       />
     );
@@ -49,8 +49,6 @@ function Map() {
   const mapClick = (e) => {
     setNewCrag({ lat: e.latLng.lat(), lng: e.latLng.lng() });
   };
-
-  console.log(newCrag);
   return (
     //Replace with api
     <LoadScript googleMapsApiKey={""}>
