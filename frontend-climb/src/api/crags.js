@@ -10,6 +10,11 @@ const getCrag = async (path) => {
   return res;
 };
 
-const exportObject = { getAllCrags, getCrag };
+const setCrag = async (cragInfo) => {
+  const res = await http.post("/crags/addcrag", cragInfo);
+  return res;
+};
+
+const exportObject = { getAllCrags, getCrag, setCrag };
 
 export default exportObject;

@@ -19,8 +19,9 @@ router.get("/:cragName", async (req, res) => {
   res.send(crag);
 });
 
-router.post("/newcrag", validate(validateCrag), async (req, res) => {
+router.post("/addcrag", validate(validateCrag), async (req, res) => {
   const data = req.body;
+  console.log(data);
   const crag = new Crag({
     cragName: data.cragName,
     information: data.information,

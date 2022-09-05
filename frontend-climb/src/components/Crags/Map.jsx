@@ -8,7 +8,6 @@ function Map() {
   const navigate = useNavigate();
   const [api, setApi] = useState(null);
   const [markers, setMarkers] = useState([]);
-  const [newCrag, setNewCrag] = useState(null);
   useEffect(() => {
     const getApi = async () => {
       const { data } = await ApiKeys.mapsApi();
@@ -47,7 +46,9 @@ function Map() {
   }
 
   const mapClick = (e) => {
-    setNewCrag({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+    navigate("/addcrag", {
+      state: { lat: e.latLng.lat(), lng: e.latLng.lng() },
+    });
   };
   return (
     //Replace with api
