@@ -1,0 +1,19 @@
+crags
+  -cragName
+  -information
+  -sectors
+    -sectorName
+    -sectorImageUrl
+    -Routes
+      -routeName
+      -routeGrade
+      -routeDescription
+      -routeImageUrl
+      -addedBy
+      -dateAdded
+    -sectorLocation
+  -sectorLocation
+    -lat
+    -lng
+  -dateCreated
+  -addedBy

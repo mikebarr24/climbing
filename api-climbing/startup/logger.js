@@ -7,7 +7,7 @@ const myFormat = printf(({ level, message, timestamp }) => {
 const winstonOptions = {
   format: combine(timestamp(), myFormat),
   transports: [
-    new transports.File({ filename: "log.log" }),
+    new transports.File({ filename: "info.log" }),
     new transports.Console({ colorize: true, prettyPrint: true }),
   ],
   exceptionHandlers: [

@@ -3,6 +3,7 @@ const { Crag, validateCrag } = require("../models/cragModel");
 const auth = require("../middleware/auth");
 const validate = require("../middleware/validate");
 const _ = require("lodash");
+const logger = require("../startup/logger");
 
 router.get("/all", async (req, res) => {
   const crags = await Crag.find();
@@ -18,17 +19,20 @@ router.get("/:cragName", async (req, res) => {
   res.send(crag);
 });
 
-router.post("/newcrag", [auth, validate(validateCrag)], async (req, res) => {
-  console.log(req.body);
+router.post("/newcrag", validate(validateCrag), async (req, res) => {
+  const data = req.body;
   const crag = new Crag({
-    cragName: req.body.cragName,
-    cragLocation: {
-      lat: req.body.cragLocation.lat,
-      lng: req.body.cragLocation.lng,
-    },
+    cragName: data.cragName,
+    information: data.information,
+    sectors: [],
+    cragLocation: data.cragLocation,
   });
-  await crag.save();
-  res.send(_.pick(crag, ["_id", "cragName"]));
+  try {
+    const response = await crag.save();
+    res.send(response.cragName);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 module.exports = router;

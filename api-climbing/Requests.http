@@ -26,7 +26,8 @@ POST http://localhost:8080/api/crags/newcrag
 Content-Type: application/json
 
 {
-  "cragName": "test3",
+  "cragName": "cragTest4",
+  "information": "this is some information",
   "cragLocation": {
     "lat": "54.475672",
     "lng": "-5.718015"

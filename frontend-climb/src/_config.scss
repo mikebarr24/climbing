@@ -67,7 +67,14 @@ a {
     text-align: center;
   }
 }
-
+.form-text {
+  margin: 0.5rem 0;
+  background-color: rgb(230, 230, 230);
+  border: 1px solid #ccc;
+  font-size: inherit;
+  padding: 0.5rem;
+  font-family: inherit;
+}
 .form-error {
   text-align: center;
   font-weight: 600;
