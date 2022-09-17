@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import ApiKeys from "../../api/ApiKeys";
-import crags from "../../api/crags";
+import ApiKeys from "../api/ApiKeys";
 
-function Map() {
+function Map(props) {
   const navigate = useNavigate();
   const [api, setApi] = useState(null);
   const [markers, setMarkers] = useState([]);
@@ -18,11 +17,12 @@ function Map() {
 
   useEffect(() => {
     const getMarkers = async () => {
-      const { data } = await crags.getAllCrags();
+      const { data } = await props.markers;
       setMarkers(data);
     };
     getMarkers();
   }, []);
+  console.log(markers);
   const markerClick = (marker) => {
     navigate(marker.cragName);
   };
