@@ -3,4 +3,8 @@
 #crag {
   margin-top: $nav-height;
   color: $dark-color;
+  .map-container {
+    width: 100%;
+    height: 80vh;
+  }
 }

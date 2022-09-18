@@ -7,6 +7,7 @@ function Map(props) {
   const navigate = useNavigate();
   const [api, setApi] = useState(null);
   const [markers, setMarkers] = useState([]);
+
   useEffect(() => {
     const getApi = async () => {
       const { data } = await ApiKeys.mapsApi();
@@ -22,10 +23,11 @@ function Map(props) {
     };
     getMarkers();
   }, []);
-  console.log(markers);
+
   const markerClick = (marker) => {
     navigate(marker.cragName);
   };
+
   const displayMarkers = markers.map((marker) => {
     return (
       <Marker
@@ -41,6 +43,7 @@ function Map(props) {
       />
     );
   });
+
   if (!api) {
     return <h2>Loading...</h2>;
   }
