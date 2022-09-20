@@ -36,4 +36,21 @@ router.post("/addcrag", validate(validateCrag), async (req, res) => {
   }
 });
 
+router.post("/addsector", async (req, res) => {
+  const crag = await Crag.findOne({ cragName: req.body.currentCrag });
+  crag.sectors.push({
+    sectorName: req.body.sectorName,
+    sectorUrl: req.body.sectorUrl,
+    sectorImageUrl: req.body.sectorImageUrl,
+    sectorLocation: req.body.sectorLocation,
+  });
+
+  try {
+    await crag.save();
+    res.send(crag);
+  } catch (error) {
+    logger.error(error);
+  }
+});
+
 module.exports = router;

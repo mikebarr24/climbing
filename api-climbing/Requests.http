@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/api/crags/newcrag
+POST http://localhost:8080/api/crags/addcrag
 Content-Type: application/json
 
 {
@@ -31,5 +31,19 @@ Content-Type: application/json
   "cragLocation": {
     "lat": "54.475672",
     "lng": "-5.718015"
+  }
+}
+
+###
+POST http://localhost:8080/api/crags/addsector
+Content-Type: application/json
+
+{ 
+  "currentCrag":"Belfast Crag",
+  "sectorName": "Test3",
+  "sectorImageUrl": "TestUrl3",
+  "sectorLocation": {
+    "lat": 123,
+    "lng": 123
   }
 }
