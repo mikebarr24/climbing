@@ -40,10 +40,10 @@ Content-Type: application/json
 
 { 
   "currentCrag":"Belfast Crag",
-  "sectorName": "Test3",
-  "sectorImageUrl": "TestUrl3",
+  "sectorName": "Victoria Square",
+  "sectorImageUrl": "TestUrl2",
   "sectorLocation": {
-    "lat": 123,
-    "lng": 123
+    "lat": 54.598247,
+    "lng": -5.925295
   }
 }

@@ -44,7 +44,6 @@ router.post("/addsector", async (req, res) => {
     sectorImageUrl: req.body.sectorImageUrl,
     sectorLocation: req.body.sectorLocation,
   });
-
   try {
     await crag.save();
     res.send(crag);

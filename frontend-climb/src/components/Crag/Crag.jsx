@@ -25,9 +25,12 @@ function Crag() {
     getCrag();
   }, [params.cragName]);
 
-  const displayMarkers = markers.map((marker) => {
-    return <Marker key={marker._id} />;
-  });
+  let displayMarkers;
+  if (crag) {
+    displayMarkers = crag.sectors.map((marker) => {
+      return <Marker key={marker._id} position={marker.sectorLocation} />;
+    });
+  }
 
   return (
     <div id="crag" className="container">
@@ -46,7 +49,9 @@ function Crag() {
                 lng: parseFloat(crag.cragLocation.lng),
               }}
               mapContainerClassName="map-container"
-            ></GoogleMap>
+            >
+              {displayMarkers}
+            </GoogleMap>
           </LoadScript>
         </div>
       )}
