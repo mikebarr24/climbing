@@ -40,6 +40,10 @@ function Crag() {
           <h2 className="title-text">
             {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
           </h2>
+          <p className="standard-text">
+            There are <strong>{crag.sectors.length}</strong> sectors at this
+            crag
+          </p>
           {/* Replae with google API */}
           <LoadScript googleMapsApiKey="">
             <GoogleMap
