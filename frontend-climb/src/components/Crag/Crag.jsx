@@ -12,6 +12,7 @@ function Crag() {
   const navigate = useNavigate();
   const [crag, setCrag] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [sector, setSector] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -26,6 +27,11 @@ function Crag() {
     getCrag();
   }, [params.cragName]);
 
+  const clickHandle = (e) => {
+    setIsOpen(true);
+    setSector(e);
+  };
+
   let displayMarkers;
   if (crag) {
     displayMarkers = crag.sectors.map((marker) => {
@@ -33,7 +39,8 @@ function Crag() {
         <Marker
           key={marker._id}
           position={marker.sectorLocation}
-          onClick={() => setIsOpen(true)}
+          onClick={() => clickHandle(marker)}
+          title={marker.sectorName}
         />
       );
     });
@@ -72,7 +79,7 @@ function Crag() {
         close={() => setIsOpen(false)}
         portalClassName="crag-modal"
       >
-        Fanyc Modal
+        {sector && sector.sectorName}
       </Modal>
     </div>
   );
