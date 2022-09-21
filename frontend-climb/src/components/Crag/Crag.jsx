@@ -5,12 +5,13 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import ErrorMessage from "../ErrorMessage";
 import crags from "../../api/crags";
 import Button from "../Button/Button";
+import Modal from "../Modal";
 
 function Crag() {
   const params = useParams();
   const navigate = useNavigate();
   const [crag, setCrag] = useState(null);
-  const [markers, setMarkers] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -28,7 +29,13 @@ function Crag() {
   let displayMarkers;
   if (crag) {
     displayMarkers = crag.sectors.map((marker) => {
-      return <Marker key={marker._id} position={marker.sectorLocation} />;
+      return (
+        <Marker
+          key={marker._id}
+          position={marker.sectorLocation}
+          onClick={() => setIsOpen(true)}
+        />
+      );
     });
   }
 
@@ -60,6 +67,13 @@ function Crag() {
         </div>
       )}
       {error && <ErrorMessage errorMessage={error} />}
+      <Modal
+        open={isOpen}
+        close={() => setIsOpen(false)}
+        portalClassName="crag-modal"
+      >
+        Fanyc Modal
+      </Modal>
     </div>
   );
 }
