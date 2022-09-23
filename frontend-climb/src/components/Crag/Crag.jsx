@@ -6,6 +6,7 @@ import ErrorMessage from "../ErrorMessage";
 import crags from "../../api/crags";
 import Button from "../Button/Button";
 import Modal from "../Modal";
+import ApiKeys from "../../api/ApiKeys";
 
 function Crag() {
   const params = useParams();
@@ -14,6 +15,15 @@ function Crag() {
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState(null);
   const [error, setError] = useState(null);
+  const [api, setApi] = useState(null);
+
+  useEffect(() => {
+    const getApi = async () => {
+      const { data } = await ApiKeys.mapsApi();
+      setApi(data);
+    };
+    getApi();
+  }, []);
 
   useEffect(() => {
     const getCrag = async () => {
@@ -56,7 +66,9 @@ function Crag() {
       },
     });
   };
-
+  if (!api) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <div id="crag" className="container">
       <Button name="Back to Map" onClick={() => navigate("/crags")} />
@@ -72,7 +84,7 @@ function Crag() {
             </p>
           </div>
           {/* Replae with google API */}
-          <LoadScript googleMapsApiKey="">
+          <LoadScript googleMapsApiKey={api}>
             <GoogleMap
               zoom={15}
               center={{

@@ -53,9 +53,10 @@ function Map(props) {
       state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
     });
   };
+
   return (
     //Replace with api
-    <LoadScript googleMapsApiKey={""}>
+    <LoadScript googleMapsApiKey={api === "dev" ? "" : api}>
       <GoogleMap
         zoom={7}
         center={{ lat: 54.677809, lng: -6.774634 }}
