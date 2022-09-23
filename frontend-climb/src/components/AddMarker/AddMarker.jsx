@@ -1,4 +1,4 @@
-import "./AddCrag.scss";
+import "./AddMarker.scss";
 
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,20 +8,20 @@ function AddCrag(props) {
   const navigate = useNavigate();
   const { state } = useLocation();
   console.log(state);
-  const initCrag = {
-    cragName: "",
+  const initMarker = {
+    markerName: "",
     information: "",
-    cragLocation: {
+    markerLocation: {
       lat: "",
       lng: "",
     },
   };
-  const [crag, setCrag] = useState(initCrag);
+  const [marker, setMarker] = useState(initMarker);
 
   useEffect(() => {
-    setCrag((x) => ({
+    setMarker((x) => ({
       ...x,
-      cragLocation: {
+      markerLocation: {
         lat: state.lat,
         lng: state.lng,
       },
@@ -30,26 +30,40 @@ function AddCrag(props) {
 
   const submitHandle = async (e) => {
     e.preventDefault();
-    await crags.setCrag(crag);
-    navigate("/crags");
+    if (state.type === "crag") {
+      await crags.setCrag({
+        cragName: marker.markerName,
+        cragLocation: marker.markerLocation,
+        information: marker.information,
+      });
+      navigate("/crags");
+    }
+    if (state.type === "sector") {
+      await crags.setSector({
+        currentCrag: state.cragName,
+        sectorName: marker.markerName,
+        sectorLocation: marker.markerLocation,
+      });
+      navigate("/crags");
+    }
   };
 
   const changeHandle = (e) => {
-    setCrag((state) => ({
+    setMarker((state) => ({
       ...state,
       [e.target.name]: e.target.value,
     }));
   };
   return (
     <div id="addcrag" className="container">
-      <h2 className="title-text">Add new Crag</h2>
+      <h2 className="title-text">Add new Marker</h2>
       <form onSubmit={submitHandle} className="form-standard standard-text">
         <input
           type="text"
-          placeholder="Enter Crag Name"
-          name="cragName"
+          placeholder="Enter Name"
+          name="markerName"
           className="form-field"
-          value={crag.cragName}
+          value={marker.markerName}
           onChange={changeHandle}
         />
         <textarea
@@ -57,20 +71,20 @@ function AddCrag(props) {
           id=""
           cols="30"
           rows="10"
-          placeholder="Enter Crag Information"
+          placeholder="Enter Information"
           className="form-text"
-          value={crag.information}
+          value={marker.information}
           onChange={changeHandle}
         ></textarea>
         <input
           type="text"
           readOnly
           className="form-field"
-          value={crag.cragLocation.lat}
+          value={marker.markerLocation.lat}
         />
         <input
           type="text"
-          value={crag.cragLocation.lng}
+          value={marker.markerLocation.lng}
           readOnly
           className="form-field"
         />

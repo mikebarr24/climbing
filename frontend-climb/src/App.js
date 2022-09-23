@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import Auth from "./api/Auth";
 import Crag from "./components/Crag/Crag";
 import Logout from "./components/Logout";
-import AddCrag from "./components/AddCrag/AddCrag";
+import AddMarker from "./components/AddMarker/AddMarker";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -23,7 +23,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/crags" element={<Crags />} />
-        <Route path="/addcrag" element={<AddCrag />} />
+        <Route path="/crags/addsector" element={<AddMarker />} />
+        <Route path="/addcrag" element={<AddMarker />} />
         <Route path="/crags/:cragName" element={<Crag />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />

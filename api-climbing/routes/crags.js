@@ -21,7 +21,6 @@ router.get("/:cragName", async (req, res) => {
 
 router.post("/addcrag", validate(validateCrag), async (req, res) => {
   const data = req.body;
-  console.log(data);
   const crag = new Crag({
     cragName: data.cragName,
     information: data.information,
@@ -40,8 +39,6 @@ router.post("/addsector", async (req, res) => {
   const crag = await Crag.findOne({ cragName: req.body.currentCrag });
   crag.sectors.push({
     sectorName: req.body.sectorName,
-    sectorUrl: req.body.sectorUrl,
-    sectorImageUrl: req.body.sectorImageUrl,
     sectorLocation: req.body.sectorLocation,
   });
   try {

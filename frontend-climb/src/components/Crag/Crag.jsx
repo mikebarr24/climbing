@@ -46,18 +46,31 @@ function Crag() {
     });
   }
 
+  const mapClick = (e) => {
+    navigate("/crags/addsector", {
+      state: {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        type: "sector",
+        cragName: crag.cragName,
+      },
+    });
+  };
+
   return (
     <div id="crag" className="container">
       <Button name="Back to Map" onClick={() => navigate("/crags")} />
       {crag && (
         <div className="crag-wrapper">
-          <h2 className="title-text">
-            {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
-          </h2>
-          <p className="standard-text">
-            There are <strong>{crag.sectors.length}</strong> sectors at this
-            crag
-          </p>
+          <div className="crag--text">
+            <h2 className="title-text">
+              {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
+            </h2>
+            <p className="standard-text">
+              There are <strong>{crag.sectors.length}</strong> sectors at this
+              crag
+            </p>
+          </div>
           {/* Replae with google API */}
           <LoadScript googleMapsApiKey="">
             <GoogleMap
@@ -67,6 +80,7 @@ function Crag() {
                 lng: parseFloat(crag.cragLocation.lng),
               }}
               mapContainerClassName="map-container"
+              onClick={mapClick}
             >
               {displayMarkers}
             </GoogleMap>

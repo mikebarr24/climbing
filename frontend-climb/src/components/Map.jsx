@@ -50,7 +50,7 @@ function Map(props) {
 
   const mapClick = (e) => {
     navigate("/addcrag", {
-      state: { lat: e.latLng.lat(), lng: e.latLng.lng() },
+      state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
     });
   };
   return (
