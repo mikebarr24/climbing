@@ -8,10 +8,14 @@ const db = () => {
   if (process.env.NODE_ENV === "test") {
     connectedDB = "Test";
     connectionString = "mongodb://localhost:27017/climbingTest";
-  } else {
+  } else if (process.env.NODE_ENV === "development") {
     connectedDB = "Dev";
+    connectionString = "mongodb://db_climbing/climbingDev";
+  } else {
+    connectedDB = "Prod";
     connectionString = `mongodb+srv://admin:${process.env.MONGO_PASSWORD}@climbing.p5ug7c5.mongodb.net/climbingDev?retryWrites=true&w=majority`;
   }
+
   mongoose
     .connect(connectionString)
     .then(() => {

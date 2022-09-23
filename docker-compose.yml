@@ -18,3 +18,13 @@ services:
       - /node_modules
     depends_on:
       - api_climbing
+  db_climbing:
+    image: mongo:latest
+    container_name: climbing_db
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:
