@@ -13,7 +13,7 @@ function Crag() {
   const navigate = useNavigate();
   const [crag, setCrag] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [sector, setSector] = useState(null);
+  const [sector, setSector] = useState([]);
   const [error, setError] = useState(null);
   const [api, setApi] = useState(null);
 
