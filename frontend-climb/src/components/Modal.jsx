@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./Crag/Crag.scss";
+import "./Modal.scss";
 
 function Modal({ open, children, close }) {
   const MODAL_STYLES = {
     position: "fixed",
     top: "50%",
     left: "50%",
-    transform: "translate(-50%)",
+    transform: "translate(-50%, -50%)",
     backgroundColor: "#FFF",
-    padding: "50px",
     zIndex: 1000,
   };
 
@@ -26,7 +25,9 @@ function Modal({ open, children, close }) {
     <>
       <div style={OVERLAY} />
       <div className="crag-modal standard-text" style={MODAL_STYLES}>
-        <button onClick={close}>Close</button>
+        <button onClick={close} className="close-button">
+          X
+        </button>
         {children}
       </div>
     </>,

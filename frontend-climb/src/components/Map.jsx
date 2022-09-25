@@ -55,7 +55,6 @@ function Map(props) {
   };
 
   return (
-    //Replace with api
     <LoadScript googleMapsApiKey={api === "dev" ? "" : api}>
       <GoogleMap
         zoom={7}

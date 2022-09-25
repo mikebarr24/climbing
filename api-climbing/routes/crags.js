@@ -40,6 +40,7 @@ router.post("/addsector", async (req, res) => {
   crag.sectors.push({
     sectorName: req.body.sectorName,
     sectorLocation: req.body.sectorLocation,
+    information: req.body.information,
   });
   try {
     await crag.save();

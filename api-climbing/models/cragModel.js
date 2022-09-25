@@ -17,6 +17,7 @@ const routeSchema = new mongoose.Schema({
 const sectorSchema = new mongoose.Schema({
   sectorName: String,
   sectorImageUrl: String,
+  information: String,
   sectorLocation: {
     lat: Number,
     lng: Number,

@@ -7,7 +7,6 @@ import crags from "../../api/crags";
 function AddCrag(props) {
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state);
   const initMarker = {
     markerName: "",
     information: "",
@@ -43,8 +42,9 @@ function AddCrag(props) {
         currentCrag: state.cragName,
         sectorName: marker.markerName,
         sectorLocation: marker.markerLocation,
+        information: marker.information,
       });
-      navigate("/crags");
+      navigate(`/crags/${state.cragName}`);
     }
   };
 

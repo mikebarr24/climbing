@@ -11,10 +11,9 @@ html {
 body {
   font-family: "Montserrat", sans-serif;
   color: $light-color;
-}
-body {
   background-color: $light-color;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 * {
   margin: 0;

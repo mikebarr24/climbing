@@ -42,6 +42,13 @@ function Crag() {
     setSector(e);
   };
 
+  //Stop scrolling when modal is open
+  if (isOpen === true) {
+    document.body.style.overflowY = "hidden";
+  } else {
+    document.body.style.overflowY = "auto";
+  }
+
   let displayMarkers;
   if (crag) {
     displayMarkers = crag.sectors.map((marker) => {
@@ -83,8 +90,7 @@ function Crag() {
               crag
             </p>
           </div>
-          {/* Replae with google API */}
-          <LoadScript googleMapsApiKey={api}>
+          <LoadScript googleMapsApiKey={api === "dev" ? "" : api}>
             <GoogleMap
               zoom={15}
               center={{
@@ -105,7 +111,11 @@ function Crag() {
         close={() => setIsOpen(false)}
         portalClassName="crag-modal"
       >
-        {sector && sector.sectorName}
+        <h2>Sector - {sector.sectorName}</h2>
+        <div className="sector-photo">Photo of Sector here</div>
+        <h3>Sector Info</h3>
+        <p>{sector.information}</p>
+        <h3>Routes</h3>
       </Modal>
     </div>
   );
