@@ -76,6 +76,7 @@ function Crag() {
   if (!api) {
     return <h2>Loading...</h2>;
   }
+
   return (
     <div id="crag" className="container">
       <Button name="Back to Map" onClick={() => navigate("/crags")} />
@@ -110,13 +111,8 @@ function Crag() {
         open={isOpen}
         close={() => setIsOpen(false)}
         portalClassName="crag-modal"
-      >
-        <h2>Sector - {sector.sectorName}</h2>
-        <div className="sector-photo">Photo of Sector here</div>
-        <h3>Sector Info</h3>
-        <p>{sector.information}</p>
-        <h3>Routes</h3>
-      </Modal>
+        sector={sector}
+      />
     </div>
   );
 }
