@@ -8,11 +8,13 @@ describe("/api/crags", () => {
   let token;
   let cragName;
   let cragLocation;
+  let information;
 
   beforeEach(() => {
     server = require("../../index");
     token = new User().genAuthToken();
     cragName = "12345";
+    information = "abcd";
     cragLocation = {
       lat: "12345",
       lng: "12345",
@@ -26,6 +28,7 @@ describe("/api/crags", () => {
     return request(server).post("/api/crags").set("x-auth-token", token).send({
       cragName,
       cragLocation,
+      information,
     });
   };
 
@@ -34,10 +37,11 @@ describe("/api/crags", () => {
       const crag = new Crag({
         cragName,
         cragLocation,
-        addedBy: mongoose.Types.ObjectId(),
+        information,
       });
       await crag.save();
-      const res = await request(server).get("/api/crags");
+      const res = await request(server).get("/api/crags/all");
+      console.log(res.body);
       expect(res.body[0]).toHaveProperty("cragName");
     });
   });

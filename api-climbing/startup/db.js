@@ -5,6 +5,7 @@ require("dotenv").config();
 const db = () => {
   let connectionString;
   let connectedDB;
+  console.log(process.env.NODE_ENV);
   if (process.env.NODE_ENV === "test") {
     connectedDB = "Test";
     connectionString = "mongodb://localhost:27017/climbingTest";
