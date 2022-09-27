@@ -25,11 +25,14 @@ describe("/api/crags", () => {
     return server.close();
   });
   const exec = () => {
-    return request(server).post("/api/crags").set("x-auth-token", token).send({
-      cragName,
-      cragLocation,
-      information,
-    });
+    return request(server)
+      .post("/api/crags/addcrag")
+      .set("x-auth-token", token)
+      .send({
+        cragName,
+        cragLocation,
+        information,
+      });
   };
 
   describe("GET /", () => {
@@ -41,14 +44,14 @@ describe("/api/crags", () => {
       });
       await crag.save();
       const res = await request(server).get("/api/crags/all");
-      console.log(res.body);
       expect(res.body[0]).toHaveProperty("cragName");
     });
   });
 
   describe("POST /", () => {
-    it("should return 200 if crag created", async () => {
+    it("should return include property 'cragName' if crag created", async () => {
       const res = await exec();
+      console.log(res.body);
       expect(res.body).toHaveProperty("cragName");
     });
     it("should return 401 if user not authorised", async () => {

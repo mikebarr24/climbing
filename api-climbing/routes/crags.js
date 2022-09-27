@@ -19,7 +19,7 @@ router.get("/:cragName", async (req, res) => {
   res.send(crag);
 });
 
-router.post("/addcrag", validate(validateCrag), async (req, res) => {
+router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   const data = req.body;
   const crag = new Crag({
     cragName: data.cragName,
@@ -29,7 +29,7 @@ router.post("/addcrag", validate(validateCrag), async (req, res) => {
   });
   try {
     const response = await crag.save();
-    res.send(response.cragName);
+    res.send(response);
   } catch (error) {
     logger.error(error);
   }
