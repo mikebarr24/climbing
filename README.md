@@ -3,6 +3,7 @@
 So welcome to my little project. This has been my baby for the last while and I certainly feel it's growing fast.
 
 ## General Info
+
 I've been a climber for quite a few years now and I just decided that I wanted to build an app to help climbers communicate and share information on crags, sectors and routes. I'm Northern Irish so that is where I'm concentrating the bulk of my effort to get the app working.
 
 ## Setup
