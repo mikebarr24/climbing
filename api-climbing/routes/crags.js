@@ -35,7 +35,7 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   }
 });
 
-router.post("/addsector", async (req, res) => {
+router.post("/addsector", auth, async (req, res) => {
   const crag = await Crag.findOne({ cragName: req.body.currentCrag });
   crag.sectors.push({
     sectorName: req.body.sectorName,
