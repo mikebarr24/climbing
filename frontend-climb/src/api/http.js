@@ -1,6 +1,9 @@
 import axios from "axios";
+import Auth from "./Auth";
 
 const baseUrl = "http://localhost:8080/api";
+
+axios.defaults.headers.common["x-auth-token"] = Auth.getJwtKey();
 
 const get = async (endpoint) => {
   return await axios.get(baseUrl + endpoint);

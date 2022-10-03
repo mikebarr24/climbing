@@ -33,6 +33,10 @@ class Auth {
   logout() {
     localStorage.removeItem(tokenKey);
   }
+
+  getJwtKey() {
+    return localStorage.getItem(tokenKey);
+  }
 }
 
 export default new Auth();

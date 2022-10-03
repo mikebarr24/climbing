@@ -1,7 +1,7 @@
+import { HashLink } from "react-router-hash-link";
+import { Link } from "react-router-dom";
 import React from "react";
 import "./Nav.scss";
-import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
 const mainLogo = require("../../media/images/climbing-logo-main-white.png");
 
 function Nav(props) {

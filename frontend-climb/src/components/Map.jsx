@@ -44,16 +44,15 @@ function Map(props) {
     );
   });
 
-  if (!api) {
-    return <h2>Loading...</h2>;
-  }
-
   const mapClick = (e) => {
     navigate("/addcrag", {
       state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
     });
   };
-
+  console.log(api);
+  if (!api) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <LoadScript googleMapsApiKey={api === "dev" ? "" : api}>
       <GoogleMap

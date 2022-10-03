@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Crags from "./components/Crags/Crags";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Nav from "./components/Nav/Nav";
 import NewUser from "./components/NewUser/NewUser";
-import { useState, useEffect } from "react";
 import Auth from "./api/Auth";
 import Crag from "./components/Crag/Crag";
 import Logout from "./components/Logout";
