@@ -7,11 +7,13 @@ import crags from "../../api/crags";
 import Button from "../Button/Button";
 import Modal from "../Modal";
 import ApiKeys from "../../api/ApiKeys";
+import Auth from "../../api/Auth";
 
 function Crag() {
   const params = useParams();
   const navigate = useNavigate();
   const [crag, setCrag] = useState(null);
+  const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
   const [error, setError] = useState(null);
@@ -23,6 +25,10 @@ function Crag() {
       setApi(data);
     };
     getApi();
+  }, []);
+
+  useEffect(() => {
+    setUser(Auth.getCurrentUser());
   }, []);
 
   useEffect(() => {
@@ -64,14 +70,16 @@ function Crag() {
   }
 
   const mapClick = (e) => {
-    navigate("/crags/addsector", {
-      state: {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        type: "sector",
-        cragName: crag.cragName,
-      },
-    });
+    if (user.isAdmin === true) {
+      navigate("/crags/addsector", {
+        state: {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+          type: "sector",
+          cragName: crag.cragName,
+        },
+      });
+    }
   };
   if (!api) {
     return <h2>Loading...</h2>;
