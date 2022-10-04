@@ -2,12 +2,17 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import ApiKeys from "../api/ApiKeys";
+import Auth from "../api/Auth";
 
 function Map(props) {
   const navigate = useNavigate();
   const [api, setApi] = useState(null);
+  const [user, setUser] = useState(null);
   const [markers, setMarkers] = useState([]);
 
+  useEffect(() => {
+    setUser(Auth.getCurrentUser());
+  }, []);
   useEffect(() => {
     const getApi = async () => {
       const { data } = await ApiKeys.mapsApi();
@@ -43,13 +48,14 @@ function Map(props) {
       />
     );
   });
-
+  console.log(user);
   const mapClick = (e) => {
-    navigate("/addcrag", {
-      state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
-    });
+    if (user.isAdmin === true) {
+      navigate("/addcrag", {
+        state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
+      });
+    }
   };
-  console.log(api);
   if (!api) {
     return <h2>Loading...</h2>;
   }
