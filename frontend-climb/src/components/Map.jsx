@@ -48,9 +48,8 @@ function Map(props) {
       />
     );
   });
-  console.log(user);
   const mapClick = (e) => {
-    if (user.isAdmin === true) {
+    if (user && user.isAdmin) {
       navigate("/addcrag", {
         state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
       });
