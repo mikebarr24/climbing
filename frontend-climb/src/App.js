@@ -9,6 +9,7 @@ import Auth from "./api/Auth";
 import Crag from "./components/Crag/Crag";
 import Logout from "./components/Logout";
 import AddMarker from "./components/AddMarker/AddMarker";
+import Account from "./components/Account/Account";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/newuser" element={<NewUser />} />
+        <Route path="/account/:user" element={<Account />} />
       </Routes>
     </div>
   );
