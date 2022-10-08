@@ -30,7 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/newuser" element={<NewUser />} />
-        <Route path="/account/:user" element={<Account />} />
+        <Route path="/account/:user" element={<Account user={user} />} />
       </Routes>
     </div>
   );
