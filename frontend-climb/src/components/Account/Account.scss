@@ -1,0 +1,28 @@
+@import "../../config";
+
+#account {
+  margin-top: $nav-height;
+  color: black;
+  .account--user-details {
+    background-color: rgb(204, 204, 204);
+    padding: 1rem;
+    border-radius: 1rem;
+    display: inline-block;
+    p {
+      margin: 0.5rem 0;
+    }
+    .account--change-password-btn {
+      padding: 0.5rem 1rem;
+      color: white;
+      background-color: black;
+      border: none;
+      border-radius: 400px;
+    }
+    .account--password-change-wrapper {
+      display: inline;
+      p {
+        display: inline;
+      }
+    }
+  }
+}
