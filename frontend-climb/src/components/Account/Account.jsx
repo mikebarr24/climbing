@@ -1,36 +1,35 @@
+import { VscAccount } from "react-icons/vsc";
+import { AiOutlineMail } from "react-icons/ai";
+import { RiLockPasswordLine } from "react-icons/ri";
+import Button from "../Button/Button";
 import "./Account.scss";
+const profileImage = require("../../media/images/profile-temp-small.jpg");
 
 function Account({ user }) {
   return (
     <div id="account" className="container">
-      <h1>Account</h1>
-      {user && (
-        <>
-          <h2>
-            Hello {user.name.charAt(0).toUpperCase() + user.name.slice(1)}
-          </h2>
-          <div className="account--user-details standard-text">
-            <p>
-              <strong>Name</strong> - {user.name}
-            </p>
-            <p>
-              <strong>Email</strong> - {user.email}
-            </p>
-            <p>
-              <strong>Admin Account</strong> -{" "}
-              {user.isAdmin === true ? "Yes" : "No"}
-            </p>
-            <div className="account--password-change-wrapper">
-              <p>
-                <strong>Password</strong> -{" "}
-              </p>{" "}
-              <button className="account--change-password-btn">
-                Change Password
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+      <div className="background"></div>
+      <h2 className="account--name-heading">{user && user.name}</h2>
+      <div className="account--info-wrapper standard-text">
+        <img
+          src={profileImage}
+          className="account--image"
+          alt="default profile"
+        />
+        <div className="account--info-box">
+          <VscAccount />
+          {user && user.name}
+        </div>
+        <div className="account--info-box">
+          <AiOutlineMail />
+          {user && user.email}
+        </div>
+        <div className="account--info-box">
+          <RiLockPasswordLine />
+          Password
+        </div>
+      </div>
+      <Button name="Edit Profile" />
     </div>
   );
 }

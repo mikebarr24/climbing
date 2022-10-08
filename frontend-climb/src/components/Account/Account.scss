@@ -3,26 +3,34 @@
 #account {
   margin-top: $nav-height;
   color: black;
-  .account--user-details {
-    background-color: rgb(204, 204, 204);
-    padding: 1rem;
-    border-radius: 1rem;
-    display: inline-block;
-    p {
-      margin: 0.5rem 0;
-    }
-    .account--change-password-btn {
-      padding: 0.5rem 1rem;
-      color: white;
-      background-color: black;
-      border: none;
-      border-radius: 400px;
-    }
-    .account--password-change-wrapper {
-      display: inline;
-      p {
-        display: inline;
-      }
+  overflow-x: hidden;
+  .background {
+    position: absolute;
+    top: -580px;
+    left: 50%;
+    background-color: black;
+    width: 800px;
+    height: 800px;
+    border-radius: 10000px;
+    transform: translateX(-50%);
+    z-index: -1;
+  }
+
+  .account--name-heading {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .account--image {
+    width: 150px;
+    border-radius: 600px;
+    display: block;
+    margin: 0 auto;
+  }
+  .account--info-wrapper {
+    .account--info-box {
+      border-bottom: 2px solid rgb(225, 225, 225);
+      margin: 3rem 0;
     }
   }
 }
