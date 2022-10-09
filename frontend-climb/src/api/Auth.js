@@ -37,6 +37,11 @@ class Auth {
   getJwtKey() {
     return localStorage.getItem(tokenKey);
   }
+
+  async getUserServer() {
+    const res = await http.get("/users/me");
+    return res;
+  }
 }
 
 export default new Auth();

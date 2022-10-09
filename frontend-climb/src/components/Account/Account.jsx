@@ -2,14 +2,23 @@ import { VscAccount } from "react-icons/vsc";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdOutlineEdit } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import "./Account.scss";
 import AccountModal from "./AccountModal";
+import Auth from "../../api/Auth";
 const profileImage = require("../../media/images/profile-temp-small.jpg");
 
-function Account({ user }) {
+function Account() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const local = async () => {
+      const { data } = await Auth.getUserServer();
+      setUser(data);
+    };
+    local();
+  }, []);
   return (
     <>
       <div id="account" className="container">
@@ -51,7 +60,7 @@ function Account({ user }) {
           onClick={() => setOpen(!open)}
         />
       </div>
-      <AccountModal open={open} />
+      <AccountModal open={open} close={() => setOpen(false)} user={user} />
     </>
   );
 }

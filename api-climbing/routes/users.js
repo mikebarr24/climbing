@@ -3,9 +3,11 @@ const { User, validateUser } = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const logger = require("../startup/logger");
+const auth = require("../middleware/auth");
 
-router.get("/me", (req, res) => {
-  res.send("user");
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+  res.send(user);
 });
 
 router.post("/", async (req, res) => {
