@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./AccountModal.scss";
 import CloseButton from "../common/CloseButton";
+import Auth from "../../api/Auth";
 
 function AccountModal({ user, open, close }) {
   const [details, setDetails] = useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
     setDetails(user);
   }, [open]);
@@ -26,11 +28,16 @@ function AccountModal({ user, open, close }) {
     }));
   };
 
-  const submitHandle = (e) => {
+  const submitHandle = async (e) => {
     e.preventDefault();
-    console.log(details);
+    try {
+      await Auth.updateUser(details);
+      close();
+      window.location = `/account/${details.name}`;
+    } catch (error) {
+      setError(error.response.data);
+    }
   };
-
   return ReactDOM.createPortal(
     <>
       <div
@@ -60,6 +67,7 @@ function AccountModal({ user, open, close }) {
             <input type="submit" className="form-button" value="Update" />
           </form>
         )}
+        {error && <h2 className="form-error">{error}</h2>}
       </div>
     </>,
     document.getElementById("portal")

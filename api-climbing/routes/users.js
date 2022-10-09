@@ -37,4 +37,16 @@ router.post("/", async (req, res) => {
     .send(_.pick(newUser, ["_id", "name", "email"]));
 });
 
+router.put("/update", auth, async (req, res) => {
+  const emailCheck = await User.findOne({ email: req.body.email });
+  if (emailCheck && emailCheck.email !== req.user.email) {
+    return res.status(400).send("Email already exists.");
+  }
+  const user = await User.findByIdAndUpdate(req.user._id, {
+    name: req.body.name,
+    email: req.body.email,
+  }).select("-password");
+  res.send(user);
+});
+
 module.exports = router;
