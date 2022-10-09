@@ -4,7 +4,7 @@ import React from "react";
 import "./Nav.scss";
 const mainLogo = require("../../media/images/climbing-logo-main-white.png");
 
-function Nav(props) {
+function Nav({ user }) {
   const [menu, setMenu] = React.useState(false);
   const menuView = () => {
     setMenu(!menu);
@@ -32,15 +32,22 @@ function Nav(props) {
           <Link to="#">
             <li className="nav-item">Contact</li>
           </Link>
-          {!props.user && (
+          {!user && (
             <Link to="/login">
               <li className="nav-item" onClick={menuView}>
                 Login
               </li>
             </Link>
           )}
-          {props.user && (
-            <Link to="/logout">
+          {user && (
+            <Link to={`/account/${user.name.toLowerCase()}`}>
+              <li className="nav-item" onClick={menuView}>
+                Account
+              </li>
+            </Link>
+          )}
+          {user && (
+            <Link to={"/logout"}>
               <li className="nav-item" onClick={menuView}>
                 Logout
               </li>

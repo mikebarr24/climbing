@@ -70,7 +70,7 @@ function Crag() {
   }
 
   const mapClick = (e) => {
-    if (user.isAdmin === true) {
+    if (user && user.isAdmin === true) {
       navigate("/crags/addsector", {
         state: {
           lat: e.latLng.lat(),

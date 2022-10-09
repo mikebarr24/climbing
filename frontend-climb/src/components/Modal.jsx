@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./Modal.scss";
 import Button from "./Button/Button";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import CloseButton from "./common/CloseButton";
 
 function Modal({ open, sector, close }) {
   const initForm = {
@@ -34,9 +35,7 @@ function Modal({ open, sector, close }) {
     <>
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
-        <button onClick={close} className="close-button">
-          X
-        </button>
+        <CloseButton onClick={close} />
         <h2>Sector - {sector.sectorName}</h2>
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
@@ -50,7 +49,7 @@ function Modal({ open, sector, close }) {
         </div>
         {openAdd && (
           <div className="modal--add-route-form">
-            <form className="form-standard">
+            <form className="form-standard modal--form">
               <input
                 name="routeName"
                 type="text"
@@ -85,7 +84,11 @@ function Modal({ open, sector, close }) {
                 </span>
                 Upload Photo
               </label>
-              <input type="submit" className="form-button" value="Add Route" />
+              <input
+                type="submit"
+                className="modal--add-route-button form-button"
+                value="Add Route"
+              />
             </form>
           </div>
         )}

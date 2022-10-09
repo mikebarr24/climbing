@@ -1,0 +1,58 @@
+@import "../../config";
+
+#account {
+  margin-top: $nav-height;
+  color: black;
+  overflow-x: hidden;
+  .background {
+    position: fixed;
+    top: -580px;
+    left: 50%;
+    background-color: black;
+    width: 800px;
+    height: 800px;
+    border-radius: 10000px;
+    transform: translateX(-50%);
+    z-index: -1;
+  }
+  .account--name-heading {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+  }
+  .account--image-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin: 0 auto;
+    img {
+      border: 1px solid rgb(214, 214, 214);
+      border-radius: 600px;
+      width: 150px;
+      height: 150px;
+    }
+    .account--pencil {
+      position: absolute;
+      bottom: -3px;
+      right: 0;
+    }
+  }
+  .account--info-wrapper {
+    .account--info-box {
+      border-bottom: 2px solid rgb(225, 225, 225);
+      margin: 3rem 0;
+      display: flex;
+    }
+    .account--icon {
+      margin-right: 2rem;
+      margin-left: 1rem;
+      font-size: 2.5rem;
+    }
+  }
+  .account--edit-btn {
+    display: block;
+    margin: 0 auto;
+  }
+}

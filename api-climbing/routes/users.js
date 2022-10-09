@@ -3,9 +3,11 @@ const { User, validateUser } = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const logger = require("../startup/logger");
+const auth = require("../middleware/auth");
 
-router.get("/me", (req, res) => {
-  res.send("user");
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+  res.send(user);
 });
 
 router.post("/", async (req, res) => {
@@ -33,6 +35,18 @@ router.post("/", async (req, res) => {
     .header("x-auth-token", token)
     .header("access-control-expose-headers", "x-auth-token")
     .send(_.pick(newUser, ["_id", "name", "email"]));
+});
+
+router.put("/update", auth, async (req, res) => {
+  const emailCheck = await User.findOne({ email: req.body.email });
+  if (emailCheck && emailCheck.email !== req.user.email) {
+    return res.status(400).send("Email already exists.");
+  }
+  const user = await User.findByIdAndUpdate(req.user._id, {
+    name: req.body.name,
+    email: req.body.email,
+  }).select("-password");
+  res.send(user);
 });
 
 module.exports = router;
