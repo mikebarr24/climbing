@@ -2,6 +2,7 @@
   "name": "frontend-climb",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://api:8080",
   "dependencies": {
     "@craco/craco": "^7.0.0-alpha.3",
     "@react-google-maps/api": "^2.12.2",
