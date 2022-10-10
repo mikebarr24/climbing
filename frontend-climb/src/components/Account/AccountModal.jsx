@@ -12,6 +12,7 @@ function AccountModal({ user, open, close }) {
     setDetails(user);
   }, [open]);
   if (!open) return null;
+  document.body.style.overflowY = "hidden";
   const OVERLAY_STYLES = {
     backgroundColor: "rgba(0,0,0, 0.7)",
     position: "fixed",
