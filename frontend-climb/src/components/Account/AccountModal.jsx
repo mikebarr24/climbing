@@ -4,10 +4,13 @@ import ReactDOM from "react-dom";
 import "./AccountModal.scss";
 import CloseButton from "../common/CloseButton";
 import Auth from "../../api/Auth";
+import Button from "../Button/Button";
+import PasswordChange from "./PasswordChange";
 
 function AccountModal({ user, open, close }) {
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
+  const [openPassword, setOpenPassword] = useState(false);
   useEffect(() => {
     setDetails(user);
   }, [open]);
@@ -39,6 +42,10 @@ function AccountModal({ user, open, close }) {
       setError(error.response.data);
     }
   };
+  const handlePassword = (e) => {
+    e.preventDefault();
+    setOpenPassword(!openPassword);
+  };
   return ReactDOM.createPortal(
     <>
       <div
@@ -66,8 +73,12 @@ function AccountModal({ user, open, close }) {
               onChange={updateHandle}
             />
             <input type="submit" className="form-button" value="Update" />
+            <button className="form-button" onClick={handlePassword}>
+              {!openPassword ? "Change Password" : "Close"}
+            </button>
           </form>
         )}
+        {openPassword && <PasswordChange />}
         {error && <h2 className="form-error">{error}</h2>}
       </div>
     </>,
