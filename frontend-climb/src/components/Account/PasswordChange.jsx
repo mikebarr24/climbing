@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./PasswordChange.scss";
 
-function PasswordChange() {
+function PasswordChange(props) {
   const initPassword = {
     originalPassword: "",
     newPassword: "",
@@ -18,6 +18,9 @@ function PasswordChange() {
 
   const submitHandle = (e) => {
     e.preventDefault();
+    if (password.newPassword !== password.repeatNewPassword) {
+      props.password("Passwords Don't Match");
+    }
   };
 
   return (

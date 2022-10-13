@@ -78,7 +78,9 @@ function AccountModal({ user, open, close }) {
             </button>
           </form>
         )}
-        {openPassword && <PasswordChange />}
+        {openPassword && (
+          <PasswordChange password={(error) => setError(error)} />
+        )}
         {error && <h2 className="form-error">{error}</h2>}
       </div>
     </>,
