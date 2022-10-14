@@ -49,4 +49,16 @@ router.put("/update", auth, async (req, res) => {
   res.send(user);
 });
 
+router.put("/password", auth, async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const match = await bcrypt.compare(req.body.originalPassword, user.password);
+  if (!match) return res.status(400).send("Wrong Password");
+  const same = await bcrypt.compare(req.body.newPassword, user.password);
+  if (same) return res.status(400).send("Can't use the same password");
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(req.body.newPassword, salt);
+  user.save();
+  res.send("Password Changed");
+});
+
 module.exports = router;
