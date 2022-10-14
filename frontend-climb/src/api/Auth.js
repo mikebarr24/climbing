@@ -46,6 +46,10 @@ class Auth {
     const { data } = await http.put("/users/update", user);
     return data;
   }
+  async updatePassword(password) {
+    const { data } = await http.put("/users/password", password);
+    return data;
+  }
 }
 
 export default new Auth();

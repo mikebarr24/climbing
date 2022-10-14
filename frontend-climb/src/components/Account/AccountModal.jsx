@@ -4,14 +4,18 @@ import ReactDOM from "react-dom";
 import "./AccountModal.scss";
 import CloseButton from "../common/CloseButton";
 import Auth from "../../api/Auth";
+import PasswordChange from "./PasswordChange";
 
 function AccountModal({ user, open, close }) {
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
+  const [happy, setHappy] = useState(null);
+  const [openPassword, setOpenPassword] = useState(false);
   useEffect(() => {
     setDetails(user);
-  }, [open]);
+  }, [user]);
   if (!open) return null;
+  document.body.style.overflowY = "hidden";
   const OVERLAY_STYLES = {
     backgroundColor: "rgba(0,0,0, 0.7)",
     position: "fixed",
@@ -37,6 +41,10 @@ function AccountModal({ user, open, close }) {
     } catch (error) {
       setError(error.response.data);
     }
+  };
+  const handlePassword = (e) => {
+    e.preventDefault();
+    setOpenPassword(!openPassword);
   };
   return ReactDOM.createPortal(
     <>
@@ -65,9 +73,19 @@ function AccountModal({ user, open, close }) {
               onChange={updateHandle}
             />
             <input type="submit" className="form-button" value="Update" />
+            <button className="form-button" onClick={handlePassword}>
+              {!openPassword ? "Change Password" : "Close"}
+            </button>
           </form>
         )}
+        {openPassword && (
+          <PasswordChange
+            error={(error) => setError(error)}
+            happy={(happy) => setHappy(happy)}
+          />
+        )}
         {error && <h2 className="form-error">{error}</h2>}
+        {happy && <h2 className="form-happy">{happy}</h2>}
       </div>
     </>,
     document.getElementById("portal")

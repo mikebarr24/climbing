@@ -1,7 +1,7 @@
 import axios from "axios";
 import Auth from "./Auth";
 
-const baseUrl = "http://localhost:8080/api";
+const baseUrl = "/api";
 
 axios.defaults.headers.common["x-auth-token"] = Auth.getJwtKey();
 
