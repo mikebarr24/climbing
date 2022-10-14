@@ -43,6 +43,14 @@ a {
   color: unset;
 }
 
+input {
+  border-radius: 0px;
+}
+
+input[type="submit"] {
+  -webkit-appearance: none;
+}
+
 h2 {
   font-size: 2.5rem;
 }
@@ -69,6 +77,8 @@ h2 {
     color: $light-color;
     background-color: $dark-color;
     text-align: center;
+    border-radius: none;
+    font-weight: 600;
   }
 }
 .form-text {
