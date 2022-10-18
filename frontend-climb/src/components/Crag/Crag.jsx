@@ -5,7 +5,7 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import ErrorMessage from "../ErrorMessage";
 import crags from "../../api/crags";
 import Button from "../Button/Button";
-import Modal from "../Modal";
+import Modal from "./Modal";
 import ApiKeys from "../../api/ApiKeys";
 import Auth from "../../api/Auth";
 
