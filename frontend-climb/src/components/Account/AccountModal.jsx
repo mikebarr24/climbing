@@ -4,16 +4,16 @@ import ReactDOM from "react-dom";
 import "./AccountModal.scss";
 import CloseButton from "../common/CloseButton";
 import Auth from "../../api/Auth";
-import Button from "../Button/Button";
 import PasswordChange from "./PasswordChange";
 
 function AccountModal({ user, open, close }) {
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
+  const [happy, setHappy] = useState(null);
   const [openPassword, setOpenPassword] = useState(false);
   useEffect(() => {
     setDetails(user);
-  }, [open]);
+  }, [user]);
   if (!open) return null;
   document.body.style.overflowY = "hidden";
   const OVERLAY_STYLES = {
@@ -79,9 +79,13 @@ function AccountModal({ user, open, close }) {
           </form>
         )}
         {openPassword && (
-          <PasswordChange password={(error) => setError(error)} />
+          <PasswordChange
+            error={(error) => setError(error)}
+            happy={(happy) => setHappy(happy)}
+          />
         )}
         {error && <h2 className="form-error">{error}</h2>}
+        {happy && <h2 className="form-happy">{happy}</h2>}
       </div>
     </>,
     document.getElementById("portal")

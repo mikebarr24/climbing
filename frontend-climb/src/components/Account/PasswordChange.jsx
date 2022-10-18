@@ -20,7 +20,16 @@ function PasswordChange(props) {
   const submitHandle = async (e) => {
     e.preventDefault();
     if (password.newPassword !== password.repeatNewPassword) {
-      return props.password("Passwords Don't Match");
+      return props.error("Passwords Don't Match");
+    }
+    try {
+      const res = await Auth.updatePassword(password);
+      props.error(null);
+      return props.happy(res);
+    } catch (error) {
+      const { response } = error;
+      props.happy(null);
+      return props.error(response.data);
     }
     await Auth.checkPassword(password.originalPassword);
   };
