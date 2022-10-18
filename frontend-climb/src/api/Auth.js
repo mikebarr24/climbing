@@ -46,8 +46,17 @@ class Auth {
     const { data } = await http.put("/users/update", user);
     return data;
   }
+<<<<<<< HEAD
+  async checkPassword(password) {
+    const passwordJson = {
+      user: this.getCurrentUser()._id,
+      password: password,
+    };
+    const { data } = await http.put("/auth/password", passwordJson);
+=======
   async updatePassword(password) {
     const { data } = await http.put("/users/password", password);
+>>>>>>> refs/remotes/origin/dev
     return data;
   }
 }

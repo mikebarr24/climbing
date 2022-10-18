@@ -31,6 +31,7 @@ function PasswordChange(props) {
       props.happy(null);
       return props.error(response.data);
     }
+    await Auth.checkPassword(password.originalPassword);
   };
 
   return (
