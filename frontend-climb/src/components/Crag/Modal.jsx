@@ -34,7 +34,7 @@ function Modal({ open, sector, close }) {
             onClick={() => setOpenAdd(!openAdd)}
           />
         </div>
-        {openAdd && <AddRouteForm />}
+        {openAdd && <AddRouteForm close={() => setOpenAdd(!openAdd)} />}
       </div>
     </>,
     document.getElementById("portal")

@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { AiOutlineCloudUpload } from "react-icons/ai";
+import { AiOutlineCloudUpload, AiOutlineArrowLeft } from "react-icons/ai";
 
 import "./AddRouteForm.scss";
 
-function AddRouteForm() {
-  const [form, setForm] = useState(initForm);
-
+function AddRouteForm({ close }) {
   const initForm = {
     routeName: "",
     routeGrade: "",
     routeInformation: "",
   };
+  const [form, setForm] = useState(initForm);
 
   const changeHandle = (e) => {
     setForm((state) => ({
@@ -20,7 +19,13 @@ function AddRouteForm() {
   };
 
   return (
-    <div className="modal--add-route-form">
+    <div className="modal--add-route-form container">
+      <div className="add-route-form--title-text text-white">
+        <span className="add-route-form--back-arrow" onClick={close}>
+          <AiOutlineArrowLeft />
+        </span>
+        <h2 className="add-route-form--title text-white">Add Route</h2>
+      </div>
       <form className="form-standard modal--form">
         <input
           name="routeName"
