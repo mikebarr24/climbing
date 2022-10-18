@@ -11,4 +11,11 @@ router.post("/login", async (req, res) => {
   res.send(token);
 });
 
+router.put("/password", async (req, res) => {
+  const user = await User.findById(req.body.user);
+  const match = await bcrypt.compare(req.body.password, user.password);
+  if (!match) return res.status(404).send("Password is not correct");
+  res.send(true);
+});
+
 module.exports = router;
