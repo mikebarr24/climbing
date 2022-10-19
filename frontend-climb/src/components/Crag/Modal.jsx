@@ -17,12 +17,18 @@ function Modal({ open, sector, close }) {
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   };
 
+  //If addRoute is open when close button is clicked, this will close modal and reset to sector view.
+  const clickHandle = () => {
+    close();
+    setOpenAdd(false);
+  };
+
   if (!open) return null;
   return ReactDOM.createPortal(
     <>
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
-        <CloseButton onClick={close} />
+        <CloseButton onClick={clickHandle} />
         <h2>Sector - {sector.sectorName}</h2>
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
