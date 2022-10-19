@@ -3,7 +3,7 @@ import { AiOutlineCloudUpload, AiOutlineArrowLeft } from "react-icons/ai";
 
 import "./AddRouteForm.scss";
 
-function AddRouteForm({ close }) {
+function AddRouteForm({ close, windowState }) {
   const initForm = {
     routeName: "",
     routeGrade: "",
@@ -19,7 +19,9 @@ function AddRouteForm({ close }) {
   };
 
   return (
-    <div className="modal--add-route-form container">
+    <div
+      className={`modal--add-route-form container ${!windowState && "open"}`}
+    >
       <div className="add-route-form--title-text text-white">
         <span className="add-route-form--back-arrow" onClick={close}>
           <AiOutlineArrowLeft />

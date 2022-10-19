@@ -6,6 +6,8 @@
   bottom: 0;
   right: 0;
   left: 0;
+  z-index: 0;
+  transform: translateX(100%);
   .add-route-form--title-text {
     display: flex;
     align-items: center;
@@ -48,5 +50,17 @@
     width: 60%;
     margin: 2rem auto;
     border-radius: 400px;
+  }
+  &.open {
+    animation: route-open 0.3s ease-in-out;
+  }
+}
+
+@keyframes route-open {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

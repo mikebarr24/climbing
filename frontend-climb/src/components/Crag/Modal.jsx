@@ -34,7 +34,12 @@ function Modal({ open, sector, close }) {
             onClick={() => setOpenAdd(!openAdd)}
           />
         </div>
-        {openAdd && <AddRouteForm close={() => setOpenAdd(!openAdd)} />}
+        {openAdd && (
+          <AddRouteForm
+            close={() => setOpenAdd(!openAdd)}
+            windowState={openAdd}
+          />
+        )}
       </div>
     </>,
     document.getElementById("portal")

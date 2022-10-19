@@ -12,6 +12,7 @@ function CloseButton({ onClick, className }) {
     width: "5rem",
     height: "5rem",
     borderRadius: "100px",
+    zIndex: "1000",
   };
   return (
     <>
