@@ -1,20 +1,27 @@
 import { useRef } from "react";
 import { AiOutlineCloudUpload, AiOutlineArrowLeft } from "react-icons/ai";
-
+import crag from "../../api/crags";
 import "./AddRouteForm.scss";
 
-function AddRouteForm({ close, windowState }) {
+function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
   const routeName = useRef();
   const routeGrade = useRef();
   const routeInformation = useRef();
 
-  const submitHandle = (e) => {
+  const submitHandle = async (e) => {
     e.preventDefault();
     const routeData = {
       routeName: routeName.current.value,
       routeGrade: routeGrade.current.value,
       routeInformation: routeInformation.current.value,
+      currentCrag: currentCrag._id,
+      currentSector: currentSector._id,
     };
+    try {
+      const res = await crag.setRoute(routeData);
+    } catch (error) {
+      console.log(error);
+    }
     console.log(routeData);
   };
 

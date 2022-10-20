@@ -5,7 +5,7 @@ import Button from "../Button/Button";
 import CloseButton from "../common/CloseButton";
 import AddRouteForm from "./AddRouteForm";
 
-function Modal({ open, sector, close }) {
+function Modal({ open, currentSector, close, currentCrag }) {
   const [openAdd, setOpenAdd] = useState(false);
 
   const OVERLAY = {
@@ -29,10 +29,10 @@ function Modal({ open, sector, close }) {
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
         <CloseButton onClick={clickHandle} />
-        <h2>Sector - {sector.sectorName}</h2>
+        <h2>Sector - {currentSector.sectorName}</h2>
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
-        <p>{sector.information}</p>
+        <p>{currentSector.information}</p>
         <div className="crag--route-header">
           <h3>Routes</h3>
           <Button
@@ -44,6 +44,8 @@ function Modal({ open, sector, close }) {
           <AddRouteForm
             close={() => setOpenAdd(!openAdd)}
             windowState={openAdd}
+            currentCrag={currentCrag}
+            currentSector={currentSector}
           />
         )}
       </div>

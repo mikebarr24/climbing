@@ -119,7 +119,8 @@ function Crag() {
         open={isOpen}
         close={() => setIsOpen(false)}
         portalClassName="crag-modal"
-        sector={sector}
+        currentSector={sector}
+        currentCrag={crag}
       />
     </div>
   );

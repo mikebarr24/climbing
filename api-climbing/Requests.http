@@ -55,3 +55,15 @@ Content-Type: application/json
 {
   
 }
+
+###
+POST http://localhost:8080/api/crags/addroute
+Content-Type: application/json
+
+{
+  "routeName": "Test Route",
+  "routeGrade": "4",
+  "routeInformation": "Test Info",
+  "currentCrag": "633b3eae1b1390b8ca330a0c",
+  "currentSector": "633b3ebb1b1390b8ca330a12"
+}
