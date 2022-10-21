@@ -4,6 +4,7 @@ import "./Modal.scss";
 import Button from "../Button/Button";
 import CloseButton from "../common/CloseButton";
 import AddRouteForm from "./AddRouteForm";
+import Route from "./Route";
 
 function Modal({ open, currentSector, close, currentCrag }) {
   const [openAdd, setOpenAdd] = useState(false);
@@ -24,6 +25,15 @@ function Modal({ open, currentSector, close, currentCrag }) {
   };
 
   if (!open) return null;
+  const routeList = currentSector.routes.map((route, index) => {
+    return (
+      <Route
+        key={index}
+        routeName={route.routeName}
+        routeGrade={route.routeGrade}
+      />
+    );
+  });
   return ReactDOM.createPortal(
     <>
       <div style={OVERLAY} />
@@ -33,13 +43,14 @@ function Modal({ open, currentSector, close, currentCrag }) {
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
         <p>{currentSector.information}</p>
-        <div className="crag--route-header">
-          <h3>Routes</h3>
-          <Button
-            name={openAdd === false ? "Add Route" : "Close Form"}
-            onClick={() => setOpenAdd(!openAdd)}
-          />
+        <div className="sector--route-container">
+          <div className="crag--route-header">
+            <h3>Routes</h3>
+            <Button name="Add Route" onClick={() => setOpenAdd(!openAdd)} />
+          </div>
+          <div className="sector--route-list-wrapper">{routeList}</div>
         </div>
+
         {openAdd && (
           <AddRouteForm
             close={() => setOpenAdd(!openAdd)}

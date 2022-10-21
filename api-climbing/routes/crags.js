@@ -50,13 +50,23 @@ router.post("/addsector", auth, async (req, res) => {
   }
 });
 
-router.post("/addroute", async (req, res) => {
-  const data = req.body;
-  const crag = await Crag.findOne({ _id: data.currentCrag });
-  console.log(crag);
-  const sector = crag.sectors.find({ _id: ObjectId(data.currentSector) });
-  console.log(sector);
-  res.send("done");
+router.post("/addroute", auth, async (req, res) => {
+  const {
+    routeName,
+    routeGrade,
+    routeInformation,
+    currentCrag,
+    currentSector,
+  } = req.body;
+  const crag = await Crag.findOne({ _id: currentCrag });
+  const sector = crag.sectors.id(currentSector);
+  sector.routes.push({
+    routeName,
+    routeGrade,
+    routeInformation,
+  });
+  await crag.save();
+  res.send("Route Added");
 });
 
 module.exports = router;

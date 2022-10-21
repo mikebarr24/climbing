@@ -10,15 +10,11 @@
   animation: route-open 0.3s ease-in-out;
   animation-fill-mode: backwards;
   .add-route-form--title-text {
-    display: flex;
-    align-items: center;
     .add-route-form--back-arrow {
       font-size: 4rem;
-      display: inline-block;
-      margin-right: auto;
     }
     .add-route-form--title {
-      display: inline-block;
+      text-align: center;
     }
   }
   .custom-file-upload {
@@ -47,7 +43,6 @@
   }
   .modal--add-route-button {
     background-color: white;
-    color: black;
     width: 60%;
     margin: 2rem auto;
     border-radius: 400px;

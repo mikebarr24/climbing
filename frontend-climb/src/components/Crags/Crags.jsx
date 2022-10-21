@@ -3,7 +3,6 @@ import Map from "../Map";
 import Auth from "../../api/Auth";
 import { useState, useEffect } from "react";
 import crags from "../../api/crags";
-import { Marker } from "@react-google-maps/api";
 
 function Crags() {
   const [user, setUser] = useState(null);

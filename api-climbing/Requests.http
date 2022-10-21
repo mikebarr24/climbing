@@ -64,6 +64,6 @@ Content-Type: application/json
   "routeName": "Test Route",
   "routeGrade": "4",
   "routeInformation": "Test Info",
-  "currentCrag": "632e13e02152c10cecf6e926",
-  "currentSector": "6330b8b30996bed051be6109"
+  "currentCrag": "633b3eae1b1390b8ca330a0c",
+  "currentSector": "633b3ebb1b1390b8ca330a12"
 }
