@@ -48,7 +48,9 @@ function Modal({ open, currentSector, close, currentCrag }) {
             <h3>Routes</h3>
             <Button name="Add Route" onClick={() => setOpenAdd(!openAdd)} />
           </div>
-          <div className="sector--route-list-wrapper">{routeList}</div>
+          <div className="sector--route-list-wrapper">
+            {routeList.length === 0 ? "No routes at this crag" : routeList}
+          </div>
         </div>
 
         {openAdd && (
