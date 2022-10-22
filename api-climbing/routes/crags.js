@@ -55,6 +55,7 @@ router.post("/addroute", auth, async (req, res) => {
     routeName,
     routeGrade,
     routeInformation,
+    routeRating,
     currentCrag,
     currentSector,
   } = req.body;
@@ -64,6 +65,7 @@ router.post("/addroute", auth, async (req, res) => {
     routeName,
     routeGrade,
     routeInformation,
+    routeRating,
   });
   await crag.save();
   res.send("Route Added");

@@ -31,6 +31,7 @@ function Modal({ open, currentSector, close, currentCrag }) {
         key={index}
         routeName={route.routeName}
         routeGrade={route.routeGrade}
+        routeRating={route.routeRating}
       />
     );
   });

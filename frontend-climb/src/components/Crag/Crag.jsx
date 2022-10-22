@@ -57,13 +57,13 @@ function Crag() {
 
   let displayMarkers;
   if (crag) {
-    displayMarkers = crag.sectors.map((marker) => {
+    displayMarkers = crag.sectors.map((sector, index) => {
       return (
         <Marker
-          key={marker._id}
-          position={marker.sectorLocation}
-          onClick={() => clickHandle(marker)}
-          title={marker.sectorName}
+          key={index}
+          position={sector.sectorLocation}
+          onClick={() => clickHandle(sector)}
+          title={sector.sectorName}
         />
       );
     });

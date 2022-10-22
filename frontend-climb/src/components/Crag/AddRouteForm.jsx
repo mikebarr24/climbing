@@ -7,6 +7,7 @@ function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
   const routeName = useRef();
   const routeGrade = useRef();
   const routeInformation = useRef();
+  const routeRating = useRef();
 
   const submitHandle = async (e) => {
     e.preventDefault();
@@ -14,15 +15,16 @@ function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
       routeName: routeName.current.value,
       routeGrade: routeGrade.current.value,
       routeInformation: routeInformation.current.value,
+      routeRating: routeRating.current.value,
       currentCrag: currentCrag._id,
       currentSector: currentSector._id,
     };
     try {
-      const res = await crag.setRoute(routeData);
+      await crag.setRoute(routeData);
+      close();
     } catch (error) {
       console.log(error);
     }
-    console.log(routeData);
   };
 
   return (
@@ -47,6 +49,12 @@ function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
           ref={routeGrade}
           className="form-field"
           placeholder="Route Grade"
+        />
+        <input
+          type="text"
+          ref={routeRating}
+          className="form-field"
+          placeholder="Route Rating"
         />
 
         <textarea

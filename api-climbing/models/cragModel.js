@@ -5,6 +5,11 @@ const routeSchema = new mongoose.Schema({
   routeName: String,
   routeGrade: String,
   routeDescription: String,
+  routeRating: {
+    type: Number,
+    min: 1,
+    max: 5,
+  },
   routeImageUrl: String,
   addedBy: mongoose.ObjectId,
   dateCreated: {
