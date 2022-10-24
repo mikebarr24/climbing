@@ -50,6 +50,11 @@ function Modal({ open, currentSector, close, currentCrag }) {
             <Button name="Add Route" onClick={() => setOpenAdd(!openAdd)} />
           </div>
           <div className="sector--route-list-wrapper">
+            <div className="sector--route-title-wrapper">
+              <p className="sector--route-title">Route Name</p>
+              <p className="sector--route-title">Route Grade</p>
+              <p className="sector--route-title right">Route Rating</p>
+            </div>
             {routeList.length === 0 ? "No routes at this crag" : routeList}
           </div>
         </div>

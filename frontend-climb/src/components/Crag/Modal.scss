@@ -1,3 +1,5 @@
+@import "../../config";
+
 .crag-modal {
   color: black;
   min-height: 80%;
@@ -23,5 +25,11 @@
   .sector--route-list-wrapper {
     border: solid 1px black;
     border-radius: 5px;
+    overflow-y: scroll;
+    .sector--route-title-wrapper {
+      display: grid;
+      grid-template-columns: 2fr 0.3fr 1fr;
+      font-size: 1rem;
+    }
   }
 }
