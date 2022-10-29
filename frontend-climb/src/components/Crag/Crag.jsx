@@ -7,7 +7,7 @@ import crags from "../../api/crags";
 import Button from "../Button/Button";
 import Modal from "./Modal";
 import ApiKeys from "../../api/ApiKeys";
-import Auth from "../../api/Auth";
+import auth from "../../api/auth";
 
 function Crag() {
   const params = useParams();
@@ -29,7 +29,7 @@ function Crag() {
   }, [crag]);
 
   useEffect(() => {
-    setUser(Auth.getCurrentUser());
+    setUser(auth.getCurrentUser());
   }, [crag]);
 
   useEffect(() => {

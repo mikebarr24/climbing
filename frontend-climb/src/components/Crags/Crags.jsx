@@ -1,6 +1,6 @@
 import "./Crags.scss";
 import Map from "../Map";
-import Auth from "../../api/Auth";
+import auth from "../../api/auth";
 import { useState, useEffect } from "react";
 import { LoadScript } from "@react-google-maps/api";
 import ApiKeys from "../../api/ApiKeys";
@@ -13,7 +13,7 @@ function Crags() {
 
   //Set Current User
   useEffect(() => {
-    setUser(Auth.getCurrentUser());
+    setUser(auth.getCurrentUser());
   }, []);
 
   //Set Google Map Api

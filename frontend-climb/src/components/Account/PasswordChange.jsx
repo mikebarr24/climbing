@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./PasswordChange.scss";
-import Auth from "../../api/Auth";
+import auth from "../../api/auth";
 
 function PasswordChange(props) {
   const initPassword = {
@@ -23,7 +23,7 @@ function PasswordChange(props) {
       return props.error("Passwords Don't Match");
     }
     try {
-      const res = await Auth.updatePassword(password);
+      const res = await auth.updatePassword(password);
       props.error(null);
       return props.happy(res);
     } catch (error) {
@@ -31,7 +31,7 @@ function PasswordChange(props) {
       props.happy(null);
       return props.error(response.data);
     }
-    await Auth.checkPassword(password.originalPassword);
+    await auth.checkPassword(password.originalPassword);
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import "./NewUser.scss";
-import Auth from "../../api/Auth";
+import auth from "../../api/auth";
 
 function NewUser() {
   const initialForm = {
@@ -27,8 +27,8 @@ function NewUser() {
       return;
     }
     try {
-      const res = await Auth.register(form);
-      Auth.logInWithJwt(res.headers["x-auth-token"]);
+      const res = await auth.register(form);
+      auth.logInWithJwt(res.headers["x-auth-token"]);
       window.location = "/";
     } catch (error) {
       setWarnings(error.response.data);

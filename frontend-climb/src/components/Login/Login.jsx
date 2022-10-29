@@ -1,5 +1,5 @@
 import React from "react";
-import Auth from "../../api/Auth";
+import auth from "../../api/auth";
 import { Link } from "react-router-dom";
 import "./Login.scss";
 
@@ -21,7 +21,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await Auth.login(form);
+      await auth.login(form);
       window.location = "/";
     } catch (error) {
       setWarning(error.response.data);

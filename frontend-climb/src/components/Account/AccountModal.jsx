@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./AccountModal.scss";
 import CloseButton from "../common/CloseButton";
-import Auth from "../../api/Auth";
+import auth from "../../api/auth";
 import PasswordChange from "./PasswordChange";
 
 function AccountModal({ user, open, close }) {
@@ -35,7 +35,7 @@ function AccountModal({ user, open, close }) {
   const submitHandle = async (e) => {
     e.preventDefault();
     try {
-      await Auth.updateUser(details);
+      await auth.updateUser(details);
       close();
       window.location = `/account/${details.name}`;
     } catch (error) {

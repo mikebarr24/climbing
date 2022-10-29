@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Nav from "./components/Nav/Nav";
 import NewUser from "./components/NewUser/NewUser";
-import Auth from "./api/Auth";
+import auth from "./api/auth";
 import Crag from "./components/Crag/Crag";
 import Logout from "./components/Logout";
 import AddMarker from "./components/AddMarker/AddMarker";
@@ -15,7 +15,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    setUser(Auth.getCurrentUser());
+    setUser(auth.getCurrentUser());
   }, []);
 
   return (

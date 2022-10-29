@@ -1,9 +1,11 @@
 import axios from "axios";
-import Auth from "./Auth";
+import Auth from "./auth";
 
 const baseUrl = "/api";
 
-axios.defaults.headers.common["x-auth-token"] = Auth.getJwtKey();
+const setJwt = (jwt) => {
+  axios.defaults.headers.common["x-auth-token"] = jwt;
+};
 
 const get = async (endpoint) => {
   return await axios.get(baseUrl + endpoint);
@@ -16,5 +18,5 @@ const put = async (endpoint, data) => {
   return await axios.put(baseUrl + endpoint, data);
 };
 
-const exportObject = { get, post, put };
+const exportObject = { get, post, put, setJwt };
 export default exportObject;

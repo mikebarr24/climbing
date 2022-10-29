@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import "./Account.scss";
 import AccountModal from "./AccountModal";
-import Auth from "../../api/Auth";
+import auth from "../../api/auth";
 const profileImage = require("../../media/images/profile-temp-small.jpg");
 
 function Account() {
@@ -14,7 +14,7 @@ function Account() {
   const [user, setUser] = useState(null);
   useEffect(() => {
     const local = async () => {
-      const { data } = await Auth.getUserServer();
+      const { data } = await auth.getUserServer();
       setUser(data);
     };
     local();
