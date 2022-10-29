@@ -1,46 +1,14 @@
-import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import ApiKeys from "../api/ApiKeys";
-import Auth from "../api/Auth";
-import crags from "../api/crags";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 
-function Map(props) {
+function Map({ crags, user, api }) {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [allCrags, setAllCrags] = useState([]);
-  const [api, setApi] = useState(null);
-
-  useEffect(() => {
-    setUser(Auth.getCurrentUser());
-  }, []);
-
-  //Get all crag data from DB
-  useEffect(() => {
-    const getAllCrags = async () => {
-      const { data } = await crags.getAllCrags();
-      setAllCrags(data);
-    };
-    getAllCrags();
-    console.log("here");
-  }, []);
-
-  //Set Google Map Api
-  useEffect(() => {
-    if (api === null) {
-      const getApi = async () => {
-        const { data } = await ApiKeys.mapsApi();
-        setApi(data);
-      };
-      getApi();
-    }
-  }, []);
 
   const markerClick = (marker) => {
     navigate(marker.cragName);
   };
 
-  const displayMarkers = allCrags.map((marker) => {
+  const displayMarkers = crags.map((marker) => {
     return (
       <Marker
         key={marker._id}
@@ -66,16 +34,14 @@ function Map(props) {
     return <h2>Loading...</h2>;
   }
   return (
-    <LoadScript googleMapsApiKey={api === "dev" ? "" : api}>
-      <GoogleMap
-        zoom={7}
-        center={{ lat: 54.677809, lng: -6.774634 }}
-        mapContainerClassName="map-container"
-        onClick={mapClick}
-      >
-        {displayMarkers && displayMarkers}
-      </GoogleMap>
-    </LoadScript>
+    <GoogleMap
+      zoom={7}
+      center={{ lat: 54.677809, lng: -6.774634 }}
+      mapContainerClassName="map-container"
+      onClick={mapClick}
+    >
+      {displayMarkers && displayMarkers}
+    </GoogleMap>
   );
 }
 
