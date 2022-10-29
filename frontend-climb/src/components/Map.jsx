@@ -1,39 +1,46 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import ApiKeys from "../api/ApiKeys";
 import Auth from "../api/Auth";
+import crags from "../api/crags";
 
 function Map(props) {
   const navigate = useNavigate();
-  const [api, setApi] = useState(null);
   const [user, setUser] = useState(null);
-  const [markers, setMarkers] = useState([]);
+  const [allCrags, setAllCrags] = useState([]);
+  const [api, setApi] = useState(null);
 
   useEffect(() => {
     setUser(Auth.getCurrentUser());
   }, []);
+
+  //Get all crag data from DB
   useEffect(() => {
-    const getApi = async () => {
-      const { data } = await ApiKeys.mapsApi();
-      setApi(data);
+    const getAllCrags = async () => {
+      const { data } = await crags.getAllCrags();
+      setAllCrags(data);
     };
-    getApi();
+    getAllCrags();
+    console.log("here");
   }, []);
 
+  //Set Google Map Api
   useEffect(() => {
-    const getMarkers = async () => {
-      const { data } = await props.markers;
-      setMarkers(data);
-    };
-    getMarkers();
+    if (api === null) {
+      const getApi = async () => {
+        const { data } = await ApiKeys.mapsApi();
+        setApi(data);
+      };
+      getApi();
+    }
   }, []);
 
   const markerClick = (marker) => {
     navigate(marker.cragName);
   };
 
-  const displayMarkers = markers.map((marker) => {
+  const displayMarkers = allCrags.map((marker) => {
     return (
       <Marker
         key={marker._id}

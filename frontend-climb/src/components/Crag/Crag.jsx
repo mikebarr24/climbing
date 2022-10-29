@@ -1,5 +1,5 @@
 import "./Crag.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import ErrorMessage from "../ErrorMessage";
@@ -17,19 +17,20 @@ function Crag() {
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
   const [error, setError] = useState(null);
-  const [api, setApi] = useState(null);
+
+  const api = useRef(null);
 
   useEffect(() => {
     const getApi = async () => {
       const { data } = await ApiKeys.mapsApi();
-      setApi(data);
+      api.current = data;
     };
     getApi();
-  }, []);
+  }, [crag]);
 
   useEffect(() => {
     setUser(Auth.getCurrentUser());
-  }, []);
+  }, [crag]);
 
   useEffect(() => {
     const getCrag = async () => {
@@ -41,7 +42,7 @@ function Crag() {
       }
     };
     getCrag();
-  }, [params.cragName]);
+  }, []);
 
   const clickHandle = (e) => {
     setIsOpen(true);
@@ -84,7 +85,7 @@ function Crag() {
   if (!api) {
     return <h2>Loading...</h2>;
   }
-
+  console.log(api);
   return (
     <div id="crag" className="container">
       <Button name="Back to Map" onClick={() => navigate("/crags")} />
@@ -99,7 +100,9 @@ function Crag() {
               crag
             </p>
           </div>
-          <LoadScript googleMapsApiKey={api === "dev" ? "" : api}>
+          <LoadScript
+            googleMapsApiKey={api.current === "dev" ? "" : api.current}
+          >
             <GoogleMap
               zoom={15}
               center={{
