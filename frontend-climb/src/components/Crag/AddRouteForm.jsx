@@ -19,6 +19,7 @@ function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
       currentCrag: currentCrag._id,
       currentSector: currentSector._id,
     };
+    console.log("here");
     try {
       await crag.setRoute(routeData);
       close();
@@ -31,10 +32,10 @@ function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
     <div
       className={`modal--add-route-form container ${windowState ? "open" : ""}`}
     >
+      <span className="add-route-form--back-arrow" onClick={close}>
+        <AiOutlineArrowLeft />
+      </span>
       <div className="add-route-form--title-text text-white">
-        <span className="add-route-form--back-arrow" onClick={close}>
-          <AiOutlineArrowLeft />
-        </span>
         <h2 className="add-route-form--title text-white">Add Route</h2>
       </div>
       <form className="form-standard modal--form" onSubmit={submitHandle}>
@@ -61,7 +62,7 @@ function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
           ref={routeInformation}
           id=""
           cols="30"
-          rows="7"
+          rows="5"
           className="form-text"
           placeholder="Route Information"
         ></textarea>

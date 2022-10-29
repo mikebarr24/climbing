@@ -52,8 +52,8 @@ function Modal({ open, currentSector, close, currentCrag }) {
           <div className="sector--route-list-wrapper">
             <div className="sector--route-title-wrapper">
               <p className="sector--route-title">Route Name</p>
-              <p className="sector--route-title">Route Grade</p>
-              <p className="sector--route-title right">Route Rating</p>
+              <p className="sector--route-title">Grade</p>
+              <p className="sector--route-title right">Rating</p>
             </div>
             {routeList.length === 0 ? "No routes at this crag" : routeList}
           </div>

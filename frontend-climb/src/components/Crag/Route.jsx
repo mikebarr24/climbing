@@ -4,7 +4,6 @@ import "./Route.scss";
 
 function Route({ routeName, routeGrade, routeRating }) {
   const starRating = [...Array(routeRating).keys()].map((item) => {
-    console.log(routeRating);
     return <AiFillStar key={item} />;
   });
   return (
