@@ -1,5 +1,4 @@
 import axios from "axios";
-import Auth from "./auth";
 
 const baseUrl = "/api";
 

@@ -23,7 +23,7 @@ function App() {
       <Nav user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/crags" element={<Crags />} />
+        <Route path="/crags" element={<Crags user={user} />} />
         <Route path="/crags/addsector" element={<AddMarker />} />
         <Route path="/addcrag" element={<AddMarker />} />
         <Route path="/crags/:cragName" element={<Crag />} />

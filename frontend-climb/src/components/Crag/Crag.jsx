@@ -100,21 +100,18 @@ function Crag() {
               crag
             </p>
           </div>
-          <LoadScript
-            googleMapsApiKey={api.current === "dev" ? "" : api.current}
+
+          <GoogleMap
+            zoom={15}
+            center={{
+              lat: parseFloat(crag.cragLocation.lat),
+              lng: parseFloat(crag.cragLocation.lng),
+            }}
+            mapContainerClassName="map-container"
+            onClick={mapClick}
           >
-            <GoogleMap
-              zoom={15}
-              center={{
-                lat: parseFloat(crag.cragLocation.lat),
-                lng: parseFloat(crag.cragLocation.lng),
-              }}
-              mapContainerClassName="map-container"
-              onClick={mapClick}
-            >
-              {displayMarkers}
-            </GoogleMap>
-          </LoadScript>
+            {displayMarkers}
+          </GoogleMap>
         </div>
       )}
       {error && <ErrorMessage errorMessage={error} />}

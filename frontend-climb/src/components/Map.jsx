@@ -1,14 +1,24 @@
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import crags from "../api/crags";
 
-function Map({ crags, user, api }) {
+function Map({ user }) {
   const navigate = useNavigate();
+  const [allCrags, setAllCrags] = useState([]);
 
   const markerClick = (marker) => {
     navigate(marker.cragName);
   };
 
-  const displayMarkers = crags.map((marker) => {
+  useEffect(() => {
+    const getAllCrags = async () => {
+      const { data } = await crags.getAllCrags();
+      setAllCrags(data);
+    };
+    getAllCrags();
+  }, []);
+  const displayMarkers = allCrags.map((marker) => {
     return (
       <Marker
         key={marker._id}
@@ -24,17 +34,18 @@ function Map({ crags, user, api }) {
     );
   });
   const mapClick = (e) => {
-    if (user && user.isAdmin) {
+    if (user.isAdmin) {
       navigate("/addcrag", {
         state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
       });
     }
   };
+
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: "", // ,
     // ...otherOptions
   });
-  if (!api) {
+  if (!isLoaded) {
     return <h2>Loading...</h2>;
   }
   return (
