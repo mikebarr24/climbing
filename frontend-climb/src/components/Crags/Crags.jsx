@@ -2,7 +2,6 @@ import "./Crags.scss";
 import Map from "../Map";
 import auth from "../../api/auth";
 import { useState, useEffect } from "react";
-import { LoadScript } from "@react-google-maps/api";
 import ApiKeys from "../../api/ApiKeys";
 import crags from "../../api/crags";
 
@@ -18,13 +17,11 @@ function Crags() {
 
   //Set Google Map Api
   useEffect(() => {
-    if (api === null) {
-      const getApi = async () => {
-        const { data } = await ApiKeys.mapsApi();
-        setApi(data);
-      };
-      getApi();
-    }
+    const getApi = async () => {
+      const { data } = await ApiKeys.mapsApi();
+      setApi(data);
+    };
+    getApi();
   }, []);
 
   //Get all crag data from DB

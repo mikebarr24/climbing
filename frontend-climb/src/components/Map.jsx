@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { GoogleMap, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 function Map({ crags, user, api }) {
   const navigate = useNavigate();
@@ -30,6 +30,10 @@ function Map({ crags, user, api }) {
       });
     }
   };
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: "", // ,
+    // ...otherOptions
+  });
   if (!api) {
     return <h2>Loading...</h2>;
   }
