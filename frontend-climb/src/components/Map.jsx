@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import crags from "../api/crags";
 
 function Map({ user }) {
@@ -18,9 +18,10 @@ function Map({ user }) {
     };
     getAllCrags();
   }, []);
+
   const displayMarkers = allCrags.map((marker) => {
     return (
-      <Marker
+      <MarkerF
         key={marker._id}
         position={{
           lat: parseFloat(marker.cragLocation.lat),
@@ -48,6 +49,7 @@ function Map({ user }) {
   if (!isLoaded) {
     return <h2>Loading...</h2>;
   }
+  console.log(displayMarkers);
   return (
     <GoogleMap
       zoom={7}
@@ -55,7 +57,7 @@ function Map({ user }) {
       mapContainerClassName="map-container"
       onClick={mapClick}
     >
-      {displayMarkers && displayMarkers}
+      {displayMarkers}
     </GoogleMap>
   );
 }
