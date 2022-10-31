@@ -26,7 +26,7 @@ function App() {
         <Route path="/crags" element={<Crags user={user} />} />
         <Route path="/crags/addsector" element={<AddMarker />} />
         <Route path="/addcrag" element={<AddMarker />} />
-        <Route path="/crags/:cragName" element={<Crag />} />
+        <Route path="/crags/:cragName" element={<Crag user={user} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/newuser" element={<NewUser />} />

@@ -1,48 +1,17 @@
 import "./Crag.scss";
-import { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import ErrorMessage from "../ErrorMessage";
-import crags from "../../api/crags";
 import Button from "../Button/Button";
 import Modal from "./Modal";
-import ApiKeys from "../../api/ApiKeys";
-import auth from "../../api/auth";
 
-function Crag() {
-  const params = useParams();
+function Crag({ user }) {
   const navigate = useNavigate();
-  const [crag, setCrag] = useState(null);
-  const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
-  const [error, setError] = useState(null);
 
-  const api = useRef(null);
-
-  useEffect(() => {
-    const getApi = async () => {
-      const { data } = await ApiKeys.mapsApi();
-      api.current = data;
-    };
-    getApi();
-  }, [crag]);
-
-  useEffect(() => {
-    setUser(auth.getCurrentUser());
-  }, [crag]);
-
-  useEffect(() => {
-    const getCrag = async () => {
-      try {
-        const { data } = await crags.getCrag(params.cragName);
-        setCrag(data);
-      } catch (error) {
-        setError(error.response.data);
-      }
-    };
-    getCrag();
-  }, []);
+  const { state: crag } = useLocation();
 
   const clickHandle = (e) => {
     setIsOpen(true);
@@ -60,7 +29,7 @@ function Crag() {
   if (crag) {
     displayMarkers = crag.sectors.map((marker) => {
       return (
-        <Marker
+        <MarkerF
           key={marker._id}
           position={marker.sectorLocation}
           onClick={() => clickHandle(marker)}
@@ -82,10 +51,7 @@ function Crag() {
       });
     }
   };
-  if (!api) {
-    return <h2>Loading...</h2>;
-  }
-  console.log(api);
+
   return (
     <div id="crag" className="container">
       <Button name="Back to Map" onClick={() => navigate("/crags")} />
@@ -114,7 +80,6 @@ function Crag() {
           </GoogleMap>
         </div>
       )}
-      {error && <ErrorMessage errorMessage={error} />}
       <Modal
         open={isOpen}
         close={() => setIsOpen(false)}

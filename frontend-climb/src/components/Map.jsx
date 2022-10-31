@@ -7,10 +7,6 @@ function Map({ user }) {
   const navigate = useNavigate();
   const [allCrags, setAllCrags] = useState([]);
 
-  const markerClick = (marker) => {
-    navigate(marker.cragName);
-  };
-
   useEffect(() => {
     const getAllCrags = async () => {
       const { data } = await crags.getAllCrags();
@@ -19,6 +15,11 @@ function Map({ user }) {
     getAllCrags();
   }, []);
 
+  const markerClick = (marker) => {
+    navigate(marker.cragName, {
+      state: marker,
+    });
+  };
   const displayMarkers = allCrags.map((marker) => {
     return (
       <MarkerF
