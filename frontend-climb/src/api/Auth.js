@@ -55,7 +55,7 @@ const checkPassword = async (password) => {
 };
 http.setJwt(getJwtKey());
 
-export default {
+const exportFunction = {
   checkPassword,
   updateUser,
   getUserServer,
@@ -65,3 +65,5 @@ export default {
   login,
   register,
 };
+
+export default exportFunction;

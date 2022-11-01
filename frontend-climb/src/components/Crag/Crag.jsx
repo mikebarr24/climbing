@@ -2,7 +2,6 @@ import "./Crag.scss";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
-import ErrorMessage from "../ErrorMessage";
 import Button from "../Button/Button";
 import Modal from "./Modal";
 
@@ -10,8 +9,6 @@ function Crag({ user }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
-  const [error, setError] = useState(null);
-  const [api, setApi] = useState(null);
 
   const { state: crag } = useLocation();
 
@@ -27,22 +24,19 @@ function Crag({ user }) {
     document.body.style.overflowY = "auto";
   }
 
-  let displayMarkers;
-  if (crag) {
-    displayMarkers = crag.sectors.map((sector, index) => {
-      return (
-        <MarkerF
-          key={index}
-          position={sector.sectorLocation}
-          onClick={() => clickHandle(sector)}
-          title={sector.sectorName}
-        />
-      );
-    });
-  }
+  const displayMarkers = crag.sectors.map((sector, index) => {
+    return (
+      <MarkerF
+        key={index}
+        position={sector.sectorLocation}
+        onClick={() => clickHandle(sector)}
+        title={sector.sectorName}
+      />
+    );
+  });
 
   const mapClick = (e) => {
-    if (user && user.isAdmin === true) {
+    if (user.isAdmin === true) {
       navigate("/crags/addsector", {
         state: {
           lat: e.latLng.lat(),
