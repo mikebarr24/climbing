@@ -6,12 +6,13 @@ function CloseButton({ onClick, className }) {
     color: "white",
     backgroundColor: "black",
     border: "0.3rem solid white",
-    right: "-1.5rem",
-    top: "-1.5rem",
+    right: "-2.5rem",
+    top: "-2.5rem",
     fontSize: "4rem",
     width: "5rem",
     height: "5rem",
     borderRadius: "100px",
+    zIndex: "1000",
   };
   return (
     <>

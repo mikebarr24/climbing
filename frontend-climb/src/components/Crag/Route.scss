@@ -1,0 +1,15 @@
+@import "../../config";
+
+.route {
+  display: grid;
+  grid-template-columns: 2fr 0.3fr 1fr;
+  color: black;
+  background-color: rgb(219, 219, 219);
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+  .route--route-rating {
+    text-align: right;
+    display: inline;
+  }
+}

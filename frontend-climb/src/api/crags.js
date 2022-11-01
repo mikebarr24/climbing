@@ -18,7 +18,11 @@ const setSector = async (sectorInfo) => {
   const res = await http.post("/crags/addsector", sectorInfo);
   return res;
 };
+const setRoute = async (routeInfo) => {
+  const res = await http.post("/crags/addroute", routeInfo);
+  return res;
+};
 
-const exportObject = { getAllCrags, getCrag, setCrag, setSector };
+const exportObject = { getAllCrags, getCrag, setCrag, setSector, setRoute };
 
 export default exportObject;

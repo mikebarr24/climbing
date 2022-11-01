@@ -10,6 +10,8 @@ function Crag({ user }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
+  const [error, setError] = useState(null);
+  const [api, setApi] = useState(null);
 
   const { state: crag } = useLocation();
 
@@ -27,13 +29,13 @@ function Crag({ user }) {
 
   let displayMarkers;
   if (crag) {
-    displayMarkers = crag.sectors.map((marker) => {
+    displayMarkers = crag.sectors.map((sector, index) => {
       return (
         <MarkerF
-          key={marker._id}
-          position={marker.sectorLocation}
-          onClick={() => clickHandle(marker)}
-          title={marker.sectorName}
+          key={index}
+          position={sector.sectorLocation}
+          onClick={() => clickHandle(sector)}
+          title={sector.sectorName}
         />
       );
     });
@@ -84,7 +86,8 @@ function Crag({ user }) {
         open={isOpen}
         close={() => setIsOpen(false)}
         portalClassName="crag-modal"
-        sector={sector}
+        currentSector={sector}
+        currentCrag={crag}
       />
     </div>
   );

@@ -1,58 +1,70 @@
-import { useState } from "react";
+import { useRef } from "react";
 import { AiOutlineCloudUpload, AiOutlineArrowLeft } from "react-icons/ai";
-
+import crag from "../../api/crags";
 import "./AddRouteForm.scss";
 
-function AddRouteForm({ close }) {
-  const initForm = {
-    routeName: "",
-    routeGrade: "",
-    routeInformation: "",
-  };
-  const [form, setForm] = useState(initForm);
+function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
+  const routeName = useRef();
+  const routeGrade = useRef();
+  const routeInformation = useRef();
+  const routeRating = useRef();
 
-  const changeHandle = (e) => {
-    setForm((state) => ({
-      ...state,
-      [e.target.name]: e.target.value,
-    }));
+  const submitHandle = async (e) => {
+    e.preventDefault();
+    const routeData = {
+      routeName: routeName.current.value,
+      routeGrade: routeGrade.current.value,
+      routeInformation: routeInformation.current.value,
+      routeRating: routeRating.current.value,
+      currentCrag: currentCrag._id,
+      currentSector: currentSector._id,
+    };
+    console.log("here");
+    try {
+      await crag.setRoute(routeData);
+      close();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div className="modal--add-route-form container">
+    <div
+      className={`modal--add-route-form container ${windowState ? "open" : ""}`}
+    >
+      <span className="add-route-form--back-arrow" onClick={close}>
+        <AiOutlineArrowLeft />
+      </span>
       <div className="add-route-form--title-text text-white">
-        <span className="add-route-form--back-arrow" onClick={close}>
-          <AiOutlineArrowLeft />
-        </span>
         <h2 className="add-route-form--title text-white">Add Route</h2>
       </div>
-      <form className="form-standard modal--form">
+      <form className="form-standard modal--form" onSubmit={submitHandle}>
         <input
-          name="routeName"
           type="text"
+          ref={routeName}
           className="form-field"
           placeholder="Route Name"
-          onChange={changeHandle}
-          value={form.routeName}
         />
         <input
-          name="routeGrade"
           type="text"
+          ref={routeGrade}
           className="form-field"
           placeholder="Route Grade"
-          onChange={changeHandle}
-          value={form.routeGrade}
+        />
+        <input
+          type="text"
+          ref={routeRating}
+          className="form-field"
+          placeholder="Route Rating"
         />
 
         <textarea
-          name="routeInformation"
+          ref={routeInformation}
           id=""
           cols="30"
-          rows="7"
+          rows="5"
           className="form-text"
-          onChange={changeHandle}
           placeholder="Route Information"
-          value={form.routeInformation}
         ></textarea>
         <label className="custom-file-upload">
           <input type="file" className="form-file" />
