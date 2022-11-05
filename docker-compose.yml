@@ -12,6 +12,8 @@ services:
       - db_climbing
     networks:
       - climbing_network
+    environment:
+      - ENVIRONMENT=development
   frontend_climbing:
     build: ./frontend-climb
     container_name: frontend
@@ -24,6 +26,8 @@ services:
       - api_climbing
     networks:
       - climbing_network
+    environment:
+      - ENVIRONMENT=development
   db_climbing:
     image: mongo:latest
     container_name: climbing_db

@@ -1,4 +1,3 @@
-process.env.NODE_ENV = "development";
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;

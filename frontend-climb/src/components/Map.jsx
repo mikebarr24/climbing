@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import crags from "../api/crags";
 
-function Map({ user }) {
+function Map({ user, api }) {
   const navigate = useNavigate();
   const [allCrags, setAllCrags] = useState([]);
 
@@ -42,15 +42,16 @@ function Map({ user }) {
       });
     }
   };
+  console.log(api);
+
+  const myApi = useMemo();
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "", // ,
-    // ...otherOptions
+    googleMapsApiKey: "",
   });
   if (!isLoaded) {
     return <h2>Loading...</h2>;
   }
-  console.log(displayMarkers);
   return (
     <GoogleMap
       zoom={7}

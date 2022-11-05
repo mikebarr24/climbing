@@ -5,10 +5,10 @@ require("dotenv").config();
 const db = () => {
   let connectionString;
   let connectedDB;
-  if (process.env.NODE_ENV === "test") {
+  if (process.env.ENVIRONMENT === "test") {
     connectedDB = "Test";
     connectionString = "mongodb://localhost:27017/climbingTest";
-  } else if (process.env.NODE_ENV === "development") {
+  } else if (process.env.ENVIRONMENT === "development") {
     connectedDB = "Dev";
     connectionString = "mongodb://db_climbing/climbingDev";
   } else {
