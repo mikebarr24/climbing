@@ -16,12 +16,10 @@ function Nav({ user }) {
       </Link>
       <div className={!menu ? "nav-menu" : "nav-menu open"}>
         <ul>
-          <Link to="/">
-            <li className="nav-item" onClick={menuView}>
-              Home
-            </li>
-          </Link>
-          <HashLink smooth to="#about" onClick={menuView}>
+          <HashLink smooth to="/#home" onClick={menuView}>
+            <li className="nav-item">Home</li>
+          </HashLink>
+          <HashLink smooth to="/#about" onClick={menuView}>
             <li className="nav-item">About</li>
           </HashLink>
           <Link to="/crags">
