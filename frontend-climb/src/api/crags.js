@@ -22,7 +22,28 @@ const setRoute = async (routeInfo) => {
   const res = await http.post("/crags/addroute", routeInfo);
   return res;
 };
+const archiveSector = async (cragId, sectorId) => {
+  const res = await http.put("/crags/archiveSector", {
+    cragId,
+    sectorId,
+  });
+  return res;
+};
+const archiveCrag = async (cragId) => {
+  const res = await http.put("/crags/archiveCrag", {
+    cragId,
+  });
+  return res;
+};
 
-const exportObject = { getAllCrags, getCrag, setCrag, setSector, setRoute };
+const exportObject = {
+  getAllCrags,
+  getCrag,
+  setCrag,
+  setSector,
+  setRoute,
+  archiveSector,
+  archiveCrag,
+};
 
 export default exportObject;

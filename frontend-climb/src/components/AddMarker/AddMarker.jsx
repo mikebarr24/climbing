@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import crags from "../../api/crags";
 
-function AddCrag(props) {
+function AddCrag() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const initMarker = {

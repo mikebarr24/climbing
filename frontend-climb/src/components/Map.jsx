@@ -21,19 +21,20 @@ function Map({ user, api }) {
     });
   };
   const displayMarkers = allCrags.map((marker) => {
-    return (
-      <MarkerF
-        key={marker._id}
-        position={{
-          lat: parseFloat(marker.cragLocation.lat),
-          lng: parseFloat(marker.cragLocation.lng),
-        }}
-        title={marker.cragName}
-        onClick={() => {
-          markerClick(marker);
-        }}
-      />
-    );
+    if (!marker.archived)
+      return (
+        <MarkerF
+          key={marker._id}
+          position={{
+            lat: parseFloat(marker.cragLocation.lat),
+            lng: parseFloat(marker.cragLocation.lng),
+          }}
+          title={marker.cragName}
+          onClick={() => {
+            markerClick(marker);
+          }}
+        />
+      );
   });
   const mapClick = (e) => {
     if (user.isAdmin) {

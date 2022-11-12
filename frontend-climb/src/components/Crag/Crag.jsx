@@ -1,16 +1,27 @@
 import "./Crag.scss";
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import Button from "../Button/Button";
 import Modal from "./Modal";
+import myCrag from "../../api/crags";
+import crags from "../../api/crags";
 
 function Crag({ user }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
+  const [crag, setCrag] = useState(null);
+  const { cragName } = useParams();
 
-  const { state: crag } = useLocation();
+  //This isn't efficient as querying server on page load. Need to look into Redux as I don't want to keep passing around useLocation json
+  useEffect(() => {
+    const internal = async () => {
+      const { data } = await myCrag.getCrag(cragName);
+      setCrag(data);
+    };
+    internal();
+  }, [isOpen]);
 
   const clickHandle = (e) => {
     setIsOpen(true);
@@ -27,14 +38,16 @@ function Crag({ user }) {
   let displayMarkers;
   if (crag) {
     displayMarkers = crag.sectors.map((sector, index) => {
-      return (
-        <MarkerF
-          key={index}
-          position={sector.sectorLocation}
-          onClick={() => clickHandle(sector)}
-          title={sector.sectorName}
-        />
-      );
+      if (!sector.archived) {
+        return (
+          <MarkerF
+            key={index}
+            position={sector.sectorLocation}
+            onClick={() => clickHandle(sector)}
+            title={sector.sectorName}
+          />
+        );
+      }
     });
   }
 
@@ -51,18 +64,30 @@ function Crag({ user }) {
     }
   };
 
+  async function archiveCrag() {
+    await crags.archiveCrag(crag._id);
+    navigate("/crags");
+  }
+
   return (
     <div id="crag" className="container">
-      <Button name="Back to Map" onClick={() => navigate("/crags")} />
       {crag && (
         <div className="crag-wrapper">
           <div className="crag--text">
             <h2 className="title-text">
               {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
             </h2>
+            <button onClick={archiveCrag}>Delete Crag</button>
+            <div className="crag--button-container">
+              <Button name="Back to Map" onClick={() => navigate("/crags")} />
+            </div>
+            {}
             <p className="standard-text">
-              There are <strong>{crag.sectors.length}</strong> sectors at this
-              crag
+              There are{" "}
+              <strong>
+                {crag.sectors.filter((sector) => !sector.archived).length}
+              </strong>{" "}
+              sectors at this crag
             </p>
           </div>
 

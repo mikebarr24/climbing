@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import CloseButton from "../common/CloseButton";
 import AddRouteForm from "./AddRouteForm";
 import Route from "./Route";
+import crags from "../../api/crags";
 
 function Modal({ open, currentSector, close, currentCrag }) {
   const [openAdd, setOpenAdd] = useState(false);
@@ -35,12 +36,18 @@ function Modal({ open, currentSector, close, currentCrag }) {
       />
     );
   });
+
+  async function archiveSector() {
+    await crags.archiveSector(currentCrag._id, currentSector._id);
+    close();
+  }
   return ReactDOM.createPortal(
     <>
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
         <CloseButton onClick={clickHandle} />
         <h2>Sector - {currentSector.sectorName}</h2>
+        <button onClick={archiveSector}>Delete Sector</button>
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
         <p>{currentSector.information}</p>

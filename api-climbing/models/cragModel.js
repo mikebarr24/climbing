@@ -17,6 +17,10 @@ const routeSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
+  archived: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const sectorSchema = new mongoose.Schema({
@@ -34,6 +38,10 @@ const sectorSchema = new mongoose.Schema({
   },
   addedBy: mongoose.ObjectId,
   routes: [routeSchema],
+  archived: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const cragSchema = new mongoose.Schema({
@@ -66,6 +74,10 @@ const cragSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now,
+  },
+  archived: {
+    type: Boolean,
+    default: false,
   },
 });
 const Crag = mongoose.model("Crag", cragSchema);

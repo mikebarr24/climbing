@@ -67,3 +67,20 @@ Content-Type: application/json
   "currentCrag": "633b3eae1b1390b8ca330a0c",
   "currentSector": "633b3ebb1b1390b8ca330a12"
 }
+
+###
+PUT http://localhost:8080/api/crags/archiveSector
+Content-Type: application/json
+
+{
+  "cragId": "636f54831b294bf3e9666785",
+  "sectorId": "636f54951b294bf3e966678a"
+}
+
+###
+PUT http://localhost:8080/api/crags/archiveCrag
+Content-Type: application/json
+
+{
+  "cragId": "636fd6aba2126e56b3523cd1"
+}

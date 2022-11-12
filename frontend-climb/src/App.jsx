@@ -23,10 +23,10 @@ function App() {
       <Nav user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/crags" element={<Crags user={user} />} />
+        <Route path="/crags" element={<Crags user={user} />}></Route>
+        <Route path="/crags/:cragName" element={<Crag user={user} />} />
         <Route path="/crags/addsector" element={<AddMarker />} />
         <Route path="/addcrag" element={<AddMarker />} />
-        <Route path="/crags/:cragName" element={<Crag user={user} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/newuser" element={<NewUser />} />

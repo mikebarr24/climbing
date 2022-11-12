@@ -3,8 +3,10 @@
 #crag {
   margin-top: $nav-height;
   color: $dark-color;
-  .crag--text {
-    text-align: right;
+
+  .crag--button-container {
+    display: flex;
+    justify-content: space-between;
   }
   .map-container {
     width: 100%;

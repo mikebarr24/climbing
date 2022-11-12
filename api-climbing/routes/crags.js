@@ -71,4 +71,29 @@ router.post("/addroute", auth, async (req, res) => {
   res.send("Route Added");
 });
 
+router.put("/archiveSector", async (req, res) => {
+  const { cragId, sectorId } = req.body;
+  try {
+    const crag = await Crag.findById({ _id: cragId });
+    if (!crag) return res.status(400).send("Crag Not Found");
+    const sector = crag.sectors.id(sectorId);
+    if (!sector) return res.status(400).send("Sector Not Found");
+    sector.archived = true;
+    await crag.save();
+  } catch (error) {
+    return res.status(400).send("Problem finding Crag or Sector");
+  }
+  res.send("Sector Archived");
+});
+
+router.put("/archiveCrag", async (req, res) => {
+  const { cragId } = req.body;
+  try {
+    await Crag.findByIdAndUpdate({ _id: cragId }, { archived: true });
+  } catch (error) {
+    return res.status(400).send("Problem finding Crag");
+  }
+  res.send("Crag Archived");
+});
+
 module.exports = router;
