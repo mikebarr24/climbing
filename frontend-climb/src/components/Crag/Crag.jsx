@@ -23,17 +23,20 @@ function Crag({ user }) {
   } else {
     document.body.style.overflowY = "auto";
   }
-
-  const displayMarkers = crag.sectors.map((sector, index) => {
-    return (
-      <MarkerF
-        key={index}
-        position={sector.sectorLocation}
-        onClick={() => clickHandle(sector)}
-        title={sector.sectorName}
-      />
-    );
-  });
+  //If no crags, sectors is not iterated
+  let displayMarkers;
+  if (crag) {
+    displayMarkers = crag.sectors.map((sector, index) => {
+      return (
+        <MarkerF
+          key={index}
+          position={sector.sectorLocation}
+          onClick={() => clickHandle(sector)}
+          title={sector.sectorName}
+        />
+      );
+    });
+  }
 
   const mapClick = (e) => {
     if (user.isAdmin === true) {
