@@ -24,16 +24,6 @@ describe("/api/crags", () => {
     await Crag.deleteMany({});
     return server.close();
   });
-  const exec = () => {
-    return request(server)
-      .post("/api/crags/addcrag")
-      .set("x-auth-token", token)
-      .send({
-        cragName,
-        cragLocation,
-        information,
-      });
-  };
 
   describe("GET /", () => {
     it("should return a list of submitted crags", async () => {
@@ -49,9 +39,18 @@ describe("/api/crags", () => {
   });
 
   describe("POST /", () => {
+    const exec = () => {
+      return request(server)
+        .post("/api/crags/addcrag")
+        .set("x-auth-token", token)
+        .send({
+          cragName,
+          cragLocation,
+          information,
+        });
+    };
     it("should return include property 'cragName' if crag created", async () => {
       const res = await exec();
-      console.log(res.body);
       expect(res.body).toHaveProperty("cragName");
     });
     it("should return 401 if user not authorised", async () => {
@@ -68,6 +67,84 @@ describe("/api/crags", () => {
       cragLocation = "";
       const res = await exec();
       expect(res.status).toBe(400);
+    });
+  });
+
+  describe("PUT /archiveSector", () => {
+    let crag;
+    let cragId;
+    let sectorId;
+    beforeEach(async () => {
+      crag = new Crag({
+        cragName,
+        information,
+        cragLocation,
+      });
+      crag.sectors.push({
+        sectorName: "test",
+        sectorLocation: cragLocation,
+      });
+      await crag.save();
+      cragId = crag._id;
+      sectorId = crag.sectors[0]._id;
+    });
+    afterEach(() => {
+      Crag.deleteMany({});
+    });
+    const exec = () => {
+      return request(server)
+        .put("/api/crags/archiveSector")
+        .set("x-auth-token", token)
+        .send({ cragId, sectorId });
+    };
+    it("should return 200 if sector is removed", async () => {
+      const res = await exec();
+      expect(res.status).toBe(200);
+    });
+    it("should return 400 if incorrect sector not Object ID", async () => {
+      sectorId = "1234";
+      const res = await exec();
+      expect(res.status).toBe(400);
+      expect(res.text).toBe("Sector Not Found");
+    });
+    it("should return 400 if incorrect crag not Object ID", async () => {
+      cragId = "1234";
+      const res = await exec();
+      expect(res.status).toBe(400);
+      expect(res.text).toBe("Problem finding Crag or Sector");
+    });
+    it("should return 400 if incorrect crag Object ID", async () => {
+      cragId = mongoose.Types.ObjectId();
+      const res = await exec();
+      expect(res.status).toBe(400);
+      expect(res.text).toBe("Crag Not Found");
+    });
+  });
+
+  describe("PUT /archiveCrag", () => {
+    let crag;
+    let cragId;
+    beforeEach(async () => {
+      crag = new Crag({
+        cragName,
+        information,
+        cragLocation,
+      });
+      await crag.save();
+      cragId = crag._id;
+    });
+    afterEach(() => {
+      Crag.deleteMany();
+    });
+    const exec = () => {
+      return request(server)
+        .put("/api/crags/archiveCrag")
+        .set("x-auth-token", token)
+        .send({ cragId });
+    };
+    it("should return 200 if crag is archived", async () => {
+      const res = await exec();
+      expect(res.status).toBe(200);
     });
   });
 });
