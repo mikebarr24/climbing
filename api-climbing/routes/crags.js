@@ -71,7 +71,7 @@ router.post("/addroute", auth, async (req, res) => {
   res.send("Route Added");
 });
 
-router.put("/archiveSector", async (req, res) => {
+router.put("/archiveSector", auth, async (req, res) => {
   const { cragId, sectorId } = req.body;
   try {
     const crag = await Crag.findById({ _id: cragId });
@@ -86,7 +86,7 @@ router.put("/archiveSector", async (req, res) => {
   res.send("Sector Archived");
 });
 
-router.put("/archiveCrag", async (req, res) => {
+router.put("/archiveCrag", auth, async (req, res) => {
   const { cragId } = req.body;
   try {
     await Crag.findByIdAndUpdate({ _id: cragId }, { archived: true });
