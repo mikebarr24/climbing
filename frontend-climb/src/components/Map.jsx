@@ -42,9 +42,6 @@ function Map({ user, api }) {
       });
     }
   };
-  console.log(api);
-
-  const myApi = useMemo();
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: "",
