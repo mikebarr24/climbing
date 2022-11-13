@@ -1,21 +1,25 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./Contact.scss";
 import sendMessage from "../../api/email";
+import Message from "../common/Message";
 
 function Contact() {
   const formName = useRef();
   const formEmail = useRef();
   const formMessage = useRef();
+  const [returnMessage, setReturnMessage] = useState(null);
 
-  function submitHandle(e) {
+  async function submitHandle(e) {
     e.preventDefault();
     const myMessage = {
       name: formName.current.value,
       email: formEmail.current.value,
       message: formMessage.current.value,
     };
-    console.log(myMessage);
-    sendMessage(myMessage);
+    setReturnMessage("Sending...");
+    const { data } = await sendMessage(myMessage);
+
+    setReturnMessage(data.success);
   }
 
   return (
@@ -46,6 +50,7 @@ function Contact() {
         />
         <input type="submit" className="form-button" />
       </form>
+      <Message message={returnMessage} />
     </div>
   );
 }
