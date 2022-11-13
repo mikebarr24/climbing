@@ -16,10 +16,11 @@ validateMessage = (message) => {
 
 const sendMail = async (contactForm) => {
   let transporter = nodemailer.createTransport({
-    service: "Hotmail",
+    host: "smtp.ethereal.email",
+    port: 587,
     auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASS,
+      user: process.env.TEST_EMAIL,
+      pass: process.env.TEST_PASS,
     },
   });
   const response = await transporter.sendMail({

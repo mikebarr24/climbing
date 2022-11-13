@@ -27,8 +27,10 @@ function Nav({ user }) {
               Crags
             </li>
           </Link>
-          <Link to="#">
-            <li className="nav-item">Contact</li>
+          <Link to="/contact">
+            <li className="nav-item" onClick={menuView}>
+              Contact
+            </li>
           </Link>
           {!user && (
             <Link to="/login">
