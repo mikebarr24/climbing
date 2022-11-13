@@ -7,7 +7,7 @@ import AddRouteForm from "./AddRouteForm";
 import Route from "./Route";
 import crags from "../../api/crags";
 
-function Modal({ open, currentSector, close, currentCrag }) {
+function Modal({ open, currentSector, close, currentCrag, user }) {
   const [openAdd, setOpenAdd] = useState(false);
 
   const OVERLAY = {
@@ -47,7 +47,7 @@ function Modal({ open, currentSector, close, currentCrag }) {
       <div className="crag-modal standard-text">
         <CloseButton onClick={clickHandle} />
         <h2>Sector - {currentSector.sectorName}</h2>
-        <button onClick={archiveSector}>Delete Sector</button>
+        {user.isAdmin && <button onClick={archiveSector}>Delete Sector</button>}
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
         <p>{currentSector.information}</p>

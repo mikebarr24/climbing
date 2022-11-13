@@ -72,6 +72,7 @@ router.post("/addroute", auth, async (req, res) => {
 });
 
 router.put("/archiveSector", auth, async (req, res) => {
+  if (!req.user.isAdmin) return res.status(401).send("Not Authorised");
   const { cragId, sectorId } = req.body;
   try {
     const crag = await Crag.findById({ _id: cragId });
@@ -87,6 +88,7 @@ router.put("/archiveSector", auth, async (req, res) => {
 });
 
 router.put("/archiveCrag", auth, async (req, res) => {
+  if (!req.user.isAdmin) return res.status(401).send("Not Authorised");
   const { cragId } = req.body;
   try {
     await Crag.findByIdAndUpdate({ _id: cragId }, { archived: true });

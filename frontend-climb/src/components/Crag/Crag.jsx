@@ -77,7 +77,7 @@ function Crag({ user }) {
             <h2 className="title-text">
               {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
             </h2>
-            <button onClick={archiveCrag}>Delete Crag</button>
+            {user.isAdmin && <button onClick={archiveCrag}>Delete Crag</button>}
             <div className="crag--button-container">
               <Button name="Back to Map" onClick={() => navigate("/crags")} />
             </div>
@@ -110,6 +110,7 @@ function Crag({ user }) {
         portalClassName="crag-modal"
         currentSector={sector}
         currentCrag={crag}
+        user={user}
       />
     </div>
   );
