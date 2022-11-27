@@ -23,16 +23,19 @@ const userSchema = new mongoose.Schema({
     min: 8,
     required: true,
   },
-  isAdmin: Boolean,
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-userSchema.methods.genAuthToken = function () {
+userSchema.methods.genAuthToken = function (admin) {
   const token = jwt.sign(
     {
       _id: this._id,
       name: this.name,
       email: this.email,
-      isAdmin: this.isAdmin,
+      isAdmin: admin ? true : this.isAdmin,
     },
     process.env.JWT_CLIMBING_PRIVATE_KEY
   );

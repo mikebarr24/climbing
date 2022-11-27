@@ -12,7 +12,7 @@ describe("/api/crags", () => {
 
   beforeEach(() => {
     server = require("../../index");
-    token = new User().genAuthToken();
+    token = new User().genAuthToken(true);
     cragName = "12345";
     information = "abcd";
     cragLocation = {

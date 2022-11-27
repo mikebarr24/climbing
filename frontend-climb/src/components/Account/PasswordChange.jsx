@@ -29,9 +29,8 @@ function PasswordChange(props) {
     } catch (error) {
       const { response } = error;
       props.happy(null);
-      return props.error(response.data);
+      return props.error(response);
     }
-    await auth.checkPassword(password.originalPassword);
   };
 
   return (
