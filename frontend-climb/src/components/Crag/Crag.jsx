@@ -1,7 +1,7 @@
 import "./Crag.scss";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { GoogleMap, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import Button from "../Button/Button";
 import Modal from "./Modal";
 import myCrag from "../../api/crags";
@@ -68,7 +68,12 @@ function Crag({ user }) {
     await crags.archiveCrag(crag._id);
     navigate("/crags");
   }
-
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: "",
+  });
+  if (!isLoaded) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <div id="crag" className="container">
       {crag && (
