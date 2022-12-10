@@ -13,7 +13,7 @@ At some stage I will be looking for people to go out and use this. I understand 
 To set up a .env file in the correct place, run the following in your terminal.
 
 ```
-cp .env.example ./api-climbing/.env
+cp .env.example ./.env
 ```
 
 Install npm packages for both front end and backend using:

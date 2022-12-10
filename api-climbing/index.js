@@ -9,5 +9,4 @@ require("./startup/db")();
 const server = app.listen(port, () => {
   logger.info(`Listening on Port ${port}`);
 });
-
 module.exports = server;
