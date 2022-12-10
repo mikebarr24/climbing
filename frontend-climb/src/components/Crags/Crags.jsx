@@ -1,20 +1,8 @@
 import "./Crags.scss";
 import Map from "../Map";
-import { useState, useEffect } from "react";
-import ApiKeys from "../../api/ApiKeys";
 
-function Crags({ user }) {
-  const [api, setApi] = useState(null);
-
-  //Set Google Map Api
-  useEffect(() => {
-    const getApi = async () => {
-      const { data } = await ApiKeys.mapsApi();
-      setApi(data);
-    };
-    getApi();
-  }, []);
-
+function Crags({ user, api }) {
+  console.log(api);
   return (
     <div id="crags" className="container">
       <h2 className="page-title">Crags</h2>
@@ -25,5 +13,4 @@ function Crags({ user }) {
     </div>
   );
 }
-
 export default Crags;

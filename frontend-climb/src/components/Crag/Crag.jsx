@@ -7,13 +7,12 @@ import Modal from "./Modal";
 import myCrag from "../../api/crags";
 import crags from "../../api/crags";
 
-function Crag({ user }) {
+function Crag({ user, api }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
   const [crag, setCrag] = useState(null);
   const { cragName } = useParams();
-
   //This isn't efficient as querying server on page load. Need to look into Redux as I don't want to keep passing around useLocation json
   useEffect(() => {
     const internal = async () => {
@@ -68,8 +67,9 @@ function Crag({ user }) {
     await crags.archiveCrag(crag._id);
     navigate("/crags");
   }
+
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "",
+    googleMapsApiKey: api === "dev" ? "" : api,
   });
   if (!isLoaded) {
     return <h2>Loading...</h2>;

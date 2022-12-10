@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import crags from "../api/crags";
 
@@ -45,7 +45,7 @@ function Map({ user, api }) {
   };
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "",
+    googleMapsApiKey: api === "dev" ? "" : api,
   });
   if (!isLoaded) {
     return <h2>Loading...</h2>;
