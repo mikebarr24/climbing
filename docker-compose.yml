@@ -12,7 +12,7 @@ services:
     depends_on:
       - db_climbing
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     networks:
       - climbing_network
   frontend_climbing:
