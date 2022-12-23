@@ -1,61 +1,83 @@
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
-import crags from "../api/crags";
 
-function Map({ user, api }) {
+function Map({
+  api,
+  zoom,
+  mapPosition,
+  markerType,
+  markers,
+  markerClick,
+  currentCragId,
+}) {
   const navigate = useNavigate();
-  const [allCrags, setAllCrags] = useState([]);
-
-  useEffect(() => {
-    const getAllCrags = async () => {
-      const { data } = await crags.getAllCrags();
-      setAllCrags(data);
-    };
-    getAllCrags();
-  }, []);
-
-  const markerClick = (marker) => {
-    navigate(marker.cragName, {
-      state: marker,
-    });
-  };
-  const displayMarkers = allCrags.map((marker) => {
-    if (!marker.archived)
-      return (
-        <MarkerF
-          key={marker._id}
-          position={{
-            lat: parseFloat(marker.cragLocation.lat),
-            lng: parseFloat(marker.cragLocation.lng),
-          }}
-          title={marker.cragName}
-          onClick={() => {
-            markerClick(marker);
-          }}
-        />
-      );
-  });
-  const mapClick = (e) => {
-    if (user.isAdmin) {
-      navigate("/addcrag", {
-        state: { lat: e.latLng.lat(), lng: e.latLng.lng(), type: "crag" },
-      });
-    }
-  };
-
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: api === "dev" ? "" : api,
   });
+
+  function mapCragClick(e) {
+    navigate("/crags/add", {
+      state: {
+        type: "crag",
+        location: {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+        },
+      },
+    });
+  }
+  function mapSectorClick(e) {
+    navigate("/crags/add", {
+      state: {
+        type: "sector",
+        currentCragId: currentCragId,
+        location: {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+        },
+      },
+    });
+  }
+  const displayMarkers = markers.map((marker) => {
+    if (!marker.archived) {
+      return (
+        <MarkerF
+          key={marker._id}
+          markerId={marker._id}
+          icon={{
+            url: require("../media/icons/crag-icon.png"),
+          }}
+          position={{
+            lat:
+              markerType === "crag"
+                ? marker.cragLocation.lat
+                : marker.sectorLocation.lat,
+            lng:
+              markerType === "crag"
+                ? marker.cragLocation.lng
+                : marker.sectorLocation.lng,
+          }}
+          title={markerType === "crag" ? marker.cragName : marker.sectorName}
+          onClick={() =>
+            markerClick({
+              markerId: marker._id,
+              name: markerType === "crag" ? marker.cragName : marker.sectorName,
+            })
+          }
+        />
+      );
+    }
+  });
+
   if (!isLoaded) {
     return <h2>Loading...</h2>;
   }
   return (
     <GoogleMap
-      zoom={7}
-      center={{ lat: 54.677809, lng: -6.774634 }}
+      zoom={zoom}
+      center={!mapPosition ? { lat: 54.677809, lng: -6.774634 } : mapPosition}
       mapContainerClassName="map-container"
-      onClick={mapClick}
+      onClick={markerType === "crag" ? mapCragClick : mapSectorClick}
     >
       {displayMarkers}
     </GoogleMap>

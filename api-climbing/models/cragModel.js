@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const routeSchema = new mongoose.Schema({
-  routeName: String,
+  routeName: {
+    type: String,
+    min: 3,
+    max: 255,
+  },
   routeGrade: String,
   routeDescription: String,
   routeRating: {
@@ -24,12 +28,22 @@ const routeSchema = new mongoose.Schema({
 });
 
 const sectorSchema = new mongoose.Schema({
-  sectorName: String,
+  sectorName: {
+    type: String,
+    min: 3,
+    max: 255,
+  },
   sectorImageUrl: String,
   information: String,
   sectorLocation: {
-    lat: Number,
-    lng: Number,
+    lat: {
+      type: Number,
+      required: true,
+    },
+    lng: {
+      type: Number,
+      required: true,
+    },
   },
   dateCreated: {
     type: Date,
@@ -50,6 +64,7 @@ const cragSchema = new mongoose.Schema({
     min: 3,
     max: 255,
     required: true,
+    unique: true,
   },
   information: {
     type: String,
@@ -62,11 +77,11 @@ const cragSchema = new mongoose.Schema({
   },
   cragLocation: {
     lat: {
-      type: String,
+      type: Number,
       required: true,
     },
     lng: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

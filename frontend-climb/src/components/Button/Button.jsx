@@ -1,9 +1,9 @@
 import React from "react";
 import "./Button.scss";
 
-function Button(props) {
+function Button({ name, className, color, onClick }) {
   let styles;
-  if (props.color === "light") {
+  if (color === "light") {
     styles = {
       backgroundColor: "#fff",
       color: "#000",
@@ -16,8 +16,12 @@ function Button(props) {
   }
   return (
     <>
-      <button className={`btn-home ${props.className}`} style={styles} onClick={props.onClick} >
-        {props.name}
+      <button
+        className={`btn-home ${className}`}
+        style={styles}
+        onClick={onClick}
+      >
+        {name}
       </button>
     </>
   );

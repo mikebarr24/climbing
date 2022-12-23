@@ -10,20 +10,23 @@ router.get("/all", async (req, res) => {
   res.send(crags);
 });
 
-router.get("/:cragName", async (req, res) => {
-  const crag = await Crag.findOne({ cragName: req.params.cragName });
-  if (!crag)
-    return res
-      .status(400)
-      .send(`The crag ${req.params.cragName} cannot be found`);
-  res.send(crag);
+router.get("/:cragId", async (req, res) => {
+  const crag = await Crag.findById(req.params.cragId);
+  if (!crag) return res.status(400).send(`The crag cannot be found`);
+  try {
+    return res.send(crag);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   const data = req.body;
+  const existingCrag = await Crag.findOne({ cragName: data.cragName.trim() });
+  if (existingCrag) return res.status(400).send("Crag Name Already Exists");
   const crag = new Crag({
-    cragName: data.cragName,
-    information: data.information,
+    cragName: data.cragName.trim(),
+    information: data.information.trim(),
     sectors: [],
     cragLocation: data.cragLocation,
   });
@@ -36,7 +39,8 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
 });
 
 router.post("/addsector", auth, async (req, res) => {
-  const crag = await Crag.findOne({ cragName: req.body.currentCrag });
+  const crag = await Crag.findById(req.body.currentCragId);
+  if (!crag) return res.status(400).send("Crag cannot be found");
   crag.sectors.push({
     sectorName: req.body.sectorName,
     sectorLocation: req.body.sectorLocation,

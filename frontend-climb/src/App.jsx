@@ -43,8 +43,7 @@ function App() {
           path="/crags/:cragName"
           element={<Crag user={user} api={mapApi} />}
         />
-        <Route path="/crags/addsector" element={<AddMarker />} />
-        <Route path="/addcrag" element={<AddMarker />} />
+        <Route path="/crags/add" element={<AddMarker />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/newuser" element={<NewUser />} />

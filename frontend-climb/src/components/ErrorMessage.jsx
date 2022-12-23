@@ -1,9 +1,11 @@
 import React from "react";
 
-function ErrorMessage(props) {
-  if (props.errorMessage) {
-    return <h2>{props.errorMessage}</h2>;
-  }
+function ErrorMessage({ errorMessage }) {
+  const STYLES = {
+    color: "red",
+    textAlign: "center",
+  };
+  return <h2 style={STYLES}>{errorMessage}</h2>;
 }
 
 export default ErrorMessage;

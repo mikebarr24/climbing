@@ -5,8 +5,8 @@ const getAllCrags = async () => {
   return res;
 };
 
-const getCrag = async (path) => {
-  const res = await http.get("/crags/" + path);
+const getCrag = async (id) => {
+  const res = await http.get("/crags/" + id);
   return res;
 };
 
