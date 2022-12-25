@@ -44,7 +44,7 @@ Content-Type: application/json
   "sectorImageUrl": "TestUrl2",
   "sectorLocation": {
     "lat": 54.598247,
-    "lng": -5.925295
+    "lng": -5.925295  
   }
 }
 
@@ -83,4 +83,13 @@ Content-Type: application/json
 
 {
   "cragId": "636fd6aba2126e56b3523cd1"
+}
+
+###
+PUT http://localhost:8080/api/crags/crag/routes
+Content-Type: application/json
+
+{
+  "cragId": "63a3787f9dcc7857688c3ba2",
+  "sectorId": "63a6c122be435534fb2f8f40"
 }

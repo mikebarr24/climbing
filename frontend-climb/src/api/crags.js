@@ -10,6 +10,14 @@ const getCrag = async (id) => {
   return res;
 };
 
+const getRoutes = async (cragId, sectorId) => {
+  const res = await http.put("/crags/crag/routes", {
+    cragId,
+    sectorId,
+  });
+  return res;
+};
+
 const setCrag = async (cragInfo) => {
   const res = await http.post("/crags/addcrag", cragInfo);
   return res;
@@ -44,6 +52,7 @@ const exportObject = {
   setRoute,
   archiveSector,
   archiveCrag,
+  getRoutes,
 };
 
 export default exportObject;

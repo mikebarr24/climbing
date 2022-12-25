@@ -1,9 +1,15 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { AiOutlineCloudUpload, AiOutlineArrowLeft } from "react-icons/ai";
-import crag from "../../api/crags";
+import crag from "../../../api/crags";
 import "./AddRouteForm.scss";
 
-function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
+function AddRouteForm({
+  close,
+  windowState,
+  currentCrag,
+  currentSector,
+  addRouteClick,
+}) {
   const routeName = useRef();
   const routeGrade = useRef();
   const routeInformation = useRef();
@@ -19,9 +25,9 @@ function AddRouteForm({ close, windowState, currentCrag, currentSector }) {
       currentCrag: currentCrag._id,
       currentSector: currentSector._id,
     };
-    console.log("here");
     try {
       await crag.setRoute(routeData);
+      addRouteClick();
       close();
     } catch (error) {
       console.log(error);

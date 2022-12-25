@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import "./Modal.scss";
-import Button from "../Button/Button";
-import CloseButton from "../common/CloseButton";
+import "./SectorModal.scss";
+import Button from "../../Button/Button";
+import CloseButton from "../../common/CloseButton";
 import AddRouteForm from "./AddRouteForm";
 import Route from "./Route";
-import crags from "../../api/crags";
+import crags from "../../../api/crags";
 
-function Modal({ open, currentSector, close, currentCrag, user }) {
-  const [openAdd, setOpenAdd] = useState(false);
+function SectorModal({ open, currentSector, close, currentCrag, user }) {
+  const [openForm, setOpenForm] = useState(false);
+  const [routes, setRoutes] = useState(currentSector.routes);
 
   const OVERLAY = {
     position: "fixed",
@@ -19,14 +20,24 @@ function Modal({ open, currentSector, close, currentCrag, user }) {
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   };
 
+  const addRouteClick = async () => {
+    const { data } = await crags.getRoutes(currentCrag._id, currentSector._id);
+    setRoutes(data);
+  };
+
   //If addRoute is open when close button is clicked, this will close modal and reset to sector view.
   const clickHandle = () => {
     close();
-    setOpenAdd(false);
+    setOpenForm(false);
+  };
+
+  const archiveSector = async () => {
+    await crags.archiveSector(currentCrag._id, currentSector._id);
+    close();
   };
 
   if (!open) return null;
-  const routeList = currentSector.routes.map((route, index) => {
+  const routeList = routes.map((route, index) => {
     return (
       <Route
         key={index}
@@ -36,25 +47,22 @@ function Modal({ open, currentSector, close, currentCrag, user }) {
       />
     );
   });
-
-  async function archiveSector() {
-    await crags.archiveSector(currentCrag._id, currentSector._id);
-    close();
-  }
   return ReactDOM.createPortal(
     <>
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
         <CloseButton onClick={clickHandle} />
         <h2>Sector - {currentSector.sectorName}</h2>
-        {user.isAdmin && <button onClick={archiveSector}>Delete Sector</button>}
+        {user.isAdmin && (
+          <Button onClick={archiveSector} name="Delete Sector" />
+        )}
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
         <p>{currentSector.information}</p>
         <div className="sector--route-container">
           <div className="crag--route-header">
             <h3>Routes</h3>
-            <Button name="Add Route" onClick={() => setOpenAdd(!openAdd)} />
+            <Button name="Add Route" onClick={() => setOpenForm(!openForm)} />
           </div>
           <div className="sector--route-list-wrapper">
             <div className="sector--route-title-wrapper">
@@ -66,12 +74,13 @@ function Modal({ open, currentSector, close, currentCrag, user }) {
           </div>
         </div>
 
-        {openAdd && (
+        {openForm && (
           <AddRouteForm
-            close={() => setOpenAdd(!openAdd)}
-            windowState={openAdd}
+            close={() => setOpenForm(!openForm)}
+            windowState={openForm}
             currentCrag={currentCrag}
             currentSector={currentSector}
+            addRouteClick={() => addRouteClick()}
           />
         )}
       </div>
@@ -80,4 +89,4 @@ function Modal({ open, currentSector, close, currentCrag, user }) {
   );
 }
 
-export default Modal;
+export default SectorModal;

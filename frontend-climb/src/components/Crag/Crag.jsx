@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Map from "../Map";
 import Button from "../Button/Button";
-import Modal from "./Modal";
+import SectorModal from "./Modal/SectorModal";
 import crags from "../../api/crags";
 
 function Crag({ user, api }) {
@@ -14,12 +14,12 @@ function Crag({ user, api }) {
   const [crag, setCrag] = useState(null);
 
   useEffect(() => {
-    const test = async () => {
+    const local = async () => {
       const { data } = await crags.getCrag(state.markerId);
       setCrag(data);
     };
-    test();
-  }, []);
+    local();
+  }, [state]);
 
   async function markerClick({ markerId }) {
     setIsOpen(true);
@@ -70,14 +70,16 @@ function Crag({ user, api }) {
           />
         </div>
       )}
-      <Modal
-        open={isOpen}
-        close={() => setIsOpen(false)}
-        portalClassName="crag-modal"
-        currentSector={sector}
-        currentCrag={crag}
-        user={user}
-      />
+      {isOpen === true && (
+        <SectorModal
+          open={isOpen}
+          close={() => setIsOpen(false)}
+          portalClassName="crag-modal"
+          currentSector={sector}
+          currentCrag={crag}
+          user={user}
+        />
+      )}
     </div>
   );
 }

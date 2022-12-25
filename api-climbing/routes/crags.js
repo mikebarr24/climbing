@@ -102,4 +102,17 @@ router.put("/archiveCrag", auth, async (req, res) => {
   res.send("Crag Archived");
 });
 
+router.put("/crag/routes", async (req, res) => {
+  console.log(req.body);
+  const crag = await Crag.findById(req.body.cragId);
+  if (!crag) return res.status(400).send(`The crag cannot be found`);
+  const sector = crag.sectors.id(req.body.sectorId);
+  if (!sector) return res.status(400).send(`The sector cannot be found`);
+  try {
+    return res.send(sector.routes);
+  } catch (error) {
+    logger.error(error);
+  }
+});
+
 module.exports = router;
