@@ -9,6 +9,7 @@ import crags from "../../api/crags";
 function Crag({ user, api }) {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [cragTrigger, setCragTrigger] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [sector, setSector] = useState([]);
   const [crag, setCrag] = useState(null);
@@ -19,12 +20,12 @@ function Crag({ user, api }) {
       setCrag(data);
     };
     local();
-  }, [state]);
+  }, [cragTrigger, state]);
 
-  async function markerClick({ markerId }) {
+  const markerClick = async ({ markerId }) => {
     setIsOpen(true);
     setSector(...crag.sectors.filter((sector) => sector._id === markerId));
-  }
+  };
 
   function archiveCrag() {
     crags.archiveCrag(crag._id);
@@ -78,6 +79,7 @@ function Crag({ user, api }) {
           currentSector={sector}
           currentCrag={crag}
           user={user}
+          cragTrigger={() => setCragTrigger(!cragTrigger)}
         />
       )}
     </div>

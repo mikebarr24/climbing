@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Crags from "./components/Crags/Crags";
 import ApiKeys from "./api/ApiKeys";
 import Home from "./components/Home/Home";

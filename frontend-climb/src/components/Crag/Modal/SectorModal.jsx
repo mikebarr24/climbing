@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactDOM from "react-dom";
 import "./SectorModal.scss";
 import Button from "../../Button/Button";
@@ -7,7 +7,14 @@ import AddRouteForm from "./AddRouteForm";
 import Route from "./Route";
 import crags from "../../../api/crags";
 
-function SectorModal({ open, currentSector, close, currentCrag, user }) {
+function SectorModal({
+  open,
+  currentSector,
+  close,
+  currentCrag,
+  user,
+  cragTrigger,
+}) {
   const [openForm, setOpenForm] = useState(false);
   const [routes, setRoutes] = useState(currentSector.routes);
 
@@ -33,6 +40,7 @@ function SectorModal({ open, currentSector, close, currentCrag, user }) {
 
   const archiveSector = async () => {
     await crags.archiveSector(currentCrag._id, currentSector._id);
+    cragTrigger();
     close();
   };
 

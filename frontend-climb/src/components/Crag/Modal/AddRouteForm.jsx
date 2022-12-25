@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { AiOutlineCloudUpload, AiOutlineArrowLeft } from "react-icons/ai";
 import crag from "../../../api/crags";
 import "./AddRouteForm.scss";
