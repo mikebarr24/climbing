@@ -1,27 +1,20 @@
 import React from "react";
 import "./Button.scss";
+import { BsTrash } from "react-icons/bs";
 
-function Button({ name, className, color, onClick }) {
-  let styles;
-  if (color === "light") {
-    styles = {
-      backgroundColor: "#fff",
-      color: "#000",
-    };
-  } else {
-    styles = {
-      backgroundColor: "#000",
-      color: "#fff",
-    };
-  }
+function Button({ children, className, color, onClick }) {
+  const STYLES = {
+    backgroundColor: color === "light" ? "#FFF" : "#000",
+    color: color === "light" ? "#000" : "#fff",
+  };
   return (
     <>
       <button
         className={`btn-home ${className}`}
-        style={styles}
+        style={STYLES}
         onClick={onClick}
       >
-        {name}
+        {children === "delete" ? <BsTrash /> : children}
       </button>
     </>
   );

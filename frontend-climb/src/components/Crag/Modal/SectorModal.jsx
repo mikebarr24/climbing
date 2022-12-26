@@ -70,16 +70,14 @@ function SectorModal({
       <div className="crag-modal standard-text">
         <CloseButton onClick={clickClose} />
         <h2>Sector - {currentSector.sectorName}</h2>
-        {user.isAdmin && (
-          <Button onClick={archiveSector} name="Delete Sector" />
-        )}
+        {user.isAdmin && <Button onClick={archiveSector}>delete</Button>}
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
         <p>{currentSector.information}</p>
         <div className="sector--route-container">
           <div className="crag--route-header">
             <h3>Routes</h3>
-            <Button name="Add Route" onClick={() => setOpenForm(!openForm)} />
+            <Button onClick={() => setOpenForm(!openForm)}>Add Route</Button>
           </div>
           <div className="sector--route-list-wrapper">
             <div className="sector--route-title-wrapper">

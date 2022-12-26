@@ -58,7 +58,7 @@ router.post("/addroute", auth, async (req, res) => {
   const {
     routeName,
     routeGrade,
-    routeInformation,
+    routeDescription,
     routeRating,
     currentCrag,
     currentSector,
@@ -68,7 +68,7 @@ router.post("/addroute", auth, async (req, res) => {
   sector.routes.push({
     routeName,
     routeGrade,
-    routeInformation,
+    routeDescription,
     routeRating,
   });
   await crag.save();

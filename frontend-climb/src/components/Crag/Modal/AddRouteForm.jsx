@@ -13,7 +13,7 @@ function AddRouteForm({
 }) {
   const routeName = useRef();
   const routeGrade = useRef();
-  const routeInformation = useRef();
+  const routeDescription = useRef();
   const routeRating = useRef();
 
   const submitHandle = async (e) => {
@@ -21,7 +21,7 @@ function AddRouteForm({
     const routeData = {
       routeName: routeName.current.value,
       routeGrade: routeGrade.current.value,
-      routeInformation: routeInformation.current.value,
+      routeDescription: routeDescription.current.value,
       routeRating: routeRating.current.value,
       currentCrag: currentCrag._id,
       currentSector: currentSector._id,
@@ -64,7 +64,7 @@ function AddRouteForm({
         />
 
         <textarea
-          ref={routeInformation}
+          ref={routeDescription}
           id=""
           cols="30"
           rows="5"

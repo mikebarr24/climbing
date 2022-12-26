@@ -54,10 +54,8 @@ function Crag({ user, api }) {
               sectors at this crag
             </p>
             <div className="button-bar">
-              <Button name="Back to Map" onClick={() => navigate("/crags")} />
-              {user.isAdmin && (
-                <Button onClick={archiveCrag} name="Delete Crag" />
-              )}
+              <Button onClick={() => navigate("/crags")}>Back to Map</Button>
+              {user.isAdmin && <Button onClick={archiveCrag}>delete</Button>}
             </div>
           </div>
           <Map
