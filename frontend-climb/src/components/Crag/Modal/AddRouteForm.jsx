@@ -1,7 +1,8 @@
 import { useRef } from "react";
-import { AiOutlineCloudUpload, AiOutlineArrowLeft } from "react-icons/ai";
-import crag from "../../../api/crags";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 import "./AddRouteForm.scss";
+import crag from "../../../api/crags";
+import BackArrow from "../../common/BackArrow";
 
 function AddRouteForm({
   close,
@@ -38,9 +39,7 @@ function AddRouteForm({
     <div
       className={`modal--add-route-form container ${windowState ? "open" : ""}`}
     >
-      <span className="add-route-form--back-arrow" onClick={close}>
-        <AiOutlineArrowLeft />
-      </span>
+      <BackArrow className="add-route-form--back-arrow" onClick={close} />
       <div className="add-route-form--title-text text-white">
         <h2 className="add-route-form--title text-white">Add Route</h2>
       </div>

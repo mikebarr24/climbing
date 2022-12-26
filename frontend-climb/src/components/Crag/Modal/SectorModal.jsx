@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import "./SectorModal.scss";
 import Button from "../../Button/Button";
@@ -6,6 +6,7 @@ import CloseButton from "../../common/CloseButton";
 import AddRouteForm from "./AddRouteForm";
 import Route from "./Route";
 import crags from "../../../api/crags";
+import RouteView from "./RouteView";
 
 function SectorModal({
   open,
@@ -16,7 +17,9 @@ function SectorModal({
   cragTrigger,
 }) {
   const [openForm, setOpenForm] = useState(false);
+  const [openRouteView, setOpenRouteView] = useState(false);
   const [routes, setRoutes] = useState(currentSector.routes);
+  const routeInfo = useRef();
 
   const OVERLAY = {
     position: "fixed",
@@ -33,7 +36,7 @@ function SectorModal({
   };
 
   //If addRoute is open when close button is clicked, this will close modal and reset to sector view.
-  const clickHandle = () => {
+  const clickClose = () => {
     close();
     setOpenForm(false);
   };
@@ -44,6 +47,11 @@ function SectorModal({
     close();
   };
 
+  const handleRouteClick = (route) => {
+    setOpenRouteView(!openRouteView);
+    routeInfo.current = route;
+  };
+
   if (!open) return null;
   const routeList = routes.map((route, index) => {
     return (
@@ -52,6 +60,7 @@ function SectorModal({
         routeName={route.routeName}
         routeGrade={route.routeGrade}
         routeRating={route.routeRating}
+        onClick={() => handleRouteClick(route)}
       />
     );
   });
@@ -59,7 +68,7 @@ function SectorModal({
     <>
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
-        <CloseButton onClick={clickHandle} />
+        <CloseButton onClick={clickClose} />
         <h2>Sector - {currentSector.sectorName}</h2>
         {user.isAdmin && (
           <Button onClick={archiveSector} name="Delete Sector" />
@@ -91,8 +100,15 @@ function SectorModal({
             addRouteClick={() => addRouteClick()}
           />
         )}
+        {openRouteView && (
+          <RouteView
+            routeInfo={routeInfo.current}
+            close={() => setOpenRouteView(false)}
+          />
+        )}
       </div>
     </>,
+
     document.getElementById("portal")
   );
 }
