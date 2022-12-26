@@ -26,4 +26,11 @@
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
   }
+  .route-view--grade-rating {
+    background-color: rgb(219, 219, 219);
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 1rem;
+  }
 }

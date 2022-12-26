@@ -10,14 +10,16 @@ function RouteView({ routeInfo, close }) {
         <h2>{routeInfo.routeName}</h2>
       </div>
       <div className="route-view--body container standard-text">
+        <div className="route-view--grade-rating">
+          <p>
+            <strong>Grade</strong>: {routeInfo.routeGrade}
+          </p>
+          <p>
+            <strong>Rating</strong>: {routeInfo.routeRating}
+          </p>
+        </div>
         <p>
-          <strong>Grade</strong>: {routeInfo.routeGrade}
-        </p>
-        <p>
-          <strong>Rating</strong>: {routeInfo.routeRating}
-        </p>
-        <p>
-          Description: <br /> {routeInfo.routeDescription}
+          <strong>Description</strong>: <br /> {routeInfo.routeDescription}
         </p>
       </div>
     </div>
