@@ -19,7 +19,6 @@ function App() {
 
   //Set Google Map Api
   useEffect(() => {
-    console.log("App");
     const getApi = async () => {
       const { data } = await ApiKeys.mapsApi();
       setMapApi(data);

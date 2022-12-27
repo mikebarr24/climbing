@@ -24,11 +24,10 @@ function Crags({ user, api }) {
       },
     });
   }
-
   return (
     <div id="crags" className="container">
       <h2 className="page-title">Crags</h2>
-      {user.isAdmin && (
+      {user && user.isAdmin && (
         <p className="standard-text">Hold the map to add a new crag</p>
       )}
       <div>
