@@ -61,7 +61,7 @@ function SectorModal({
       <div className="crag-modal standard-text">
         <CloseButton onClick={clickHandle} />
         <h2>Sector - {currentSector.sectorName}</h2>
-        {user.isAdmin && (
+        {user && user.isAdmin && (
           <Button onClick={archiveSector} name="Delete Sector" />
         )}
         <div className="sector-photo">Photo of Sector here</div>
