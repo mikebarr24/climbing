@@ -20,7 +20,6 @@ function SectorModal({
   const [openRouteView, setOpenRouteView] = useState(false);
   const [routes, setRoutes] = useState(currentSector.routes);
   const routeInfo = useRef();
-
   const OVERLAY = {
     position: "fixed",
     top: "0",
@@ -53,6 +52,7 @@ function SectorModal({
   };
 
   if (!open) return null;
+  document.body.style.overflowY = "hidden";
   const routeList = routes.map((route, index) => {
     return (
       <Route
@@ -68,9 +68,13 @@ function SectorModal({
     <>
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
-        <CloseButton onClick={clickClose} />
-        <h2>Sector - {currentSector.sectorName}</h2>
-        {user.isAdmin && <Button onClick={archiveSector}>delete</Button>}
+        <div className="crag-modal--title-bar">
+          {user && user.isAdmin && (
+            <Button onClick={archiveSector}>delete</Button>
+          )}
+          <h2>{currentSector.sectorName}</h2>
+          <CloseButton onClick={clickClose} />
+        </div>
         <div className="sector-photo">Photo of Sector here</div>
         <h3>Sector Info</h3>
         <p>{currentSector.information}</p>

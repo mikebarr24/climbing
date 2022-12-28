@@ -15,7 +15,7 @@ function AccountModal({ user, open, close }) {
     setDetails(user);
   }, [user]);
   if (!open) return null;
-  document.body.style.overflowY = "hidden";
+  document.body.style.overflow = "hidden";
   const OVERLAY_STYLES = {
     backgroundColor: "rgba(0,0,0, 0.7)",
     position: "fixed",
@@ -54,8 +54,10 @@ function AccountModal({ user, open, close }) {
         onClick={close}
       />
       <div id="account-modal" className="container standard-text">
-        <CloseButton onClick={close} />
-        <h2>Edit Account Details</h2>
+        <div className="account-modal--title-bar">
+          <h2>Edit Account Details</h2>
+          <CloseButton onClick={close} />
+        </div>
         {details && (
           <form className="form-standard" onSubmit={submitHandle}>
             <input

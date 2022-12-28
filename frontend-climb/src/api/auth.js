@@ -53,11 +53,18 @@ const checkPassword = async (password) => {
   const { data } = await http.put("/auth/password", passwordJson);
   return data;
 };
+
+const updatePassword = async (input) => {
+  const { data } = await http.put("/users/password", input);
+  return data;
+};
+
 http.setJwt(getJwtKey());
 
 const exportFunction = {
   checkPassword,
   updateUser,
+  updatePassword,
   getUserServer,
   logout,
   getCurrentUser,
