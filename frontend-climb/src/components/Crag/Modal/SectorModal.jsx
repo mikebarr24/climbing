@@ -69,9 +69,7 @@ function SectorModal({
       <div style={OVERLAY} />
       <div className="crag-modal standard-text">
         <div className="crag-modal--title-bar">
-          {user && user.isAdmin && (
-            <Button onClick={archiveSector}>delete</Button>
-          )}
+          {user?.isAdmin && <Button onClick={archiveSector}>delete</Button>}
           <h2>{currentSector.sectorName}</h2>
           <CloseButton onClick={clickClose} />
         </div>
