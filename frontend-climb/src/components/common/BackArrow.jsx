@@ -3,12 +3,16 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function BackArrow({ className, onClick }) {
   const STYLES = {
+    position: "absolute",
+    left: "0rem",
     fontSize: "4rem",
+    display: "flex",
+    alignItems: "center",
   };
   return (
-    <span style={STYLES} className={className} onClick={onClick}>
+    <div style={STYLES} className={className} onClick={onClick}>
       <AiOutlineArrowLeft />
-    </span>
+    </div>
   );
 }
 

@@ -7,6 +7,7 @@ import AddRouteForm from "./AddRouteForm";
 import Route from "./Route";
 import crags from "../../../api/crags";
 import RouteView from "./RouteView";
+import ArchiveButton from "../../common/ArchiveButton";
 
 function SectorModal({
   open,
@@ -67,27 +68,29 @@ function SectorModal({
   return ReactDOM.createPortal(
     <>
       <div style={OVERLAY} />
-      <div className="crag-modal standard-text">
-        <div className="crag-modal--title-bar">
-          {user?.isAdmin && <Button onClick={archiveSector}>delete</Button>}
+      <div className="crag-modal standard-text container">
+        <div className="modal--title-bar">
           <h2>{currentSector.sectorName}</h2>
+          {user?.isAdmin && <ArchiveButton onClick={archiveSector} />}
           <CloseButton onClick={clickClose} />
         </div>
-        <div className="sector-photo">Photo of Sector here</div>
-        <h3>Sector Info</h3>
-        <p>{currentSector.information}</p>
-        <div className="sector--route-container">
-          <div className="crag--route-header">
-            <h3>Routes</h3>
-            <Button onClick={() => setOpenForm(!openForm)}>Add Route</Button>
-          </div>
-          <div className="sector--route-list-wrapper">
-            <div className="sector--route-title-wrapper">
-              <p className="sector--route-title">Route Name</p>
-              <p className="sector--route-title">Grade</p>
-              <p className="sector--route-title right">Rating</p>
+        <div className="crag-modal--body">
+          <div className="sector-photo">Photo of Sector here</div>
+          <h3>Sector Info</h3>
+          <p>{currentSector.information}</p>
+          <div className="sector--route-container">
+            <div className="crag--route-header">
+              <h3>Routes</h3>
+              <Button onClick={() => setOpenForm(!openForm)}>Add Route</Button>
             </div>
-            {routeList.length === 0 ? "No routes at this crag" : routeList}
+            <div className="sector--route-list-wrapper">
+              <div className="sector--route-title-wrapper">
+                <p className="sector--route-title">Route Name</p>
+                <p className="sector--route-title">Grade</p>
+                <p className="sector--route-title right">Rating</p>
+              </div>
+              {routeList.length === 0 ? "No routes at this crag" : routeList}
+            </div>
           </div>
         </div>
 

@@ -5,6 +5,7 @@ import Map from "../Map";
 import Button from "../Button/Button";
 import SectorModal from "./Modal/SectorModal";
 import crags from "../../api/crags";
+import ArchiveButton from "../common/ArchiveButton";
 
 function Crag({ user, api }) {
   const { state } = useLocation();
@@ -55,7 +56,9 @@ function Crag({ user, api }) {
             </p>
             <div className="button-bar">
               <Button onClick={() => navigate("/crags")}>Back to Map</Button>
-              {user?.isAdmin && <Button onClick={archiveCrag}>delete</Button>}
+              {user?.isAdmin && (
+                <ArchiveButton onClick={archiveCrag} color="black" />
+              )}
             </div>
           </div>
           <Map
