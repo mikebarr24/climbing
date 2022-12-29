@@ -50,19 +50,22 @@ function AddRouteForm({
           className="form-field"
           placeholder="Route Name"
         />
-        <input
-          type="text"
-          ref={routeGrade}
-          className="form-field"
-          placeholder="Route Grade"
-        />
-        <input
-          type="text"
-          ref={routeRating}
-          className="form-field"
-          placeholder="Route Rating"
-        />
-
+        <select className="form-field" ref={routeGrade}>
+          <option>Select Grade</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <select className="form-field" ref={routeRating}>
+          <option>Select Rating</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
         <textarea
           ref={routeDescription}
           id=""
