@@ -1,8 +1,14 @@
 import "./RouteView.scss";
 import React from "react";
 import BackArrow from "../../common/BackArrow";
+import { AiFillStar } from "react-icons/ai";
 
 function RouteView({ routeInfo, close }) {
+  const starRating = [...Array(routeInfo.routeRating).keys()].map(
+    (_, index) => {
+      return <AiFillStar key={index} />;
+    }
+  );
   return (
     <div className="route-view">
       <div className="modal--title-bar">
@@ -13,8 +19,8 @@ function RouteView({ routeInfo, close }) {
         <p>
           <strong>Grade</strong>: {routeInfo.routeGrade}
         </p>
-        <p>
-          <strong>Rating</strong>: {routeInfo.routeRating}
+        <p className="route-view--stars">
+          <strong>Rating</strong>: {starRating}
         </p>
       </div>
       <div className="route-view--body container standard-text">
