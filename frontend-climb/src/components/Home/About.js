@@ -21,8 +21,8 @@ function About() {
         Michael
       </p>
       <div className="btn-wrapper">
-        <Button name="Contact Me" className="about-btn" />
-        <Button name="Learn More" className="about-btn" />
+        <Button className="about-btn">Contact Me (Not Working)</Button>
+        <Button className="about-btn">Learn More (Not Working)</Button>
       </div>
     </div>
   );

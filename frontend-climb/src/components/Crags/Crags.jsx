@@ -28,7 +28,9 @@ function Crags({ user, api }) {
     <div id="crags" className="container">
       <h2 className="page-title">Crags</h2>
       {user && user.isAdmin && (
-        <p className="standard-text">Hold the map to add a new crag</p>
+        <p className="standard-text">
+          Click on a Crag or click the map to add a new crag
+        </p>
       )}
       <div>
         <Map
