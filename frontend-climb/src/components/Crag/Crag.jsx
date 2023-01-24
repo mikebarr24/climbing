@@ -60,6 +60,9 @@ function Crag({ user, api }) {
                 <ArchiveButton onClick={archiveCrag} color="black" />
               )}
             </div>
+            <p className="standard-text">
+              Click on a Sector or click the map to add a new sector
+            </p>
           </div>
           <Map
             api={api}

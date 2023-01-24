@@ -54,11 +54,9 @@ function Account() {
             Password
           </div>
         </div>
-        <Button
-          name="Edit Profile"
-          className="account--edit-btn"
-          onClick={() => setOpen(!open)}
-        />
+        <Button className="account--edit-btn" onClick={() => setOpen(!open)}>
+          Edit Profile
+        </Button>
       </div>
       <AccountModal open={open} close={() => setOpen(false)} user={user} />
     </>

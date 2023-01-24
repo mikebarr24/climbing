@@ -81,7 +81,9 @@ function SectorModal({
           <div className="sector--route-container">
             <div className="crag--route-header">
               <h3>Routes</h3>
-              <Button onClick={() => setOpenForm(!openForm)}>Add Route</Button>
+              <Button onClick={() => setOpenForm(!openForm)}>
+                Add New Route
+              </Button>
             </div>
             <div className="sector--route-list-wrapper">
               <div className="sector--route-title-wrapper">
