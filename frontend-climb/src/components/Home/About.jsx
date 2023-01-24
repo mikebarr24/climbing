@@ -1,8 +1,10 @@
 import React from "react";
 import Button from "../Button/Button";
 import "./About.scss";
+import { useNavigate } from "react-router-dom";
 
 function About() {
+  const navigate = useNavigate();
   return (
     <div id="about" className="container">
       <h2 className="title-text">About my Project</h2>
@@ -21,8 +23,9 @@ function About() {
         Michael
       </p>
       <div className="btn-wrapper">
-        <Button className="about-btn">Contact Me (Not Working)</Button>
-        <Button className="about-btn">Learn More (Not Working)</Button>
+        <Button className="about-btn" onClick={() => navigate("/contact")}>
+          Contact Me
+        </Button>
       </div>
     </div>
   );
