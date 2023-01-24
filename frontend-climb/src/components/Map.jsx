@@ -45,7 +45,7 @@ function Map({
           key={marker._id}
           markerId={marker._id}
           icon={{
-            url: require("../media/icons/crag-icon.png"),
+            url: require("../media/icons/carabiner-icon.png"),
           }}
           position={{
             lat:
