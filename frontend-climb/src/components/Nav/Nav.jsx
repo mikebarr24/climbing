@@ -11,9 +11,9 @@ function Nav({ user }) {
   };
   return (
     <nav id="nav">
-      <Link to="/">
+      <HashLink to="/#home">
         <img src={mainLogo} alt="Main Logo" className="main-logo" />
-      </Link>
+      </HashLink>
       <div className={!menu ? "nav-menu" : "nav-menu open"}>
         <ul>
           <HashLink smooth to="/#home" onClick={menuView}>
