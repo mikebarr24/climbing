@@ -2,6 +2,7 @@ import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import { useNavigate } from "react-router-dom";
 
 function Map({
+  user,
   api,
   zoom,
   mapPosition,
@@ -11,32 +12,36 @@ function Map({
   currentCragId,
 }) {
   const navigate = useNavigate();
-  const { isLoaded, loadError } = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: api === "dev" ? "" : api,
   });
 
   function mapCragClick(e) {
-    navigate("/crags/add", {
-      state: {
-        type: "crag",
-        location: {
-          lat: e.latLng.lat(),
-          lng: e.latLng.lng(),
+    if (user?.isAdmin) {
+      navigate("/crags/add", {
+        state: {
+          type: "crag",
+          location: {
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng(),
+          },
         },
-      },
-    });
+      });
+    }
   }
   function mapSectorClick(e) {
-    navigate("/crags/add", {
-      state: {
-        type: "sector",
-        currentCragId: currentCragId,
-        location: {
-          lat: e.latLng.lat(),
-          lng: e.latLng.lng(),
+    if (user?.isAdmin) {
+      navigate("/crags/add", {
+        state: {
+          type: "sector",
+          currentCragId: currentCragId,
+          location: {
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng(),
+          },
         },
-      },
-    });
+      });
+    }
   }
   const displayMarkers = markers.map((marker) => {
     if (!marker.archived) {
