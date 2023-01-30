@@ -67,6 +67,7 @@ function Crag({ user, api }) {
             )}
           </div>
           <Map
+            user={user}
             api={api}
             zoom={13}
             mapPosition={crag.cragLocation}
