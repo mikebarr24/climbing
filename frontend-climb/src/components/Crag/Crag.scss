@@ -3,10 +3,9 @@
 #crag {
   margin-top: $nav-height;
   color: $dark-color;
-
-  .crag--button-container {
+  .crag--title-wrapper {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
   }
   .map-container {
     width: 100%;
