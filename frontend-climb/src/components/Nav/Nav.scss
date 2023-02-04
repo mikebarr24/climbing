@@ -28,22 +28,34 @@
     left: 0;
     justify-content: center;
     align-items: center;
-    background-color: $light-color;
     background-image: url("../../media/images/rock-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    animation: nav-open 300ms ease-in-out;
-    animation-direction: reverse;
     .nav-item {
       list-style: none;
       color: $light-color;
       font-weight: 600;
       font-size: 5rem;
       margin: 1rem 0;
+      @include laptop {
+        font-size: 2rem;
+        margin: 1rem;
+      }
     }
     &.open {
       display: flex;
       animation: nav-open 300ms ease-in-out;
+      @include laptop {
+        animation: none;
+      }
+    }
+    @include laptop {
+      display: flex;
+      background: none;
+      position: relative;
+      ul {
+        display: flex;
+      }
     }
   }
   .burger-button {
@@ -61,6 +73,9 @@
       display: block;
       background-color: $light-color;
       border-radius: 5px;
+    }
+    @include laptop {
+      display: none;
     }
   }
 }
