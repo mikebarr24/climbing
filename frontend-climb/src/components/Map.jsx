@@ -71,6 +71,8 @@ function Map({
           }
         />
       );
+    } else {
+      return null;
     }
   });
 
