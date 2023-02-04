@@ -44,9 +44,14 @@ function Crag({ user, api }) {
       {crag && (
         <div className="crag-wrapper">
           <div className="crag--text">
-            <h2 className="title-text">
-              {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
-            </h2>
+            <div className="crag--title-wrapper">
+              <h2 className="title-text">
+                {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
+              </h2>{" "}
+              {user?.isAdmin && (
+                <ArchiveButton onClick={archiveCrag} color="black" />
+              )}
+            </div>
             <p className="standard-text">
               There are{" "}
               <strong>
@@ -54,12 +59,7 @@ function Crag({ user, api }) {
               </strong>{" "}
               sectors at this crag
             </p>
-            <div className="button-bar">
-              <Button onClick={() => navigate("/crags")}>Back to Map</Button>
-              {user?.isAdmin && (
-                <ArchiveButton onClick={archiveCrag} color="black" />
-              )}
-            </div>
+            <Button onClick={() => navigate("/crags")}>Back to Map</Button>
             <p className="standard-text">
               Click on a Sector or click the map to add a new sector
             </p>
