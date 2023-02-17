@@ -9,7 +9,7 @@ function AddRouteForm({
   windowState,
   currentCrag,
   currentSector,
-  addRouteClick,
+  setSector,
 }) {
   const routeName = useRef();
   const routeGrade = useRef();
@@ -23,12 +23,12 @@ function AddRouteForm({
       routeGrade: routeGrade.current.value,
       routeDescription: routeDescription.current.value,
       routeRating: routeRating.current.value,
-      currentCrag: currentCrag._id,
-      currentSector: currentSector._id,
+      currentCrag: currentCrag,
+      currentSector: currentSector,
     };
     try {
-      await crag.setRoute(routeData);
-      addRouteClick();
+      const { data } = await crag.setRoute(routeData);
+      setSector(data);
       close();
     } catch (error) {
       console.log(error);

@@ -18,11 +18,7 @@ function Crags({ user, api }) {
   }, []);
 
   function markerClick(markerDetails) {
-    navigate(`/crags/${markerDetails.name.toLowerCase()}`, {
-      state: {
-        markerId: markerDetails.markerId,
-      },
-    });
+    navigate(`/crags/${markerDetails.name}`);
   }
   return (
     <div id="crags" className="container">
@@ -37,8 +33,8 @@ function Crags({ user, api }) {
           user={user}
           api={api}
           zoom={7}
-          markers={allCrags}
           markerType="crag"
+          markers={allCrags}
           markerClick={markerClick}
         />
       </div>

@@ -9,7 +9,7 @@ function Map({
   markerType,
   markers,
   markerClick,
-  currentCragId,
+  currentCrag,
 }) {
   const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
@@ -34,7 +34,7 @@ function Map({
       navigate("/crags/add", {
         state: {
           type: "sector",
-          currentCragId: currentCragId,
+          currentCrag: currentCrag,
           location: {
             lat: e.latLng.lat(),
             lng: e.latLng.lng(),

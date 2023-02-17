@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import crags from "../../api/crags";
 import ErrorMessage from "../ErrorMessage";
 
-function AddCrag() {
+function AddCrag({ currentCrag }) {
   const navigate = useNavigate();
   const { state } = useLocation();
   const initMarker = {
@@ -43,16 +43,12 @@ function AddCrag() {
       }
       if (state.type === "sector") {
         await crags.setSector({
-          currentCragId: state.currentCragId,
+          currentCrag: state.currentCrag,
           sectorName: marker.markerName,
           sectorLocation: marker.markerLocation,
           information: marker.information,
         });
-        navigate(`/crags/${state.cragName}`, {
-          state: {
-            markerId: state.currentCragId,
-          },
-        });
+        navigate(`/crags/${state.currentCrag}/${marker.markerName}`);
       }
     } catch (err) {
       setError(err.response.data);

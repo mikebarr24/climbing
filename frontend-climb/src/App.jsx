@@ -12,6 +12,7 @@ import Logout from "./components/Logout";
 import AddMarker from "./components/AddMarker/AddMarker";
 import Account from "./components/Account/Account";
 import Contact from "./components/Contact/Contact";
+import SectorModal from "./components/Crag/Modal/SectorModal";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,6 +43,11 @@ function App() {
         <Route
           path="/crags/:cragName"
           element={<Crag user={user} api={mapApi} />}
+        />
+
+        <Route
+          path="/crags/:cragName/:sectorName"
+          element={<SectorModal user={user} />}
         />
         <Route path="/crags/add" element={<AddMarker />} />
         <Route path="/login" element={<Login />} />

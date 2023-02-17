@@ -1,6 +1,6 @@
 import "./Crag.scss";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Map from "../Map";
 import Button from "../Button/Button";
 import SectorModal from "./Modal/SectorModal";
@@ -8,24 +8,21 @@ import crags from "../../api/crags";
 import ArchiveButton from "../common/ArchiveButton";
 
 function Crag({ user, api }) {
-  const { state } = useLocation();
+  const { cragName } = useParams();
   const navigate = useNavigate();
   const [cragTrigger, setCragTrigger] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [sector, setSector] = useState([]);
   const [crag, setCrag] = useState(null);
-
   useEffect(() => {
     const local = async () => {
-      const { data } = await crags.getCrag(state.markerId);
+      const { data } = await crags.getCrag(cragName);
       setCrag(data);
     };
     local();
-  }, [cragTrigger, state]);
+  }, [cragName]);
 
-  const markerClick = async ({ markerId }) => {
-    setIsOpen(true);
-    setSector(...crag.sectors.filter((sector) => sector._id === markerId));
+  const markerClick = async ({ name }) => {
+    navigate(`/crags/${cragName}/${name}`);
   };
 
   function archiveCrag() {
@@ -71,17 +68,15 @@ function Crag({ user, api }) {
             mapPosition={crag.cragLocation}
             markerType="sector"
             markers={crag.sectors}
-            currentCragId={crag._id}
+            currentCrag={crag.cragName}
             markerClick={markerClick}
           />
         </div>
       )}
       {isOpen === true && (
         <SectorModal
-          open={isOpen}
           close={() => setIsOpen(false)}
           portalClassName="crag-modal"
-          currentSector={sector}
           currentCrag={crag}
           user={user}
           cragTrigger={() => setCragTrigger(!cragTrigger)}
