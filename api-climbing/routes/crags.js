@@ -9,7 +9,11 @@ const logger = require("../startup/logger");
 
 router.get("/all", async (req, res) => {
   const crags = await Crag.find();
-  res.send(crags);
+  try {
+    res.send(crags);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 router.get("/:cragName", async (req, res) => {
@@ -46,23 +50,23 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   try {
     const response = await crag.save();
     res.send(response);
+    await User.updateMany(
+      {},
+      {
+        $push: {
+          notifications: {
+            objectId: cragId,
+            title: data.cragName.trim(),
+            description: data.information.trim(),
+            type: "crag",
+            parent: crag.cragName,
+          },
+        },
+      }
+    );
   } catch (error) {
     logger.error(error);
   }
-  await User.updateMany(
-    {},
-    {
-      $push: {
-        notifications: {
-          objectId: cragId,
-          title: data.cragName.trim(),
-          description: data.information.trim(),
-          type: "crag",
-          parent: crag.cragName,
-        },
-      },
-    }
-  );
 });
 
 router.post("/addsector", auth, async (req, res) => {
@@ -83,23 +87,23 @@ router.post("/addsector", auth, async (req, res) => {
   try {
     await crag.save();
     res.send(crag);
+    await User.updateMany(
+      {},
+      {
+        $push: {
+          notifications: {
+            objectId: sectorId,
+            title: req.body.sectorName,
+            parent: `${crag.cragName}/${newSector.sectorName}`,
+            description: req.body.information,
+            type: "sector",
+          },
+        },
+      }
+    );
   } catch (error) {
     logger.error(error);
   }
-  await User.updateMany(
-    {},
-    {
-      $push: {
-        notifications: {
-          objectId: sectorId,
-          title: req.body.sectorName,
-          parent: `${crag.cragName}/${newSector.sectorName}`,
-          description: req.body.information,
-          type: "sector",
-        },
-      },
-    }
-  );
 });
 
 router.post("/addroute", auth, async (req, res) => {
@@ -127,37 +131,37 @@ router.post("/addroute", auth, async (req, res) => {
   });
   try {
     await crag.save();
+    await User.updateMany(
+      {},
+      {
+        $push: {
+          notifications: {
+            objectId: routeId,
+            title: routeName,
+            parent: `${crag.cragName}/${sector.sectorName}`,
+            description: routeDescription,
+            type: "route",
+          },
+        },
+      }
+    );
+    res.send(sector);
   } catch (error) {
     logger.error(error);
   }
-  await User.updateMany(
-    {},
-    {
-      $push: {
-        notifications: {
-          objectId: routeId,
-          title: routeName,
-          parent: `${crag.cragName}/${sector.sectorName}`,
-          description: routeDescription,
-          type: "route",
-        },
-      },
-    }
-  );
-  res.send(sector);
 });
 
 router.put("/archiveSector", auth, async (req, res) => {
   if (!req.user.isAdmin) return res.status(401).send("Not Authorised");
   const { cragName, sectorName } = req.body;
+  const crag = await Crag.findOne({ cragName: cragName });
+  if (!crag) return res.status(400).send("Crag Not Found");
+  const [sector] = crag.sectors.filter(
+    (item) => item.sectorName === sectorName
+  );
+  if (!sector) return res.status(400).send("Sector Not Found");
+  sector.archived = true;
   try {
-    const crag = await Crag.findOne({ cragName: cragName });
-    if (!crag) return res.status(400).send("Crag Not Found");
-    const [sector] = crag.sectors.filter(
-      (item) => item.sectorName === sectorName
-    );
-    if (!sector) return res.status(400).send("Sector Not Found");
-    sector.archived = true;
     await crag.save();
     res.send(crag);
   } catch (error) {
@@ -170,10 +174,10 @@ router.put("/archiveCrag", auth, async (req, res) => {
   const { cragId } = req.body;
   try {
     await Crag.findByIdAndUpdate({ _id: cragId }, { archived: true });
+    res.send("Crag Archived");
   } catch (error) {
     return res.status(400).send("Problem finding Crag");
   }
-  res.send("Crag Archived");
 });
 
 router.put("/archiveRoute", async (req, res) => {
@@ -192,7 +196,7 @@ router.put("/archiveRoute", async (req, res) => {
     await crag.save();
     res.send(sector);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 });
 
@@ -204,8 +208,12 @@ router.post("/removeNotification", async (req, res) => {
     notToRemove = index;
   });
   user.notifications.splice(notToRemove, 1);
-  user.save();
-  res.send(user.notifications);
+  try {
+    user.save();
+    res.send(user.notifications);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 router.put("/crag/routes", async (req, res) => {
