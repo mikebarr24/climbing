@@ -100,7 +100,11 @@ function Nav({ user }) {
         }`}
       >
         <ul className="nav--notification-list-wrapper">
-          {displayedNotifications.slice(0, 6)}
+          {displayedNotifications.length > 0 ? (
+            displayedNotifications.slice(0, 6)
+          ) : (
+            <h2>No notifications</h2>
+          )}
         </ul>
         <div className="nav--notification-close" onClick={notificationsView}>
           <SlArrowUp />
