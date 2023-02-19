@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./SectorModal.scss";
 import Button from "../../Button/Button";
 import CloseButton from "../../common/CloseButton";
@@ -20,6 +20,8 @@ function SectorModal({ user }) {
   const [trigger, setTrigger] = useState(false);
   const [help, setHelp] = useState(false);
   const routeInfo = useRef();
+  const { cragName, sectorName } = useParams();
+  const { state } = useLocation();
   const OVERLAY = {
     position: "fixed",
     top: "0",
@@ -28,7 +30,7 @@ function SectorModal({ user }) {
     right: "0",
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   };
-  const { cragName, sectorName } = useParams();
+
   useEffect(() => {
     const local = async () => {
       const { data } = await crags.getCrag(cragName);

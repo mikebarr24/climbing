@@ -12,14 +12,20 @@
   box-shadow: 0px 2px 10px rgba($color: $light-color, $alpha: 0.2);
   background-color: black;
   z-index: 1000;
+  .nav--notification-icon {
+    font-size: 3rem;
+    cursor: pointer;
+    * {
+      display: flex;
+      margin: auto 0;
+    }
+  }
   a {
     height: 80%;
   }
-  .main-logo {
-    height: 100%;
-  }
   .nav-menu {
     display: none;
+    align-items: center;
     position: absolute;
     height: 100vh;
     top: 0;
@@ -31,6 +37,7 @@
     background-image: url("../../media/images/rock-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+
     .nav-item {
       list-style: none;
       color: $light-color;
@@ -57,6 +64,52 @@
       ul {
         display: flex;
       }
+    }
+  }
+  .nav--notifications {
+    position: absolute;
+    display: none;
+    top: $nav-height;
+    background-color: white;
+    color: black;
+    right: auto;
+    left: 0;
+    width: 100vw;
+    max-width: 50rem;
+    border-top-right-radius: 1rem;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    border: solid 1px gray;
+
+    .nav--notification-close {
+      position: absolute;
+      display: flex;
+      border-radius: 0 0 1rem 1rem;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 4rem;
+      background-color: rgb(202, 202, 202);
+      transform: translateY(4rem);
+      * {
+        margin: auto;
+        font-size: 3rem;
+        color: rgb(106, 106, 106);
+      }
+    }
+    .nav--notification-list-wrapper {
+      .nav--notification-item {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+      }
+    }
+    &.open {
+      display: block;
+      animation: notifications-open 0.3s ease-in-out;
     }
   }
   .burger-button {
@@ -87,5 +140,16 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@keyframes notifications-open {
+  0% {
+    transform: translateY(-1rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

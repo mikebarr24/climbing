@@ -53,6 +53,14 @@ const archiveRoute = async (routeName, sectorName, cragName) => {
   return res;
 };
 
+const removeNotification = async (notificationId, userId) => {
+  const res = await http.post("/crags/removeNotification", {
+    notificationId,
+    userId,
+  });
+  return res;
+};
+
 const exportObject = {
   getAllCrags,
   getCrag,
@@ -62,6 +70,7 @@ const exportObject = {
   archiveSector,
   archiveCrag,
   archiveRoute,
+  removeNotification,
   getRoutes,
 };
 

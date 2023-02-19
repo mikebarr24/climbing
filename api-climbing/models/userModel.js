@@ -1,7 +1,49 @@
 const Joi = require("joi");
+Joi.ObjectId = require("joi-objectid")(Joi);
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 require("dotenv");
+
+const notificationsSchema = new mongoose.Schema({
+  objectId: {
+    type: mongoose.ObjectId,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+    max: 255,
+    min: 3,
+  },
+  description: {
+    type: String,
+    required: true,
+    max: 255,
+    min: 3,
+  },
+  type: {
+    type: String,
+    required: true,
+    max: 10,
+    min: 1,
+  },
+  parent: {
+    type: String,
+    required: false,
+    max: 255,
+    min: 1,
+  },
+  viewed: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  dateAdded: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
+});
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -27,6 +69,9 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  notifications: {
+    type: [notificationsSchema],
+  },
 });
 
 userSchema.methods.genAuthToken = function (admin) {
@@ -50,6 +95,7 @@ const validateUser = (user) => {
     email: Joi.string().min(3).max(255).email().required(),
     password: Joi.string().min(8).max(1024).required(),
     isAdmin: Joi.boolean(),
+    notifications: Joi.ObjectId(),
   });
   return schema.validate(user);
 };

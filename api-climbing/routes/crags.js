@@ -1,5 +1,7 @@
 const router = require("express").Router();
+const mongoose = require("mongoose");
 const { Crag, validateCrag, Sector } = require("../models/cragModel");
+const { User } = require("../models/userModel");
 const auth = require("../middleware/auth");
 const validate = require("../middleware/validate");
 const _ = require("lodash");
@@ -34,7 +36,9 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   const data = req.body;
   const existingCrag = await Crag.findOne({ cragName: data.cragName.trim() });
   if (existingCrag) return res.status(400).send("Crag Name Already Exists");
+  const cragId = mongoose.Types.ObjectId();
   const crag = new Crag({
+    _id: cragId,
     cragName: data.cragName.trim(),
     information: data.information.trim(),
     cragLocation: data.cragLocation,
@@ -45,12 +49,28 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   } catch (error) {
     logger.error(error);
   }
+  await User.updateMany(
+    {},
+    {
+      $push: {
+        notifications: {
+          objectId: cragId,
+          title: data.cragName.trim(),
+          description: data.information.trim(),
+          type: "crag",
+          parent: crag.cragName,
+        },
+      },
+    }
+  );
 });
 
 router.post("/addsector", auth, async (req, res) => {
   const crag = await Crag.findOne({ cragName: req.body.currentCrag });
   if (!crag) return res.status(400).send("Crag cannot be found");
+  const sectorId = mongoose.Types.ObjectId();
   const newSector = {
+    _id: sectorId,
     sectorName: req.body.sectorName,
     sectorLocation: req.body.sectorLocation,
     information: req.body.information,
@@ -66,6 +86,20 @@ router.post("/addsector", auth, async (req, res) => {
   } catch (error) {
     logger.error(error);
   }
+  await User.updateMany(
+    {},
+    {
+      $push: {
+        notifications: {
+          objectId: sectorId,
+          title: req.body.sectorName,
+          parent: `${crag.cragName}/${newSector.sectorName}`,
+          description: req.body.information,
+          type: "sector",
+        },
+      },
+    }
+  );
 });
 
 router.post("/addroute", auth, async (req, res) => {
@@ -83,13 +117,33 @@ router.post("/addroute", auth, async (req, res) => {
   );
   const [route] = sector.routes.filter((item) => item.routeName === routeName);
   if (route) return res.status(400).send("Route Name Already Exists");
+  const routeId = mongoose.Types.ObjectId();
   sector.routes.push({
+    _id: routeId,
     routeName,
     routeGrade,
     routeDescription,
     routeRating,
   });
-  await crag.save();
+  try {
+    await crag.save();
+  } catch (error) {
+    logger.error(error);
+  }
+  await User.updateMany(
+    {},
+    {
+      $push: {
+        notifications: {
+          objectId: routeId,
+          title: routeName,
+          parent: `${crag.cragName}/${sector.sectorName}`,
+          description: routeDescription,
+          type: "route",
+        },
+      },
+    }
+  );
   res.send(sector);
 });
 
@@ -140,6 +194,18 @@ router.put("/archiveRoute", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+router.post("/removeNotification", async (req, res) => {
+  const user = await User.findById(req.body.userId);
+  let notToRemove;
+  user.notifications.filter((item, index) => {
+    item._id === req.body.notificationId;
+    notToRemove = index;
+  });
+  user.notifications.splice(notToRemove, 1);
+  user.save();
+  res.send(user.notifications);
 });
 
 router.put("/crag/routes", async (req, res) => {

@@ -1,19 +1,58 @@
 import { HashLink } from "react-router-hash-link";
-import { Link } from "react-router-dom";
-import React from "react";
+import { IoMdNotifications } from "react-icons/io";
+import { SlArrowUp } from "react-icons/sl";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./Nav.scss";
-const mainLogo = require("../../media/images/climbing-logo-main-white.png");
+import getNotifications from "../../api/notifications";
+import Notification from "./Notification";
 
 function Nav({ user }) {
-  const [menu, setMenu] = React.useState(false);
+  const [menu, setMenu] = useState(false);
+  const [notificationsMenu, setNotificationsMenu] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
+
   const menuView = () => {
     setMenu(!menu);
   };
+
+  const notificationsView = () => {
+    setNotificationsMenu(!notificationsMenu);
+  };
+
+  useEffect(() => {
+    const getNot = async () => {
+      const { data } = await getNotifications();
+      setNotifications(data.notifications);
+    };
+    getNot();
+  }, [notificationsMenu]);
+
+  const notificationHandel = (notification) => {
+    console.log(notification);
+    navigate(`crags/${notification.parent}`);
+    setNotificationsMenu(!notificationsMenu);
+  };
+
+  const displayedNotifications = notifications.map((notification, index) => {
+    return (
+      <li key={index} className="nav--notification-item">
+        <Notification
+          notification={notification}
+          onClick={notificationHandel}
+          user={user}
+          setNotifications={setNotifications}
+        />
+      </li>
+    );
+  });
+
   return (
     <nav id="nav">
-      <HashLink to="/#home">
-        <img src={mainLogo} alt="Main Logo" className="main-logo" />
-      </HashLink>
+      <span className="nav--notification-icon" onClick={notificationsView}>
+        <IoMdNotifications />
+      </span>
       <div className={!menu ? "nav-menu" : "nav-menu open"}>
         <ul>
           <HashLink smooth to="/#home" onClick={menuView}>
@@ -54,6 +93,18 @@ function Nav({ user }) {
             </Link>
           )}
         </ul>
+      </div>
+      <div
+        className={`nav--notifications container ${
+          notificationsMenu && "open"
+        }`}
+      >
+        <ul className="nav--notification-list-wrapper">
+          {displayedNotifications.slice(0, 6)}
+        </ul>
+        <div className="nav--notification-close" onClick={notificationsView}>
+          <SlArrowUp />
+        </div>
       </div>
       <div className="burger-button" onClick={menuView}>
         <span></span>
