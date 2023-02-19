@@ -20,6 +20,19 @@
       margin: auto 0;
     }
   }
+  .logo {
+    height: 3rem;
+    margin: auto;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    cursor: pointer;
+    @include laptop {
+      display: none;
+    }
+  }
   a {
     height: 80%;
   }

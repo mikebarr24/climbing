@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import "./Nav.scss";
 import getNotifications from "../../api/notifications";
 import Notification from "./Notification";
+const logo = require("../../media/images/climbing-logo-main-white.png");
 
 function Nav({ user }) {
   const [menu, setMenu] = useState(false);
@@ -53,6 +54,9 @@ function Nav({ user }) {
       <span className="nav--notification-icon" onClick={notificationsView}>
         <IoMdNotifications />
       </span>
+      <HashLink smooth to="/#home" className="logo">
+        <img src={logo} alt="climbing logo" className="logo" />
+      </HashLink>
       <div className={!menu ? "nav-menu" : "nav-menu open"}>
         <ul>
           <HashLink smooth to="/#home" onClick={menuView}>
