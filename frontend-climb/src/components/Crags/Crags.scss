@@ -3,6 +3,11 @@
 #crags {
   margin-top: $nav-height;
   color: $dark-color;
+  .crags--title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .map-container {
     width: 100%;
     height: 80vh;

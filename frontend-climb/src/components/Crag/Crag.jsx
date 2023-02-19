@@ -6,11 +6,14 @@ import Button from "../Button/Button";
 import SectorModal from "./Modal/SectorModal";
 import crags from "../../api/crags";
 import ArchiveButton from "../common/ArchiveButton";
+import Help from "../common/Help";
+import Modal from "../common/Modal";
 
 function Crag({ user, api }) {
   const { cragName } = useParams();
   const navigate = useNavigate();
   const [cragTrigger, setCragTrigger] = useState(true);
+  const [help, setHelp] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [crag, setCrag] = useState(null);
   useEffect(() => {
@@ -42,24 +45,27 @@ function Crag({ user, api }) {
         <div className="crag-wrapper">
           <div className="crag--text">
             <div className="crag--title-wrapper">
-              <h2 className="title-text">
-                {crag.cragName.charAt(0).toUpperCase() + crag.cragName.slice(1)}
-              </h2>{" "}
-              {user?.isAdmin && (
-                <ArchiveButton onClick={archiveCrag} color="black" />
-              )}
+              <Button
+                className="crag--back-button"
+                onClick={() => navigate("/crags")}
+              >
+                Crags
+              </Button>
+              <div className="crag--title">
+                <h2 className="title-text">
+                  {crag.cragName.charAt(0).toUpperCase() +
+                    crag.cragName.slice(1)}
+                </h2>
+                {user?.isAdmin && (
+                  <ArchiveButton onClick={archiveCrag} color="black" />
+                )}
+              </div>
+              <Help
+                text="This is some text in here"
+                onClick={() => setHelp(true)}
+                className="help-icon"
+              />
             </div>
-            <p className="standard-text">
-              There are{" "}
-              <strong>
-                {crag.sectors.filter((sector) => !sector.archived).length}
-              </strong>{" "}
-              sectors at this crag
-            </p>
-            <Button onClick={() => navigate("/crags")}>Back to Map</Button>
-            <p className="standard-text">
-              Click on a Sector or click the map to add a new sector
-            </p>
           </div>
           <Map
             user={user}
@@ -81,6 +87,20 @@ function Crag({ user, api }) {
           user={user}
           cragTrigger={() => setCragTrigger(!cragTrigger)}
         />
+      )}
+      {help && (
+        <Modal close={() => setHelp(!help)}>
+          <h3>Click on a Sector to view the routes within the sector.</h3>
+          {user?.isAdmin && (
+            <>
+              <br />
+              <h3>
+                Admin Account:
+                <p>Click on the map to add a new sector to the crag.</p>
+              </h3>
+            </>
+          )}
+        </Modal>
       )}
     </div>
   );

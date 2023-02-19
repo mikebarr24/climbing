@@ -9,6 +9,8 @@ import Route from "./Route";
 import crags from "../../../api/crags";
 import RouteView from "./RouteView";
 import ArchiveButton from "../../common/ArchiveButton";
+import Help from "../../common/Help";
+import Modal from "../../common/Modal";
 
 function SectorModal({ user }) {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function SectorModal({ user }) {
   const [openRouteView, setOpenRouteView] = useState(false);
   const [sector, setSector] = useState(null);
   const [trigger, setTrigger] = useState(false);
+  const [help, setHelp] = useState(false);
   const routeInfo = useRef();
   const OVERLAY = {
     position: "fixed",
@@ -78,8 +81,11 @@ function SectorModal({ user }) {
       <div style={OVERLAY} />
       <div className="crag-modal standard-text container">
         <div className="modal--title-bar">
-          {<h2>{sector.sectorName}</h2>}
-          {user?.isAdmin && <ArchiveButton onClick={archiveSector} />}
+          <Help className="modal--help" onClick={() => setHelp(!help)} />
+          <div className="modal--text">
+            {<h2>{sector.sectorName}</h2>}
+            {user?.isAdmin && <ArchiveButton onClick={archiveSector} />}
+          </div>
           <CloseButton onClick={() => navigate(`/crags/${cragName}`)} />
         </div>
         <div className="crag-modal--body">
@@ -123,6 +129,12 @@ function SectorModal({ user }) {
           />
         )}
       </div>
+      {help && (
+        <Modal close={() => setHelp(!help)}>
+          <h3>Click on a Route Name to view more details about the route.</h3>
+          <br />
+        </Modal>
+      )}
     </>,
 
     document.getElementById("portal")

@@ -27,28 +27,35 @@ function AddCrag({ currentCrag }) {
         lng: state.location.lng,
       },
     }));
-  }, []);
+  }, [state.location]);
 
   const submitHandle = async (e) => {
     e.preventDefault();
     setError(null);
     try {
-      if (state.type === "crag") {
-        await crags.setCrag({
-          cragName: marker.markerName,
-          cragLocation: marker.markerLocation,
-          information: marker.information,
-        });
-        navigate("/crags");
-      }
-      if (state.type === "sector") {
-        await crags.setSector({
-          currentCrag: state.currentCrag,
-          sectorName: marker.markerName,
-          sectorLocation: marker.markerLocation,
-          information: marker.information,
-        });
-        navigate(`/crags/${state.currentCrag}/${marker.markerName}`);
+      switch (state.type) {
+        case "crag":
+          console.log("crag");
+          await crags.setCrag({
+            cragName: marker.markerName,
+            cragLocation: marker.markerLocation,
+            information: marker.information,
+          });
+          navigate("/crags");
+          break;
+        case "sector":
+          console.log("sector");
+          await crags.setSector({
+            currentCrag: state.currentCrag,
+            sectorName: marker.markerName,
+            sectorLocation: marker.markerLocation,
+            information: marker.information,
+          });
+          navigate(`/crags/${state.currentCrag}/${marker.markerName}`);
+          break;
+        default:
+          console.log("Error adding Crag or Sector");
+          break;
       }
     } catch (err) {
       setError(err.response.data);

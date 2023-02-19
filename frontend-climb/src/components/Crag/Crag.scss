@@ -6,6 +6,14 @@
   .crag--title-wrapper {
     display: flex;
     align-items: center;
+    width: 100%;
+    .crag--title {
+      display: flex;
+      margin: auto;
+    }
+    .help-icon {
+      margin-left: auto;
+    }
   }
   .map-container {
     width: 100%;

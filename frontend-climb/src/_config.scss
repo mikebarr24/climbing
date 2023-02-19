@@ -65,6 +65,10 @@ h2 {
   font-size: 2.5rem;
 }
 
+h3 {
+  font-size: 2rem;
+}
+
 /* Forms */
 .form-standard {
   display: flex;
@@ -129,8 +133,10 @@ h2 {
 
 .modal--title-bar {
   display: flex;
+  width: 100%;
   justify-content: center;
   position: absolute;
+  align-items: center;
   left: 0;
   top: 0;
   right: 0;
