@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import { AiOutlineCloudUpload } from "react-icons/ai";
+import { useRef, useState } from "react";
 import "./AddRouteForm.scss";
 import crag from "../../../api/crags";
 import BackArrow from "../../common/BackArrow";
+import FileUpload from "../../common/FileUpload";
 
 function AddRouteForm({
   close,
@@ -15,19 +15,20 @@ function AddRouteForm({
   const routeGrade = useRef();
   const routeDescription = useRef();
   const routeRating = useRef();
+  const [image, setImage] = useState(null);
 
   const submitHandle = async (e) => {
     e.preventDefault();
-    const routeData = {
-      routeName: routeName.current.value,
-      routeGrade: routeGrade.current.value,
-      routeDescription: routeDescription.current.value,
-      routeRating: routeRating.current.value,
-      currentCrag: currentCrag,
-      currentSector: currentSector,
-    };
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("routeName", routeName.current.value);
+    formData.append("routeGrade", routeGrade.current.value);
+    formData.append("routeDescription", routeDescription.current.value);
+    formData.append("routeRating", routeRating.current.value);
+    formData.append("currentCrag", currentCrag);
+    formData.append("currentSector", currentSector);
     try {
-      const { data } = await crag.setRoute(routeData);
+      const { data } = await crag.setRoute(formData);
       setSector(data);
       close();
     } catch (error) {
@@ -74,13 +75,7 @@ function AddRouteForm({
           className="form-text"
           placeholder="Route Information"
         ></textarea>
-        <label className="custom-file-upload">
-          <input type="file" className="form-file" />
-          <span className="modal--upload-cloud">
-            <AiOutlineCloudUpload />
-          </span>
-          Upload Photo
-        </label>
+        <FileUpload setImage={setImage} image={image} />
         <input
           type="submit"
           className="modal--add-route-button form-button"

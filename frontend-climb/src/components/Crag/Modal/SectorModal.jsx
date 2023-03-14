@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./SectorModal.scss";
 import Button from "../../Button/Button";
 import CloseButton from "../../common/CloseButton";
@@ -17,11 +17,11 @@ function SectorModal({ user }) {
   const [openForm, setOpenForm] = useState(false);
   const [openRouteView, setOpenRouteView] = useState(false);
   const [sector, setSector] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [trigger, setTrigger] = useState(false);
   const [help, setHelp] = useState(false);
   const routeInfo = useRef();
   const { cragName, sectorName } = useParams();
-  const { state } = useLocation();
   const OVERLAY = {
     position: "fixed",
     top: "0",
@@ -41,6 +41,20 @@ function SectorModal({ user }) {
     };
     local();
   }, [cragName, sectorName]);
+
+  //Set image if one attached to crag
+  useEffect(() => {
+    if (sector) {
+      const local = async () => {
+        const { data } = await crags.getImage(
+          "sectors",
+          sector.sectorImageName
+        );
+        setImageUrl(data);
+      };
+      local();
+    }
+  }, [sector]);
 
   const archiveSector = async () => {
     await crags.archiveSector(cragName, sectorName);
@@ -91,7 +105,7 @@ function SectorModal({ user }) {
           <CloseButton onClick={() => navigate(`/crags/${cragName}`)} />
         </div>
         <div className="crag-modal--body">
-          <div className="sector-photo">Photo of Sector here</div>
+          <img className="sector--photo" src={imageUrl} alt="" />
           <h3>Sector Info</h3>
           {<p>{sector.information}</p>}
           <div className="sector--route-container">

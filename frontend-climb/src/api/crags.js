@@ -61,6 +61,11 @@ const removeNotification = async (notificationId, userId) => {
   return res;
 };
 
+const getImage = async (folder, fileName) => {
+  const res = await http.get(`/crags/images/${folder}/${fileName}`);
+  return res;
+};
+
 const exportObject = {
   getAllCrags,
   getCrag,
@@ -72,6 +77,7 @@ const exportObject = {
   archiveRoute,
   removeNotification,
   getRoutes,
+  getImage,
 };
 
 export default exportObject;

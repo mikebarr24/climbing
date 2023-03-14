@@ -9,6 +9,7 @@ services:
       - ./api-climbing:/app
       - /node_modules
       - ./.env:/app/.env
+      - /Users/michaelbarr/.aws:/.aws
     depends_on:
       - db_climbing
     environment:

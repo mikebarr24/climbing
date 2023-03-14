@@ -19,9 +19,12 @@
   }
   .crag-modal--body {
     padding-top: 6rem;
-    .sector-photo {
-      height: 20rem;
-      background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    .sector--photo {
+      margin: 0 auto;
+      max-height: 30rem;
+      max-width: 100%;
     }
     .crag--route-header {
       display: flex;

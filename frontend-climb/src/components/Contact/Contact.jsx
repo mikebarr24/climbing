@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import "./Contact.scss";
 import sendMessage from "../../api/email";
 import Message from "../common/Message";

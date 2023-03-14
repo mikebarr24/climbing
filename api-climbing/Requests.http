@@ -1,5 +1,8 @@
 GET http://localhost:8080/api/crags/test
 
+###
+GET http://localhost:8080/api/crags/images/routes/1f69f2d9ec3aa6aadbe8b6b8fd66da9c4f66da22d3401444df6857902b25b444
+
 
 ###
 POST http://localhost:8080/api/users

@@ -15,7 +15,11 @@ const routeSchema = new mongoose.Schema({
     min: 1,
     max: 5,
   },
-  routeImageUrl: String,
+  routeImageName: {
+    type: String,
+    min: 3,
+    max: 255,
+  },
   addedBy: mongoose.ObjectId,
   dateCreated: {
     type: Date,
@@ -35,7 +39,11 @@ const sectorSchema = new mongoose.Schema({
     max: 255,
     unique: true,
   },
-  sectorImageUrl: String,
+  sectorImageName: {
+    type: String,
+    min: 3,
+    max: 255,
+  },
   information: String,
   sectorLocation: {
     lat: {

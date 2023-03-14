@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import crags from "../../api/crags";
 import ErrorMessage from "../ErrorMessage";
+import FileUpload from "../common/FileUpload";
 
-function AddCrag({ currentCrag }) {
+function AddCrag() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const initMarker = {
@@ -18,6 +19,7 @@ function AddCrag({ currentCrag }) {
   };
   const [marker, setMarker] = useState(initMarker);
   const [error, setError] = useState(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     setMarker((x) => ({
@@ -31,11 +33,11 @@ function AddCrag({ currentCrag }) {
 
   const submitHandle = async (e) => {
     e.preventDefault();
+
     setError(null);
     try {
       switch (state.type) {
         case "crag":
-          console.log("crag");
           await crags.setCrag({
             cragName: marker.markerName,
             cragLocation: marker.markerLocation,
@@ -44,13 +46,14 @@ function AddCrag({ currentCrag }) {
           navigate("/crags");
           break;
         case "sector":
-          console.log("sector");
-          await crags.setSector({
-            currentCrag: state.currentCrag,
-            sectorName: marker.markerName,
-            sectorLocation: marker.markerLocation,
-            information: marker.information,
-          });
+          const formData = new FormData();
+          formData.append("file", image);
+          formData.append("currentCrag", state.currentCrag);
+          formData.append("sectorName", marker.markerName);
+          formData.append("sectorLocationLng", marker.markerLocation.lng);
+          formData.append("sectorLocationLat", marker.markerLocation.lat);
+          formData.append("information", marker.information);
+          await crags.setSector(formData);
           navigate(`/crags/${state.currentCrag}/${marker.markerName}`);
           break;
         default:
@@ -58,7 +61,7 @@ function AddCrag({ currentCrag }) {
           break;
       }
     } catch (err) {
-      setError(err.response.data);
+      setError(err.response);
     }
   };
 
@@ -92,6 +95,9 @@ function AddCrag({ currentCrag }) {
           value={marker.information}
           onChange={changeHandle}
         ></textarea>
+        {state.type === "sector" && (
+          <FileUpload setImage={setImage} image={image} />
+        )}
         <input type="submit" className="form-button" />
       </form>
       {error && <ErrorMessage errorMessage={error} />}

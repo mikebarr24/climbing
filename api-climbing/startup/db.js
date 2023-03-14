@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 const logger = require("./logger");
 require("dotenv").config();
 
@@ -13,7 +14,7 @@ const db = () => {
     connectionString = "mongodb://db_climbing/climbingDev";
   } else {
     connectedDB = "Production";
-    connectionString = `mongodb+srv://admin:${process.env.MONGO_PASSWORD}@climbing.p5ug7c5.mongodb.net/climbingDev?retryWrites=true&w=majority`;
+    connectionString = `mongodb+srv://admin:${process.env.MONGO_PASSWORD}@climbing.p5ug7c5.mongodb.net/climbingProd?retryWrites=true&w=majority`;
   }
 
   mongoose

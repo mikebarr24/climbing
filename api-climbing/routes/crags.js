@@ -6,6 +6,11 @@ const auth = require("../middleware/auth");
 const validate = require("../middleware/validate");
 const _ = require("lodash");
 const logger = require("../startup/logger");
+const sendToBucket = require("../modules/bucket/sendToBucket");
+const getUrl = require("../modules/bucket/getUrl");
+const upload = require("../middleware/upload");
+const randomFilename = require("../startup/randomFilename");
+const jimp = require("../modules/jimp");
 
 router.get("/all", async (req, res) => {
   const crags = await Crag.find();
@@ -16,17 +21,21 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.get("/:cragName", async (req, res) => {
-  const crag = await Crag.findOne({ cragName: req.params.cragName });
-  if (!crag) return res.status(400).send(`The crag cannot be found`);
+//Get Signed filename for image on AWS Bucket
+router.get("/images/:folder/:fileName", async (req, res) => {
+  const folder = req.params.folder;
+  const fileName = req.params.fileName;
+  if (!fileName || !folder)
+    return res.status(400).send("Folder or Filename not supplied");
   try {
-    return res.send(crag);
+    const url = await getUrl(`${folder}/${fileName}`);
+    res.send(url);
   } catch (error) {
     logger.error(error);
   }
 });
 
-router.get("/:cragName/:sectorName", async (req, res) => {
+router.get("/:cragName", async (req, res) => {
   const crag = await Crag.findOne({ cragName: req.params.cragName });
   if (!crag) return res.status(400).send(`The crag cannot be found`);
   try {
@@ -69,15 +78,29 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   }
 });
 
-router.post("/addsector", auth, async (req, res) => {
+router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
   const crag = await Crag.findOne({ cragName: req.body.currentCrag });
   if (!crag) return res.status(400).send("Crag cannot be found");
+  let uniqueFilename;
+  if (req.file) {
+    uniqueFilename = randomFilename();
+    try {
+      const resize = await jimp(req.file.buffer);
+      await sendToBucket(resize, uniqueFilename, "sectors", req.file.mimetype);
+    } catch (error) {
+      console.log("here", error);
+    }
+  }
   const sectorId = mongoose.Types.ObjectId();
   const newSector = {
     _id: sectorId,
     sectorName: req.body.sectorName,
-    sectorLocation: req.body.sectorLocation,
+    sectorLocation: {
+      lat: req.body.sectorLocationLat,
+      lng: req.body.sectorLocationLng,
+    },
     information: req.body.information,
+    sectorImageName: uniqueFilename,
   };
   const [currentSector] = crag.sectors.filter(
     (item) => item.sectorName === newSector.sectorName
@@ -106,7 +129,15 @@ router.post("/addsector", auth, async (req, res) => {
   }
 });
 
-router.post("/addroute", auth, async (req, res) => {
+router.post("/addroute", upload.single("file"), async (req, res) => {
+  const uniqueFilename = randomFilename();
+  //Sends file to AWS bucket
+  try {
+    const resize = await jimp(req.file.buffer);
+    sendToBucket(resize, uniqueFilename, "routes", req.file.mimetype);
+  } catch (error) {
+    logger.error(error);
+  }
   const {
     routeName,
     routeGrade,
@@ -128,9 +159,17 @@ router.post("/addroute", auth, async (req, res) => {
     routeGrade,
     routeDescription,
     routeRating,
+    routeImageName: uniqueFilename,
   });
+
   try {
     await crag.save();
+    res.send(sector);
+  } catch (error) {
+    logger.error(error);
+  }
+  //Sends Route to Notificatinons
+  try {
     await User.updateMany(
       {},
       {
@@ -145,7 +184,6 @@ router.post("/addroute", auth, async (req, res) => {
         },
       }
     );
-    res.send(sector);
   } catch (error) {
     logger.error(error);
   }
