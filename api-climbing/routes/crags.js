@@ -81,6 +81,8 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
 router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
   const crag = await Crag.findOne({ cragName: req.body.currentCrag });
   if (!crag) return res.status(400).send("Crag cannot be found");
+
+  //Sends file to AWS bucket
   let uniqueFilename;
   if (req.file) {
     uniqueFilename = randomFilename();
@@ -91,6 +93,8 @@ router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
       console.log("here", error);
     }
   }
+
+  //Creates Database entry for route
   const sectorId = mongoose.Types.ObjectId();
   const newSector = {
     _id: sectorId,
@@ -110,6 +114,12 @@ router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
   try {
     await crag.save();
     res.send(crag);
+  } catch (error) {
+    logger.error(error);
+  }
+
+  //Sends Sector to Notificatinons
+  try {
     await User.updateMany(
       {},
       {
@@ -130,8 +140,15 @@ router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
 });
 
 router.post("/addroute", upload.single("file"), async (req, res) => {
-  const uniqueFilename = randomFilename();
+  const crag = await Crag.findOne({ cragName: currentCrag });
+  const [sector] = crag.sectors.filter(
+    (item) => item.sectorName === currentSector
+  );
+  const [route] = sector.routes.filter((item) => item.routeName === routeName);
+  if (route) return res.status(400).send("Route Name Already Exists");
+
   //Sends file to AWS bucket
+  const uniqueFilename = randomFilename();
   try {
     const resize = await jimp(req.file.buffer);
     sendToBucket(resize, uniqueFilename, "routes", req.file.mimetype);
@@ -146,12 +163,8 @@ router.post("/addroute", upload.single("file"), async (req, res) => {
     currentCrag,
     currentSector,
   } = req.body;
-  const crag = await Crag.findOne({ cragName: currentCrag });
-  const [sector] = crag.sectors.filter(
-    (item) => item.sectorName === currentSector
-  );
-  const [route] = sector.routes.filter((item) => item.routeName === routeName);
-  if (route) return res.status(400).send("Route Name Already Exists");
+
+  //Creates Database entry for route
   const routeId = mongoose.Types.ObjectId();
   sector.routes.push({
     _id: routeId,
@@ -161,13 +174,13 @@ router.post("/addroute", upload.single("file"), async (req, res) => {
     routeRating,
     routeImageName: uniqueFilename,
   });
-
   try {
     await crag.save();
     res.send(sector);
   } catch (error) {
     logger.error(error);
   }
+
   //Sends Route to Notificatinons
   try {
     await User.updateMany(
