@@ -3,7 +3,7 @@ import "./AddMarker.scss";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import crags from "../../api/crags";
-import ErrorMessage from "../ErrorMessage";
+import Message from "../common/Message";
 import FileUpload from "../common/FileUpload";
 
 function AddCrag() {
@@ -18,7 +18,7 @@ function AddCrag() {
     },
   };
   const [marker, setMarker] = useState(initMarker);
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -34,34 +34,38 @@ function AddCrag() {
   const submitHandle = async (e) => {
     e.preventDefault();
 
-    setError(null);
-    try {
-      switch (state.type) {
-        case "crag":
+    switch (state.type) {
+      case "crag":
+        try {
           await crags.setCrag({
             cragName: marker.markerName,
             cragLocation: marker.markerLocation,
             information: marker.information,
           });
           navigate("/crags");
-          break;
-        case "sector":
-          const formData = new FormData();
-          formData.append("file", image);
-          formData.append("currentCrag", state.currentCrag);
-          formData.append("sectorName", marker.markerName);
-          formData.append("sectorLocationLng", marker.markerLocation.lng);
-          formData.append("sectorLocationLat", marker.markerLocation.lat);
-          formData.append("information", marker.information);
+        } catch (error) {
+          setMessage({ message: error.response.data, type: "error" });
+        }
+        break;
+      case "sector":
+        setMessage({ message: "Uploading" });
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("currentCrag", state.currentCrag);
+        formData.append("sectorName", marker.markerName);
+        formData.append("sectorLocationLng", marker.markerLocation.lng);
+        formData.append("sectorLocationLat", marker.markerLocation.lat);
+        formData.append("information", marker.information);
+        try {
           await crags.setSector(formData);
           navigate(`/crags/${state.currentCrag}/${marker.markerName}`);
-          break;
-        default:
-          console.log("Error adding Crag or Sector");
-          break;
-      }
-    } catch (err) {
-      setError(err.response);
+        } catch (error) {
+          setMessage({ message: error.response.data, type: "error" });
+        }
+        break;
+      default:
+        console.log("Error adding Crag or Sector");
+        break;
     }
   };
 
@@ -100,7 +104,7 @@ function AddCrag() {
         )}
         <input type="submit" className="form-button" />
       </form>
-      {error && <ErrorMessage errorMessage={error} />}
+      {message && <Message message={message} />}
     </div>
   );
 }

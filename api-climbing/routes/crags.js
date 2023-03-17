@@ -81,6 +81,10 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
 router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
   const crag = await Crag.findOne({ cragName: req.body.currentCrag });
   if (!crag) return res.status(400).send("Crag cannot be found");
+  const [currentSector] = crag.sectors.filter(
+    (item) => item.sectorName === req.body.sectorName
+  );
+  if (currentSector) return res.status(400).send("Sector already exists.");
 
   //Sends file to AWS bucket
   let uniqueFilename;
@@ -90,11 +94,11 @@ router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
       const resize = await jimp(req.file.buffer);
       await sendToBucket(resize, uniqueFilename, "sectors", req.file.mimetype);
     } catch (error) {
-      console.log("here", error);
+      logger.error(error);
     }
   }
 
-  //Creates Database entry for route
+  //Creates Database entry for sector
   const sectorId = mongoose.Types.ObjectId();
   const newSector = {
     _id: sectorId,
@@ -106,10 +110,6 @@ router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
     information: req.body.information,
     sectorImageName: uniqueFilename,
   };
-  const [currentSector] = crag.sectors.filter(
-    (item) => item.sectorName === newSector.sectorName
-  );
-  if (currentSector) return res.status(400).send("Sector already exists.");
   crag.sectors.push(newSector);
   try {
     await crag.save();
@@ -157,12 +157,14 @@ router.post("/addroute", upload.single("file"), async (req, res) => {
   if (route) return res.status(400).send("Route Name Already Exists");
 
   //Sends file to AWS bucket
-  const uniqueFilename = randomFilename();
-  try {
-    const resize = await jimp(req.file.buffer);
-    sendToBucket(resize, uniqueFilename, "routes", req.file.mimetype);
-  } catch (error) {
-    logger.error(error);
+  if (req.file) {
+    const uniqueFilename = randomFilename();
+    try {
+      const resize = await jimp(req.file.buffer);
+      sendToBucket(resize, uniqueFilename, "routes", req.file.mimetype);
+    } catch (error) {
+      logger.error(error);
+    }
   }
 
   //Creates Database entry for route
@@ -173,7 +175,7 @@ router.post("/addroute", upload.single("file"), async (req, res) => {
     routeGrade,
     routeDescription,
     routeRating,
-    routeImageName: uniqueFilename,
+    routeImageName: req.file ? uniqueFilename : null,
   });
   try {
     await crag.save();

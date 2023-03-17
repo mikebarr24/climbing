@@ -3,6 +3,7 @@ import "./AddRouteForm.scss";
 import crag from "../../../api/crags";
 import BackArrow from "../../common/BackArrow";
 import FileUpload from "../../common/FileUpload";
+import Message from "../../common/Message";
 
 function AddRouteForm({
   close,
@@ -16,9 +17,11 @@ function AddRouteForm({
   const routeDescription = useRef();
   const routeRating = useRef();
   const [image, setImage] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const submitHandle = async (e) => {
     e.preventDefault();
+    setMessage({ message: "Uploading" });
     const formData = new FormData();
     formData.append("file", image);
     formData.append("routeName", routeName.current.value);
@@ -32,7 +35,7 @@ function AddRouteForm({
       setSector(data);
       close();
     } catch (error) {
-      console.log(error);
+      setMessage({ message: error.response.data, type: "error" });
     }
   };
 
@@ -82,6 +85,7 @@ function AddRouteForm({
           value="Add Route"
         />
       </form>
+      {message && <Message message={message} />}
     </div>
   );
 }
