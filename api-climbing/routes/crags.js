@@ -140,6 +140,15 @@ router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
 });
 
 router.post("/addroute", upload.single("file"), async (req, res) => {
+  const {
+    routeName,
+    routeGrade,
+    routeDescription,
+    routeRating,
+    currentCrag,
+    currentSector,
+  } = req.body;
+
   const crag = await Crag.findOne({ cragName: currentCrag });
   const [sector] = crag.sectors.filter(
     (item) => item.sectorName === currentSector
@@ -155,14 +164,6 @@ router.post("/addroute", upload.single("file"), async (req, res) => {
   } catch (error) {
     logger.error(error);
   }
-  const {
-    routeName,
-    routeGrade,
-    routeDescription,
-    routeRating,
-    currentCrag,
-    currentSector,
-  } = req.body;
 
   //Creates Database entry for route
   const routeId = mongoose.Types.ObjectId();
