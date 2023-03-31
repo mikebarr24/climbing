@@ -11,6 +11,7 @@ const getUrl = require("../modules/bucket/getUrl");
 const upload = require("../middleware/upload");
 const randomFilename = require("../startup/randomFilename");
 const jimp = require("../modules/jimp");
+const sendToNotifications = require("../modules/sendToNotifications");
 
 router.get("/all", async (req, res) => {
   const crags = await Crag.find();
@@ -59,19 +60,17 @@ router.post("/addcrag", [validate(validateCrag), auth], async (req, res) => {
   try {
     const response = await crag.save();
     res.send(response);
-    await User.updateMany(
-      {},
-      {
-        $push: {
-          notifications: {
-            objectId: cragId,
-            title: data.cragName.trim(),
-            description: data.information.trim(),
-            type: "crag",
-            parent: crag.cragName,
-          },
-        },
-      }
+  } catch (error) {
+    logger.error(error);
+  }
+
+  //Send to User Notifications
+  try {
+    await sendToNotifications(
+      cragId,
+      data.cragName.trim(),
+      "crag",
+      crag.cragName
     );
   } catch (error) {
     logger.error(error);
@@ -120,19 +119,11 @@ router.post("/addsector", [auth, upload.single("file")], async (req, res) => {
 
   //Sends Sector to Notificatinons
   try {
-    await User.updateMany(
-      {},
-      {
-        $push: {
-          notifications: {
-            objectId: sectorId,
-            title: req.body.sectorName,
-            parent: `${crag.cragName}/${newSector.sectorName}`,
-            description: req.body.information,
-            type: "sector",
-          },
-        },
-      }
+    await sendToNotifications(
+      sectorId,
+      req.body.sectorName,
+      "sector",
+      `${crag.cragName}/${newSector.sectorName}`
     );
   } catch (error) {
     logger.error(error);
@@ -186,19 +177,11 @@ router.post("/addroute", upload.single("file"), async (req, res) => {
 
   //Sends Route to Notificatinons
   try {
-    await User.updateMany(
-      {},
-      {
-        $push: {
-          notifications: {
-            objectId: routeId,
-            title: routeName,
-            parent: `${crag.cragName}/${sector.sectorName}`,
-            description: routeDescription,
-            type: "route",
-          },
-        },
-      }
+    await sendToNotifications(
+      routeId,
+      routeName,
+      "route",
+      `${crag.cragName}/${sector.sectorName}`
     );
   } catch (error) {
     logger.error(error);
@@ -255,23 +238,23 @@ router.put("/archiveRoute", async (req, res) => {
 });
 
 router.post("/removeNotification", async (req, res) => {
-  const user = await User.findById(req.body.userId);
-  let notToRemove;
-  user.notifications.filter((item, index) => {
-    item._id === req.body.notificationId;
-    notToRemove = index;
-  });
-  user.notifications.splice(notToRemove, 1);
   try {
-    user.save();
-    res.send(user.notifications);
+    const user = await User.findByIdAndUpdate(
+      req.body.userId,
+      {
+        $pull: { notifications: { _id: req.body.notificationId } },
+      },
+      { new: true }
+    );
+    if (!user) return res.status(400).send("User Not Found");
+    return res.send(user.notifications);
   } catch (error) {
     logger.error(error);
   }
 });
 
 router.put("/crag/routes", async (req, res) => {
-  const crag = await Crag.findById(req.body.cragId);
+  const crag = await Crag.find(req.body.cragId);
   if (!crag) return res.status(400).send(`The crag cannot be found`);
   const sector = crag.sectors.id(req.body.sectorId);
   if (!sector) return res.status(400).send(`The sector cannot be found`);

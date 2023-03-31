@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import "./Nav.scss";
 import getNotifications from "../../api/notifications";
 import Notification from "./Notification";
+import crags from "../../api/crags";
 const logo = require("../../media/images/climbing-logo-main-white.png");
 
 function Nav({ user }) {
@@ -18,8 +19,9 @@ function Nav({ user }) {
     setMenu(!menu);
   };
 
-  const notificationsView = () => {
-    setNotificationsMenu(!notificationsMenu);
+  const removeNotification = async (notificationId, userId) => {
+    const { data } = await crags.removeNotification(notificationId, userId);
+    setNotifications(data);
   };
 
   useEffect(() => {
@@ -31,11 +33,9 @@ function Nav({ user }) {
   }, [notificationsMenu]);
 
   const notificationHandel = (notification) => {
-    console.log(notification);
     navigate(`crags/${notification.parent}`);
     setNotificationsMenu(!notificationsMenu);
   };
-
   const displayedNotifications = notifications.map((notification, index) => {
     return (
       <li key={index} className="nav--notification-item">
@@ -43,7 +43,7 @@ function Nav({ user }) {
           notification={notification}
           onClick={notificationHandel}
           user={user}
-          setNotifications={setNotifications}
+          removeNotification={removeNotification}
         />
       </li>
     );
@@ -51,7 +51,10 @@ function Nav({ user }) {
 
   return (
     <nav id="nav">
-      <span className="nav--notification-icon" onClick={notificationsView}>
+      <span
+        className="nav--notification-icon"
+        onClick={() => setNotificationsMenu(!notificationsMenu)}
+      >
         <IoMdNotifications />
       </span>
       <HashLink smooth to="/#home" className="logo">
@@ -107,10 +110,15 @@ function Nav({ user }) {
           {displayedNotifications.length > 0 ? (
             displayedNotifications.slice(0, 6)
           ) : (
-            <h2>No notifications</h2>
+            <h2 className="nav--notification-no-notifications">
+              No Notifications
+            </h2>
           )}
         </ul>
-        <div className="nav--notification-close" onClick={notificationsView}>
+        <div
+          className="nav--notification-close"
+          onClick={() => setNotificationsMenu(!notificationsMenu)}
+        >
           <SlArrowUp />
         </div>
       </div>

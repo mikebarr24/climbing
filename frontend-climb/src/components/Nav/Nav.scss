@@ -119,6 +119,9 @@
         margin: 0;
         list-style-type: none;
       }
+      .nav--notification-no-notifications {
+        text-align: center;
+      }
     }
     &.open {
       display: block;

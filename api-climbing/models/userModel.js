@@ -13,13 +13,7 @@ const notificationsSchema = new mongoose.Schema({
     type: String,
     required: true,
     max: 255,
-    min: 3,
-  },
-  description: {
-    type: String,
-    required: true,
-    max: 255,
-    min: 3,
+    min: 1,
   },
   type: {
     type: String,
@@ -29,7 +23,7 @@ const notificationsSchema = new mongoose.Schema({
   },
   parent: {
     type: String,
-    required: false,
+    required: true,
     max: 255,
     min: 1,
   },

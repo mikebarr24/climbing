@@ -1,9 +1,8 @@
 import React from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import "./Notification.scss";
-import crags from "../../api/crags";
 
-function Notification({ notification, onClick, user, setNotifications }) {
+function Notification({ notification, onClick, user, removeNotification }) {
   let color;
   switch (notification.type) {
     case "route":
@@ -22,10 +21,6 @@ function Notification({ notification, onClick, user, setNotifications }) {
     borderRightColor: color,
     borderBottomColor: color,
   };
-  const removeNotification = async (notificationId, userId) => {
-    const { data } = await crags.removeNotification(notificationId, userId);
-    setNotifications(data);
-  };
 
   return (
     <div className="notification-wrapper">
@@ -37,7 +32,6 @@ function Notification({ notification, onClick, user, setNotifications }) {
         onClick={() => onClick(notification)}
       >
         <h3 className="notification-title">{notification.title}</h3>
-        <p className="notification-text">{notification.description}</p>
       </div>
       <span
         className="notification-remove"
