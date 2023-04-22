@@ -52,7 +52,6 @@ router.put("/update", auth, async (req, res) => {
 router.put("/password", auth, async (req, res) => {
   const user = await User.findById(req.user._id);
   const match = await bcrypt.compare(req.body.originalPassword, user.password);
-  console.log(match);
   if (!match) return res.status(400).send("Wrong Password");
   const same = await bcrypt.compare(req.body.newPassword, user.password);
   if (same) return res.status(400).send("Can't use the same password");
