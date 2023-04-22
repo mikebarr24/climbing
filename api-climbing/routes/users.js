@@ -62,4 +62,9 @@ router.put("/password", auth, async (req, res) => {
   res.send("Password Changed");
 });
 
+router.post("/setImage", async (req, res) => {
+  const user = await User.findById(req.body.userId);
+  if (!user) return res.status(400).send("User Not Found");
+});
+
 module.exports = router;

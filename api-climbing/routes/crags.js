@@ -148,8 +148,8 @@ router.post("/addroute", upload.single("file"), async (req, res) => {
   if (route) return res.status(400).send("Route Name Already Exists");
 
   //Sends file to AWS bucket
+  const uniqueFilename = randomFilename();
   if (req.file) {
-    const uniqueFilename = randomFilename();
     try {
       const resize = await jimp(req.file.buffer);
       sendToBucket(resize, uniqueFilename, "routes", req.file.mimetype);
