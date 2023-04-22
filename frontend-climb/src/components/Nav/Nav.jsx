@@ -36,18 +36,21 @@ function Nav({ user }) {
     navigate(`crags/${notification.parent}`);
     setNotificationsMenu(!notificationsMenu);
   };
-  const displayedNotifications = notifications.map((notification, index) => {
-    return (
-      <li key={index} className="nav--notification-item">
-        <Notification
-          notification={notification}
-          onClick={notificationHandel}
-          user={user}
-          removeNotification={removeNotification}
-        />
-      </li>
-    );
-  });
+  let displayedNotifications = [];
+  if (notifications) {
+    displayedNotifications = notifications.map((notification, index) => {
+      return (
+        <li key={index} className="nav--notification-item">
+          <Notification
+            notification={notification}
+            onClick={notificationHandel}
+            user={user}
+            removeNotification={removeNotification}
+          />
+        </li>
+      );
+    });
+  }
 
   return (
     <nav id="nav">
@@ -108,7 +111,7 @@ function Nav({ user }) {
       >
         <ul className="nav--notification-list-wrapper">
           {displayedNotifications.length > 0 ? (
-            displayedNotifications.slice(0, 6)
+            displayedNotifications.slice(0, 6).reverse()
           ) : (
             <h2 className="nav--notification-no-notifications">
               No Notifications
