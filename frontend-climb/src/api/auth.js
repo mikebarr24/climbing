@@ -26,7 +26,7 @@ const getCurrentUser = () => {
     const jwt = localStorage.getItem(tokenKey);
     return jwtDecode(jwt);
   } catch (error) {
-    return null;
+    return console.log(error);
   }
 };
 const logout = () => {
