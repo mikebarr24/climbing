@@ -21,9 +21,19 @@ const login = async (user) => {
 const logInWithJwt = (jwt) => {
   localStorage.setItem(tokenKey, jwt);
 };
+
+const checkUserLoggedIn = () => {
+  const jwt = localStorage.getItem(tokenKey);
+  if (jwt) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const getCurrentUser = () => {
+  const jwt = localStorage.getItem(tokenKey);
   try {
-    const jwt = localStorage.getItem(tokenKey);
     return jwtDecode(jwt);
   } catch (error) {
     return console.log(error);
@@ -67,6 +77,7 @@ const exportFunction = {
   updatePassword,
   getUserServer,
   logout,
+  checkUserLoggedIn,
   getCurrentUser,
   logInWithJwt,
   login,

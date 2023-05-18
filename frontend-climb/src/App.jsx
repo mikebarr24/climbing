@@ -27,9 +27,13 @@ function App() {
     getApi();
   }, []);
 
+  //Set User
   useEffect(() => {
-    setUser(auth.getCurrentUser());
+    if (auth.checkUserLoggedIn() === true) {
+      setUser(auth.getCurrentUser());
+    }
   }, []);
+
   if (!mapApi) return <h1>Loading</h1>;
   return (
     <div className="App">

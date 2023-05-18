@@ -1,12 +1,16 @@
 {
-  "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Node.js in Docker",
-      "type": "docker",
+      "type": "node",
       "request": "launch",
-      "preLaunchTask": "Run Docker Container",
-      "platform": "node"
+      "name": "Docker: Attach to Node",
+      "port": 3000,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/frontend-climb/src",
+      "remoteRoot": "/app/frontend-climb/src",
+      "protocol": "inspector",
+      "restart": true,
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

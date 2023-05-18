@@ -149,6 +149,23 @@ h3 {
   text-align: center;
 }
 
+/* Text Formatting */
+.center {
+  text-align: center;
+}
+
+.light-text-color {
+  color: $light-color;
+}
+
+/* Default Margin */
+.margin-top-1 {
+  margin-top: 1rem;
+}
+
+.margin-bottom-1 {
+  margin-bottom: 1rem;
+}
 /* Mixins */
 
 @mixin laptop {

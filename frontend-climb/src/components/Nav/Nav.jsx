@@ -25,12 +25,14 @@ function Nav({ user }) {
   };
 
   useEffect(() => {
-    const getNot = async () => {
-      const { data } = await getNotifications();
-      setNotifications(data.notifications);
-    };
-    getNot();
-  }, [notificationsMenu]);
+    if (user) {
+      const getNot = async () => {
+        const { data } = await getNotifications();
+        setNotifications(data.notifications);
+      };
+      getNot();
+    }
+  }, [notificationsMenu, user]);
 
   const notificationHandel = (notification) => {
     navigate(`crags/${notification.parent}`);

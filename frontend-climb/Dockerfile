@@ -1,4 +1,4 @@
-FROM node:16-alpine3.16
+FROM node:18.16-alpine3.17
 WORKDIR /app
 RUN addgroup nonroot && adduser -S -D -G nonroot nonroot
 COPY package*.json .

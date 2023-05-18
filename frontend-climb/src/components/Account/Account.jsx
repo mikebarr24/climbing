@@ -24,6 +24,11 @@ function Account() {
       <div id="account" className="container">
         <div className="background"></div>
         <h2 className="account--name-heading">{user && user.name}</h2>
+        {user?.isAdmin && (
+          <h3 className="center light-text-color margin-bottom-1">
+            Admin Account
+          </h3>
+        )}
         <div className="account--info-wrapper standard-text">
           <div className="account--image-wrapper">
             <span className="account--pencil">
